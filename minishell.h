@@ -29,6 +29,12 @@
 # define CTL_D "\033[A\033[12Cexit\n"
 
 void    prompt_display(char **env);
+
+//store cmd
+t_node	*get_cmd(char *s, int *l);
 int		check_qouts(char *s);
+int		normall_collect(t_node **cmd, char *s, int *i);
+void	handle_qouts(t_node **cmd, char *s, char c, int *i);
+t_node	*creat_node(char *str, int start, int end);
 
 #endif
