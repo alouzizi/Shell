@@ -2,6 +2,7 @@ NAME = minishell
 HEADER = minishell.h
 
 SRCS = qouts.c\
+		tree.c\
 		main.c
 
 OBJS = $(SRCS:.c=.o)

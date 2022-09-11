@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/09 14:48:48 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/09 14:58:38 by alouzizi         ###   ########.fr       */
+/*   Created: 2022/09/09 15:04:14 by alouzizi          #+#    #+#             */
+/*   Updated: 2022/09/11 10:47:21 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void    prompt_display(char **env)
 			exit (0);
 		}
 		if (!check_qouts(s))
-			printf("Syntax ok\n"); // add fct store cmd
+			tree(s);
 		else
 		{
 			ft_putstr_fd("Syntax Error : Check Quotes!\n", 2);
