@@ -28,6 +28,13 @@
 # include <limits.h>
 # define CTL_D "\033[A\033[12Cexit\n"
 
+typedef struct s_data
+{
+	int	signal;
+	int	status;
+}	t_data;
+t_data	g_global;
+
 typedef struct tree
 {
 	struct tree *right;
@@ -38,6 +45,11 @@ typedef struct tree
 void	tree(char *s);
 t_tree	*newtree(char **content);
 char	*data(int j, char c, char c2);
+
+//signals
+void				ctl_c(int signum);
+void				sig_reset(void);
+void				signals_handling(void);
 
 //store cmd
 t_node	*get_cmd(char *s, int *l);

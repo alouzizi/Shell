@@ -3,7 +3,8 @@ HEADER = minishell.h
 
 SRCS = qouts.c\
 		tree.c\
-		main.c
+		main.c\
+		signal.c
 
 OBJS = $(SRCS:.c=.o)
 
