@@ -51,6 +51,11 @@ void				ctl_c(int signum);
 void				sig_reset(void);
 void				signals_handling(void);
 
+//env
+void				shlvl_handling(char **env, int i);
+void				ft_update_env(char **env);
+void				ft_env(char **env);
+
 //store cmd
 t_node	*get_cmd(char *s, int *l);
 int		check_qouts(char *s);

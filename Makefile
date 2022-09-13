@@ -1,10 +1,12 @@
 NAME = minishell
 HEADER = minishell.h
 
-SRCS = qouts.c\
+SRCS = main.c\
+		qouts.c\
 		tree.c\
-		main.c\
-		signal.c
+		signal.c\
+		env.c
+
 
 OBJS = $(SRCS:.c=.o)
 
