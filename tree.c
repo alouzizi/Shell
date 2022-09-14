@@ -57,12 +57,12 @@ void tree(char *s)
 				}
 				else
 				temp->s[0] = data(1, s[i], 0);
-				temp->right = newtree(str);
+				temp->left = newtree(str);
 				j = 0;
 				i++;
 			}
-			temp->left = malloc(sizeof(t_tree));
-			temp = temp->left;
+			temp->right = malloc(sizeof(t_tree));
+			temp = temp->right;
 		}
 		if (s[i] == '&' || s[i] == '|')
 		{
@@ -74,20 +74,20 @@ void tree(char *s)
 			if (j == 1)
 			{
 				temp->s = str;
-				temp->left = NULL;
 				temp->right = NULL;
+				temp->left = NULL;
 				j = 0;
 			}
 			temp2 = malloc(sizeof(t_tree));
 			temp2->s = malloc(sizeof(char *) * 2);
 			temp2->s[0] = data(2, s[i], s[i + 1]);
 			i++;
-			temp2->right = root;
+			temp2->left = root;
 			root = temp2;
 			j = 0;
 			i++;
-			root->left = malloc(sizeof(t_tree));
-			temp = root->left;
+			root->right = malloc(sizeof(t_tree));
+			temp = root->right;
 		}
 	}
 	if (j != 0)
@@ -96,20 +96,21 @@ void tree(char *s)
 		temp->left = NULL;
 		temp->right = NULL;
 	}
-	// printf(" root = %s\n", root->s[0]);
-	// printf(" root-> right = %s\n", root->right->s[0]);
-	// printf(" root-> left = %s\n", root->left->s[0]);
-	// if (root->right->right)
-	// {
-	// 	printf(" root-> right-> right = %s\n", root->right->right->s[0]);
-	// 	printf(" root-> right-> left = %s\n", root->right->left->s[0]);
-	// }
-	// if (root->left->left)
-	// {
-	// 	printf(" root-> left-> right = %s\n", root->left->right->s[0]);
-	// 	printf(" root-> left-> left = %s\n", root->left->left->s[0]);
-	// }
+	print_tree(root, 0);
 	exit(1);
+}
+
+void print_tree(t_tree *root, int space)
+{
+	if (root == NULL)
+	return;
+	space += COUNT;
+	print_tree(root->right, space);
+	printf("\n");
+	for (int i = COUNT; i < space; i++)
+		printf(" ");
+	printf("[%s]\n", root->s[0]);
+	print_tree(root->left, space);
 }
 
 t_tree	*newtree(char **content)

@@ -27,7 +27,7 @@
 # include <termios.h>
 # include <limits.h>
 # define CTL_D "\033[A\033[12Cexit\n"
-
+#define COUNT 10
 typedef struct s_data
 {
 	int	signal;
@@ -42,6 +42,7 @@ typedef struct tree
 	char	**s;
 }t_tree;
 
+void print_tree(t_tree *root, int space);
 void	tree(char *s);
 t_tree	*newtree(char **content);
 char	*data(int j, char c, char c2);
