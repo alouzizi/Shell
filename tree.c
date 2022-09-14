@@ -33,14 +33,13 @@ void tree(char *s)
 		{
 			str = transfer_list_to_2darray(get_cmd(s, &i));
 			l = 0;
-			if (j != 2)
 				j = 1;
 		}
 		if ((s[i] == '|' || s[i] == '<' || s[i] == '>') && s[i + 1] != '|' && s[i])
 		{
-			if ( j == 0)
+			if ( j == 0 && s[i] == '|')
 			{
-				printf("syntax erore\n");
+				write(2,"syntax erore\n",13);
 				exit (1);
 			}
 			if (j == 1)
@@ -48,6 +47,11 @@ void tree(char *s)
 				temp->s = malloc(sizeof(char *) * 2);
 				if (s[i + 1] == '<' || s[i + 1] == '>')
 				{
+					if (s[i] != s[i + 1])
+					{
+						write(2,"syntax erore\n",13);
+						exit(1);
+					}
 					temp->s[0] = data(2, s[i], s[i + 1]);
 					i++;
 				}
@@ -61,23 +65,50 @@ void tree(char *s)
 			temp = temp->left;
 		}
 		if (s[i] == '&' || s[i] == '|')
-		{ 
-			temp2->s = malloc(sizeof(char *) * 2);
-			temp2 = malloc(sizeof(t_tree));
-			if (s[i] == '|')
+		{
+			if (s[i] != s[i + 1] || j == 0)
 			{
-				temp2->s[0] = data(2, s[i], s[i + 1]);
-				i++;
+				write(2, "syntax erore\n", 13);
+				exit (1);
 			}
-			else
-				temp2->s[0] = data(1, s[i], 0);
+			if (j == 1)
+			{
+				temp->s = str;
+				temp->left = NULL;
+				temp->right = NULL;
+				j = 0;
+			}
+			temp2 = malloc(sizeof(t_tree));
+			temp2->s = malloc(sizeof(char *) * 2);
+			temp2->s[0] = data(2, s[i], s[i + 1]);
+			i++;
 			temp2->right = root;
 			root = temp2;
-			j =0;
+			j = 0;
 			i++;
+			root->left = malloc(sizeof(t_tree));
+			temp = root->left;
 		}
 	}
-	temp->s = str;
+	if (j != 0)
+	{
+		temp->s = str;
+		temp->left = NULL;
+		temp->right = NULL;
+	}
+	// printf(" root = %s\n", root->s[0]);
+	// printf(" root-> right = %s\n", root->right->s[0]);
+	// printf(" root-> left = %s\n", root->left->s[0]);
+	// if (root->right->right)
+	// {
+	// 	printf(" root-> right-> right = %s\n", root->right->right->s[0]);
+	// 	printf(" root-> right-> left = %s\n", root->right->left->s[0]);
+	// }
+	// if (root->left->left)
+	// {
+	// 	printf(" root-> left-> right = %s\n", root->left->right->s[0]);
+	// 	printf(" root-> left-> left = %s\n", root->left->left->s[0]);
+	// }
 	exit(1);
 }
 
