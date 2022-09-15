@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:14:09 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/15 05:13:34 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/15 23:17:23 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,51 @@ int	builtincmp(char *s1, char *s2)
 // commands_execution checks whether the command
 // can be executed or not
 
+char	*check_access(char	**paths)
+{
+	char	*path;
+	int		i;
+
+	i = 0;
+	while (paths[i])
+	{
+		if (!access(paths[i], X_OK | F_OK))
+		{
+			path = paths[i];
+			break ;
+		}
+		i++;
+	}
+	if (!path)
+		return (NULL);
+	return (path);
+}
+
+void	print_cnf_error(char *cmd)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(CNF, 2);
+	ft_putendl_fd(cmd, 2);
+	exit(127);
+}
+
 void	commands_execution(char **path, char **cmd, char **env)
 {
+	char	*tmp;
 	int		fd;
-	int		i;
 	int		status;
 
-	i = -1;
-	while (path[++i])
-		if (!access(path[i], X_OK))
-			break ;
+	tmp = check_access(path);
 	fd = fork();
 	if (!fd)
 	{
-		execve(path[i], cmd, env);
-		exit (0);
+		if (tmp)
+		{
+			execve(tmp, cmd, env);
+			exit (0);
+		}
+		else
+			print_cnf_error(cmd[0]);
 	}
 	else
 	{
@@ -84,8 +114,8 @@ int	isbuiltin(char **cmd, char **env)
 {
 	if (!cmd[0])
 		return (1);
-	else if (!builtincmp(cmd[0], "minishell"))
-		return (ft_minishell(cmd, env), 1);
+	// else if (!builtincmp(cmd[0], "minishell"))
+	// 	return (ft_minishell(cmd, env), 1);
 	else if (!builtincmp(cmd[0], "pwd"))
 		return (ft_pwd(), 1);
 	else if (!builtincmp(cmd[0], "echo"))
