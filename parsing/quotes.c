@@ -10,48 +10,50 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parsing.h"
 
-t_node *get_cmd(char *s, int *i)
+t_node	*get_cmd(char *s, int *i)
 {
-	t_node *cmd;
+	t_node	*cmd;
 
 	cmd = NULL;
 	while (s[*i])
 	{
 		if (s[*i] == '"' || s[*i] == '\'')
-			handle_qouts(&cmd, s, s[*i], i);
+			handle_quotes(&cmd, s, s[*i], i);
 		else if (s[*i] != ' ')
+		{
 			if (normall_collect(&cmd, s, i) == 1)
 				return (cmd);
 			if (s[*i] == '|' || s[*i] == '<' || s[*i] == '>' || s[*i] == '&')
 				return (cmd);
+		}
 		while (s[*i] && s[*i] == ' ')
 			(*i)++;
 	}
 	return (cmd);
 }
 
-int normall_collect(t_node **cmd, char *s, int *i)
+int	normall_collect(t_node **cmd, char *s, int *i)
 {
-	int star;
-	int end;
-	t_node *node;
-	t_node *list;
+	t_node	*node;
+	t_node	*list;
+	int		star;
+	int		end;
 
 	list = NULL;
 	star = *i;
 	while (s[*i] && s[*i] != '\'' && s[*i] != '"' && s[*i] != ' ')
 	{
 		if (s[*i] == '|' || s[*i] == '<' || s[*i] == '>' || s[*i] == '&')
-			break;
+			break ;
 		(*i)++;
 	}
 	end = (*i) - 1;
-	node = creat_node(s, star, end);
+	node = create_node(s, star, end);
 	if ((s[*i] == '\'' || s[*i] == '"') && s[*i])
 	{
-		handle_qouts(&list, s, s[*i], i);
+		handle_quotes(&list, s, s[*i], i);
 		node->s = ft_strjoin(node->s, list->s);
 		free(list->s);
 		list = NULL;
@@ -60,14 +62,12 @@ int normall_collect(t_node **cmd, char *s, int *i)
 	return (0);
 }
 
-
-void handle_qouts(t_node **cmd, char *s, char c, int *i)
+void	handle_quotes(t_node **cmd, char *s, char c, int *i)
 {
-	t_node *node;
-	t_node *list;
-
-	int start;
-	int end;
+	t_node	*node;
+	t_node	*list;
+	int		start;
+	int		end;
 
 	list = NULL;
 	(*i)++;
@@ -75,11 +75,11 @@ void handle_qouts(t_node **cmd, char *s, char c, int *i)
 	while (s[*i] != c && s[*i])
 		(*i)++;
 	end = (*i) - 1;
-		node = creat_node(s, start, end);
+	node = create_node(s, start, end);
 	(*i) += 1;
 	if ((s[*i] == '\'' || s[*i] == '"') && s[*i])
 	{
-		handle_qouts(&list, s, s[*i], i);
+		handle_quotes(&list, s, s[*i], i);
 		node->s = ft_strjoin(node->s, list->s);
 		free(list->s);
 	}
@@ -92,10 +92,10 @@ void handle_qouts(t_node **cmd, char *s, char c, int *i)
 	ft_lstadd_back(cmd, node);
 }
 
-t_node *creat_node(char *str, int start, int end)
+t_node	*create_node(char *str, int start, int end)
 {
-	t_node *node;
-	int i;
+	t_node	*node;
+	int		i;
 
 	i = 0;
 	node = malloc(sizeof(t_node));
@@ -107,14 +107,14 @@ t_node *creat_node(char *str, int start, int end)
 		exit(1);
 	while (start <= end)
 		node->s[i++] = str[start++];
-	node->s[i] = '\0';
+	node->s[i] = 0;
 	return (node);
 }
 
-char **transfer_list_to_2darray(t_node *node)
+char	**transfer_list_to_2darray(t_node *node)
 {
-	int i;
-	char **tab;
+	char	**tab;
+	int		i;
 
 	i = ft_lstsize(node) + 1;
 	tab = malloc(sizeof(char *) * i);
@@ -129,19 +129,14 @@ char **transfer_list_to_2darray(t_node *node)
 	return (tab);
 }
 
-int check_qouts(char *s)
+int	check_quotes(char *s, int i, int j)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while(s[i])
+	while (s[i])
 	{
 		if (s[i] == '\'')
 		{
 			i++;
-			while(s[i] != '\'' && s[i])
+			while (s[i] != '\'' && s[i])
 				i++;
 			if (s[i] != '\'')
 				j = 1;
@@ -149,7 +144,7 @@ int check_qouts(char *s)
 		if (s[i] == '"')
 		{
 			i++;
-			while(s[i] != '"' && s[i])
+			while (s[i] != '"' && s[i])
 				i++;
 			if (s[i] != '"')
 				j = 1;

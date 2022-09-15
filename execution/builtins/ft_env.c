@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/09 14:49:11 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/10 14:58:43 by alouzizi         ###   ########.fr       */
+/*   Created: 2022/06/15 00:38:34 by ooumlil           #+#    #+#             */
+/*   Updated: 2022/09/15 04:34:07 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../execution.h"
 
 // shlvl_handling : we enter this function
 // only if SHLVL already exists, and we increment
@@ -39,7 +39,6 @@ void	shlvl_handling(char **env, int i)
 	}
 	s = ft_itoa(t);
 	env[i] = ft_strjoin(tmp, s);
-	free(s);
 }
 
 // ft_update_env takes the 3rd variable 
@@ -52,6 +51,7 @@ void	ft_update_env(char **env)
 {
 	int	i;
 	int	check;
+
 	check = 0;
 	i = -1;
 	while (env[++i])
@@ -76,7 +76,6 @@ void	ft_update_env(char **env)
 // value to 0
 
 void	ft_env(char **env)
-
 {
 	int	i;
 
@@ -86,6 +85,3 @@ void	ft_env(char **env)
 			ft_putendl_fd(env[i], 1);
 	g_global.status = 0;
 }
-
-
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 15:04:14 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/13 09:14:03 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/09/15 08:00:44 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	prompt_display(char **env)
 			ft_putstr_fd(CTL_D, 1);
 			exit (0);
 		}
-		if (!check_qouts(s))
-			tree(s);
+		if (!check_quotes(s, 0, 0))
+			tree(s, env);
 		else
 		{
 			g_global.status = 1;
-			ft_putstr_fd("Syntax Error : Check Quotes!\n", 2);
+			ft_putendl_fd("Syntax Error : Check Quotes!", 2);
 		}
 	}
 }
