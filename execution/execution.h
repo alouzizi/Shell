@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:29:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/15 23:16:48 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/15 19:26:00 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,7 @@ int					isbuiltin(char **cmd, char **env);
 void				print_cnf_error(char *cmd);
 void				execute(char **s, char **env);
 void				commands_execution(char **path, char **cmd, char **env);
+// pipe
+int                 creat_pipe(t_tree *root, char **env);
 
 #endif

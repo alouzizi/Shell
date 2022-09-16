@@ -144,4 +144,5 @@ void	tree(char *s, char **env)
 	print_tree(root, 0);
 	if (root)
 		execute(root->s, env);
+	creat_pipe(root, env);
 }
