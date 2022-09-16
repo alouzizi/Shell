@@ -6,13 +6,14 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:29:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/15 05:21:42 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/15 23:16:48 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
+# define CNF "command not found: "
 # include "../minishell.h"
 
 //pwd
@@ -60,7 +61,8 @@ void				ft_exit(char **cmd);
 char				**get_path(char *s, char **env);
 int					builtincmp(char *s1, char *s2);
 int					isbuiltin(char **cmd, char **env);
-void				ft_minishell(char **cmd, char **env);
+// void				ft_minishell(char **cmd, char **env);
+void				print_cnf_error(char *cmd);
 void				execute(char **s, char **env);
 void				commands_execution(char **path, char **cmd, char **env);
 
