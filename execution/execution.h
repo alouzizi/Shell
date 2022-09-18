@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:29:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/15 19:26:00 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/09/17 04:12:43 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # define CNF "command not found: "
 # include "../minishell.h"
-
 //pwd
 void				ft_pwd(void);
 
@@ -65,7 +64,5 @@ int					isbuiltin(char **cmd, char **env);
 void				print_cnf_error(char *cmd);
 void				execute(char **s, char **env);
 void				commands_execution(char **path, char **cmd, char **env);
-// pipe
-int                 creat_pipe(t_tree *root, char **env);
 
 #endif

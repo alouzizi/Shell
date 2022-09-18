@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:06:36 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/15 22:36:19 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/17 07:43:21 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ int		normall_collect(t_node **cmd, char *s, int *i);
 void	handle_quotes(t_node **cmd, char *s, char c, int *i);
 t_node	*create_node(char *str, int start, int end);
 char	**transfer_list_to_2darray(t_node *node);
+
+int		creat_pipe(t_tree *root, char **env);
 
 #endif
