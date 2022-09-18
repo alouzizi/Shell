@@ -70,6 +70,7 @@ void	tree(char *s, char **env)
 	j = 0;
 	root = malloc(sizeof(t_tree));
 	temp = root;
+	str = NULL;
 	while (s[i])
 	{
 		if (s[i] != '|' && s[i] != '<' && s[i] != '>' && s[i] != '&')
@@ -77,41 +78,11 @@ void	tree(char *s, char **env)
 			str = transfer_list_to_2darray(get_cmd(s, &i));
 			j = 1;
 		}
-		if ((s[i] == '|' || s[i] == '<' || s[i] == '>') \
-			&& s[i + 1] != '|' && s[i])
-		{
-			if (j == 0 && s[i] == '|')
-			{
-				ft_putendl_fd("Syntax Error\n", 2);
-				return ;
-			}
-			if (j == 1)
-			{
-				temp->s = malloc(sizeof(char *) * 2);
-				if (s[i + 1] == '<' || s[i + 1] == '>')
-				{
-					if (s[i] != s[i + 1])
-					{
-						ft_putendl_fd("Syntax Error\n", 2);
-						return ;
-					}
-					temp->s[0] = data(2, s[i], s[i + 1]);
-					i++;
-				}
-				else
-				temp->s[0] = data(1, s[i], 0);
-				temp->left = newtree(str);
-				j = 0;
-				i++;
-			}
-			temp->right = malloc(sizeof(t_tree));
-			temp = temp->right;
-		}
-		if (s[i] == '&' || s[i] == '|')
+		if (s[i] == '&' || (s[i] == '|' && s[i + 1] == '|'))
 		{
 			if (s[i] != s[i + 1] || j == 0)
 			{
-				ft_putendl_fd("Syntax Error\n", 2);
+				ft_putendl_fd("Syntax Error3\n", 2);
 				return ;
 			}
 			if (j == 1)
@@ -132,10 +103,48 @@ void	tree(char *s, char **env)
 			root->right = malloc(sizeof(t_tree));
 			temp = root->right;
 		}
+		if ((s[i] == '|' || s[i] == '<' || s[i] == '>') && s[i])
+		{
+			printf("j = %d\n",j);
+			if (j == 0 && s[i] == '|')
+			{
+				ft_putendl_fd("Syntax Error1\n", 2);
+				return ;
+			}
+			if( j == 1 && str[0] == NULL)
+			{
+				ft_putendl_fd("Syntax Error!\n", 2);
+				return ;
+			}
+			temp->s = malloc(sizeof(char *) * 2);
+			if (s[i + 1] == '<' || s[i + 1] == '>' || s[i] == '<' || s[i] == '>' )
+			{
+				if (s[i] != s[i + 1])
+				{
+					ft_putendl_fd("Syntax Error3\n", 2);
+					return ;
+				}
+				temp->s[0] = data(2, s[i], s[i + 1]);
+				i++;
+			}
+			else
+				temp->s[0] = data(1, s[i], 0);
+			if (j == 1)
+				temp->left = newtree(str);
+			else
+				temp->left = NULL;
+			printf("d = %d\n",j);
+			printf("s = [%s]\n",temp->s[0]);
+			temp->right = malloc(sizeof(t_tree));
+			temp = temp->right;
+			j = 0;
+			i++;
+		}
 	}
 	if (j != 0)
 	{
 		temp->s = str;
+		printf("str = [%s]\n", str[0]);
 		temp->left = NULL;
 		temp->right = NULL;
 	}
@@ -144,5 +153,4 @@ void	tree(char *s, char **env)
 	print_tree(root, 0);
 	if (root)
 		execute(root->s, env);
-	creat_pipe(root, env);
 }
