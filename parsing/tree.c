@@ -12,51 +12,6 @@
 
 #include "parsing.h"
 
-void	print_tree(t_tree *root, int space)
-{
-	int	i;
-
-	i = COUNT - 1;
-	if (root == NULL)
-		return ;
-	space += COUNT;
-	print_tree(root->right, space);
-	printf("\n");
-	while (++i < space)
-		printf(" ");
-	printf("[%s]\n", root->s[0]);
-	print_tree(root->left, space);
-}
-
-t_tree	*newtree(char **content)
-{
-	t_tree	*tree;
-
-	tree = malloc(sizeof(t_tree));
-	if (!tree)
-		return (NULL);
-	tree->s = content;
-	tree->left = NULL;
-	tree->right = NULL;
-	return (tree);
-}
-
-char	*data(int j, char c, char c2)
-{
-	char	*s;
-	int		i;
-
-	i = 0;
-	s = malloc(j + 1);
-	if (!s)
-		exit(1);
-	s[i++] = c;
-	if (j == 2)
-		s[i++] = c2;
-	s[i] = '\0';
-	return (s);
-}
-
 void	tree(char *s, char **env)
 {
 	t_tree	*root;
@@ -66,9 +21,8 @@ void	tree(char *s, char **env)
 	int		i;
 	int		j;
 
-	i = 0;
-	j = 0;
-	root = malloc(sizeof(t_tree));
+	i = j = 0;
+	root = newtree(NULL);
 	temp = root;
 	str = NULL;
 	while (s[i])
@@ -82,7 +36,7 @@ void	tree(char *s, char **env)
 		{
 			if (s[i] != s[i + 1] || j == 0)
 			{
-				ft_putendl_fd("Syntax Error3\n", 2);
+				ft_putendl_fd("Syntax Error\n", 2);
 				return ;
 			}
 			if (j == 1)
@@ -105,23 +59,17 @@ void	tree(char *s, char **env)
 		}
 		if ((s[i] == '|' || s[i] == '<' || s[i] == '>') && s[i])
 		{
-			printf("j = %d\n",j);
-			if (j == 0 && s[i] == '|')
+			if ((j != 1 && s[i] == '|') || (j == 1 && str[0] == NULL))
 			{
-				ft_putendl_fd("Syntax Error1\n", 2);
+				ft_putendl_fd("Syntax Error\n", 2);
 				return ;
 			}
-			if( j == 1 && str[0] == NULL)
-			{
-				ft_putendl_fd("Syntax Error!\n", 2);
-				return ;
-			}
-			temp->s = malloc(sizeof(char *) * 2);
-			if (s[i + 1] == '<' || s[i + 1] == '>' || s[i] == '<' || s[i] == '>' )
+			temp->s = malloc(sizeof(char *));
+			if (s[i + 1] == '<' || s[i + 1] == '>'  && (s[i] == '<' || s[i] == '>') )
 			{
 				if (s[i] != s[i + 1])
 				{
-					ft_putendl_fd("Syntax Error3\n", 2);
+					ft_putendl_fd("Syntax Error\n", 2);
 					return ;
 				}
 				temp->s[0] = data(2, s[i], s[i + 1]);
@@ -133,24 +81,28 @@ void	tree(char *s, char **env)
 				temp->left = newtree(str);
 			else
 				temp->left = NULL;
-			printf("d = %d\n",j);
-			printf("s = [%s]\n",temp->s[0]);
-			temp->right = malloc(sizeof(t_tree));
+			i++;
+			j = i;
+			str = transfer_list_to_2darray(get_cmd(s, &j));
+			if (str[0])
+				temp->right = newtree(NULL);
+			else
+			{
+				ft_putendl_fd("Syntax Error\n", 2);
+				return ;
+			}
 			temp = temp->right;
 			j = 0;
-			i++;
 		}
 	}
-	if (j != 0)
+	if (j == 1)
 	{
 		temp->s = str;
-		printf("str = [%s]\n", str[0]);
 		temp->left = NULL;
 		temp->right = NULL;
 	}
-	else
-		root = 0;
 	print_tree(root, 0);
-	if (root)
-		execute(root->s, env);
+	// if (root)
+	// 	execute(root->s, env);
+	creat_pipe(root, env);
 }

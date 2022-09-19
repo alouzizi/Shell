@@ -17,7 +17,8 @@ SRCS = main.c \
 	execution/builtins/ft_unset.c \
 	execution/builtins/ft_exit.c \
 	execution/exec.c \
-	execution/pipe.c
+	execution/pipe.c \
+	parsing/tree_utils.c
 
 
 OBJS = $(SRCS:.c=.o)
