@@ -23,9 +23,9 @@ t_node	*get_cmd(char *s, int *i)
 			handle_quotes(&cmd, s, s[*i], i);
 		else if (s[*i] != ' ')
 		{
-			if (normall_collect(&cmd, s, i) == 1)
-				return (cmd);
 			if (s[*i] == '|' || s[*i] == '<' || s[*i] == '>' || s[*i] == '&')
+				return (cmd);
+			if (normall_collect(&cmd, s, i) == 1)
 				return (cmd);
 		}
 		while (s[*i] && s[*i] == ' ')
