@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:15:24 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/18 20:26:47 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/09/18 21:14:49 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,18 @@ int creat_pipe(t_tree *root, char **env)
 		close(fd[0]);
 		close(fd[1]);
 		//excute root->right
-		//if (root->right->s[0][0] == '|')
+		if (root->right->s[0][0] == '|')
 		{
-			//creat_pipe(root->right ,env);
-			//exit(0);
+			creat_pipe(root->right ,env);
+			exit(0);
 		}
-		//else
-			// execute(root->right->s, env);
+		else
+		{
+			
 		char **path = get_path(root->right->s[0], env);
 		char *p = check_access(path);
 		execve(p,root->right->s,env);
+		}
 	}
 	close(fd[1]);
 	close(fd[0]);
