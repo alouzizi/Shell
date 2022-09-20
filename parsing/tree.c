@@ -65,7 +65,7 @@ void	tree(char *s, char **env)
 				return ;
 			}
 			temp->s = malloc(sizeof(char *));
-			if (s[i + 1] == '<' || s[i + 1] == '>'  && (s[i] == '<' || s[i] == '>') )
+			if ((s[i + 1] == '<' || s[i + 1] == '>') && (s[i] == '<' || s[i] == '>'))
 			{
 				if (s[i] != s[i + 1])
 				{
@@ -101,8 +101,8 @@ void	tree(char *s, char **env)
 		temp->left = NULL;
 		temp->right = NULL;
 	}
-	print_tree(root, 0);
-	// if (root)
-	// 	execute(root->s, env);
+	// print_tree(root, 0);
+	if (!root)
+		return ;
 	creat_pipe(root, env);
 }

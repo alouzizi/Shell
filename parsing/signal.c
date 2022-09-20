@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:50:14 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/15 07:55:29 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/20 00:17:19 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ctl_c(int signum)
 		rl_replace_line("", 0);
 		rl_redisplay();
 		g_global.status = 130;
+		g_global.signal = 0;
 	}
 }
 

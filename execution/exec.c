@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:14:09 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/15 23:17:23 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/20 20:55:31 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char	**get_path(char *s, char **env)
 		paths[i] = ft_strjoin(paths[i], s);
 	}
 	paths[i] = 0;
-	free (s);
 	return (paths);
 }
 
@@ -75,25 +74,25 @@ char	*check_access(char	**paths)
 
 void	print_cnf_error(char *cmd)
 {
-	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(PRMPT_ERR, 2);
 	ft_putstr_fd(CNF, 2);
 	ft_putendl_fd(cmd, 2);
 	exit(127);
 }
 
-void	commands_execution(char **path, char **cmd, char **env)
+void	commands_execution(char **paths, char **cmd, char **env)
 {
-	char	*tmp;
+	char	*path;
 	int		fd;
 	int		status;
 
-	tmp = check_access(path);
+	path = check_access(paths);
 	fd = fork();
 	if (!fd)
 	{
-		if (tmp)
+		if (path)
 		{
-			execve(tmp, cmd, env);
+			execve(path, cmd, env);
 			exit (0);
 		}
 		else
@@ -114,8 +113,6 @@ int	isbuiltin(char **cmd, char **env)
 {
 	if (!cmd[0])
 		return (1);
-	// else if (!builtincmp(cmd[0], "minishell"))
-	// 	return (ft_minishell(cmd, env), 1);
 	else if (!builtincmp(cmd[0], "pwd"))
 		return (ft_pwd(), 1);
 	else if (!builtincmp(cmd[0], "echo"))
@@ -136,16 +133,16 @@ int	isbuiltin(char **cmd, char **env)
 
 void	execute(char **s, char **env)
 {
-	char	**path;
+	char	**paths;
 
 	if (!isbuiltin(s, env))
 	{
 		if (s[0][0] == '/' || s[0][0] == '.')
-			path = s;
+			paths = s;
 		else
-			path = get_path(s[0], env);
-		if (!path)
+			paths = get_path(s[0], env);
+		if (!paths)
 			return ;
-		commands_execution(path, s, env);
+		commands_execution(paths, s, env);
 	}
 }

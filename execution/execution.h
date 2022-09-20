@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:29:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/18 20:23:23 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/09/20 20:16:24 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 # define EXECUTION_H
 
 # define CNF "command not found: "
+# define PRMPT_ERR "minishell: "
 # include "../minishell.h"
+
 //pwd
 void				ft_pwd(void);
 
@@ -56,13 +58,18 @@ char				*get_env(char *str, char **env);
 unsigned long long	a_to_ull(char *str);
 void				ft_exit(char **cmd);
 
+//pipe
+// void				pipe_right(int *fd, t_tree *root, char **env);
+// void				pipe_left(int *fd, t_tree *root, char **env);
+// int					creat_pipe(t_tree *root, char **env);
+
 //executing
 char				**get_path(char *s, char **env);
 int					builtincmp(char *s1, char *s2);
 int					isbuiltin(char **cmd, char **env);
-// void				ft_minishell(char **cmd, char **env);
 void				print_cnf_error(char *cmd);
 void				execute(char **s, char **env);
-void				commands_execution(char **path, char **cmd, char **env);
-char	*check_access(char	**paths);
+void				commands_execution(char **paths, char **cmd, char **env);
+char				*check_access(char	**paths);
+
 #endif
