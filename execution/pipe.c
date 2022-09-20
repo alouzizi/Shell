@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:15:24 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/20 20:53:51 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/20 22:35:06 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,16 @@ void	pipe_cmd_exec(t_tree *root, char **env, int index)
 		paths = get_path(root->right->s[0], env);
 		path = check_access(paths);
 		if (path)
-			execve(path, root->right->s, env);
-		else
-			print_cnf_error(root->right->s[0]);
+			if (execve(path, root->right->s, env))
+				print_cnf_error(root->right->s[0]);
 	}
 	else
 	{
 		paths = get_path(root->left->s[0], env);
 		path = check_access(paths);
 		if (path)
-			execve(path, root->left->s, env);
-		else
-			print_cnf_error(root->left->s[0]);
+			if (execve(path, root->left->s, env))
+				print_cnf_error(root->left->s[0]);
 	}
 }
 

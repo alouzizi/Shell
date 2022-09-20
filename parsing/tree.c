@@ -101,7 +101,6 @@ void	tree(char *s, char **env)
 		temp->left = NULL;
 		temp->right = NULL;
 	}
-	// print_tree(root, 0);
 	if (!root)
 		return ;
 	creat_pipe(root, env);
