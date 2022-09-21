@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:15:24 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/20 22:35:06 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/21 21:10:16 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	pipe_right(int *fd, t_tree *root, char **env)
 	}
 	else
 		pipe_cmd_exec(root, env, 0);
+	g_global.signal = 1;
 }
 
 void	pipe_left(int *fd, t_tree *root, char **env)
@@ -71,26 +72,25 @@ void	pipe_left(int *fd, t_tree *root, char **env)
 	if (isbuiltin(root->left->s, env))
 		exit(0);
 	pipe_cmd_exec(root, env, 1);
+	g_global.signal = 1;
 }
 
 int	creat_pipe(t_tree *root, char **env)
 {
 	int	*fd;
-	int	id1;
-	int	id2;
+	int	id;
 
 	fd = malloc(sizeof(int) * 2);
 	if (pipe(fd) == -1)
 		perror("Pipe");
-	id1 = fork();
-	if (!id1)
+	id = fork();
+	if (!id)
 		pipe_left(fd, root, env);
-	id2 = fork();
-	if (!id2)
+	id = fork();
+	if (!id)
 		pipe_right(fd, root, env);
 	close(fd[1]);
 	close(fd[0]);
-	waitpid(id1, NULL, 0);
-	waitpid(id2, NULL, 0);
+	waitpid(id, NULL, 0);
 	return (0);
 }

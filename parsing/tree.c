@@ -101,7 +101,22 @@ void	tree(char *s, char **env)
 		temp->left = NULL;
 		temp->right = NULL;
 	}
-	if (!root)
+	if (!root || !root->s)
 		return ;
-	creat_pipe(root, env);
+	if (!builtincmp(root->s[0], "|"))
+		creat_pipe(root, env);
+	else if (!builtincmp(root->s[0], "||"))
+		puts("OR");
+	else if (!builtincmp(root->s[0], "&&"))
+		puts("AND");
+	else if (!builtincmp(root->s[0], ">>"))
+		puts("APPEND");
+	else if (!builtincmp(root->s[0], "<<"))
+		puts("HEREDOC");
+	else if (!builtincmp(root->s[0], ">"))
+		puts("REDIRECT OUTPUT");
+	else if (!builtincmp(root->s[0], "<"))
+		puts("REDIRECT INPUT");
+	else
+		execute(root->s, env);
 }
