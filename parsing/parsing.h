@@ -33,7 +33,8 @@ int		normall_collect(t_node **cmd, char *s, int *i);
 void	handle_quotes(t_node **cmd, char *s, char c, int *i);
 t_node	*create_node(char *str, int start, int end);
 char	**transfer_list_to_2darray(t_node *node);
-int		is_redirection_pipe(char c);
+// int		is_redirection_pipe(char c);
 int		creat_pipe(t_tree *root, char **env);
-
+char	*expand_$(char *s, int start, int lvl);
+char	*expand_$2(char *s, int start);
 #endif
