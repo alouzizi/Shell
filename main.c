@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 15:04:14 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/20 20:10:10 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/24 06:21:56 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ void	prompt_display(char **env)
 
 int	main(int ac, char **av, char **env)
 {
+	char	**new_env;
+
 	if (ac != 1 || av[1])
 		return (1);
-	ft_update_env(env);
+	new_env = ft_update_env(env);
 	signals_handling();
-	prompt_display(env);
+	prompt_display(new_env);
 }

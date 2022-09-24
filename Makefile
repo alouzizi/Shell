@@ -16,11 +16,10 @@ SRCS = main.c \
 	execution/builtins/ft_minishell.c \
 	execution/builtins/ft_unset.c \
 	execution/builtins/ft_exit.c \
+	execution/operators/pipe.c \
 	execution/exec.c \
 	execution/exec_utils.c \
-	execution/pipe.c \
 	parsing/tree_utils.c
-
 
 OBJS = $(SRCS:.c=.o)
 
@@ -28,11 +27,11 @@ RL_INC	= -I/goinfre/$(USER)/.brew/opt/readline/include
 RL_LIB = -L/goinfre/$(USER)/.brew/opt/readline/lib
 
 %.o : %.c
-	@$(CC) $(RL_INC) -I $(RL_INC) -o $@  -c $^
+	@$(CC) $(CFLAGS) $(RL_INC) -I $(RL_INC) -o $@  -c $^
 
 LIBFT = ./libft/libft.a
 
-CFLAGS = 
+CFLAGS = -Wall -Wextra -Werror
 
 RM = rm -f
 

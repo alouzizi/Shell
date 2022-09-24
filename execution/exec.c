@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:14:09 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/21 08:20:00 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/24 08:42:29 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	*check_access(char	**paths)
 	int		i;
 
 	i = 0;
+	path = 0;
 	while (paths[i])
 	{
 		if (!access(paths[i], X_OK | F_OK))
@@ -38,8 +39,8 @@ char	*check_access(char	**paths)
 void	print_cnf_error(char *cmd)
 {
 	ft_putstr_fd(PRMPT_ERR, 2);
-	ft_putstr_fd(CNF, 2);
-	ft_putendl_fd(cmd, 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putendl_fd(CNF, 2);
 	exit(127);
 }
 
@@ -49,16 +50,12 @@ void	commands_execution(char **paths, char **cmd, char **env)
 	int		fd;
 	int		status;
 
+	status = 0;
 	path = check_access(paths);
 	fd = fork();
 	if (!fd)
 	{
-		if (path)
-		{
-			execve(path, cmd, env);
-			exit (0);
-		}
-		else
+		if (execve(path, cmd, env))
 			print_cnf_error(cmd[0]);
 	}
 	else
@@ -105,7 +102,12 @@ void	execute(char **s, char **env)
 		else
 			paths = get_path(s[0], env);
 		if (!paths)
+		{
+			ft_putstr_fd(PRMPT_ERR, 2);
+			ft_putstr_fd(s[0], 2);
+			ft_putendl_fd(CNF, 2);
 			return ;
+		}
 		commands_execution(paths, s, env);
 	}
 }

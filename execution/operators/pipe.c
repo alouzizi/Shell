@@ -6,11 +6,11 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:15:24 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/21 21:10:16 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/22 04:56:49 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "../execution.h"
 
 void	dup_function(int *fd, int index)
 {
@@ -28,29 +28,28 @@ void	dup_function(int *fd, int index)
 	}
 }
 
-void	pipe_cmd_exec(t_tree *root, char **env, int index)
+void	execute_pipe(char **arr, char **env)
 {
 	char	**paths;
 	char	*path;
 
+	paths = get_path(arr[0], env);
+	path = check_access(paths);
+	if (path)
+		if (execve(path, arr, env))
+			print_cnf_error(arr[0]);
+}
+
+void	pipe_cmd_exec(t_tree *root, char **env, int index)
+{
 	if (!index)
 	{
 		if (isbuiltin(root->right->s, env))
 			exit(0);
-		paths = get_path(root->right->s[0], env);
-		path = check_access(paths);
-		if (path)
-			if (execve(path, root->right->s, env))
-				print_cnf_error(root->right->s[0]);
+		execute_pipe(root->right->s, env);
 	}
 	else
-	{
-		paths = get_path(root->left->s[0], env);
-		path = check_access(paths);
-		if (path)
-			if (execve(path, root->left->s, env))
-				print_cnf_error(root->left->s[0]);
-	}
+		execute_pipe(root->left->s, env);
 }
 
 void	pipe_right(int *fd, t_tree *root, char **env)
@@ -63,7 +62,6 @@ void	pipe_right(int *fd, t_tree *root, char **env)
 	}
 	else
 		pipe_cmd_exec(root, env, 0);
-	g_global.signal = 1;
 }
 
 void	pipe_left(int *fd, t_tree *root, char **env)
@@ -72,7 +70,6 @@ void	pipe_left(int *fd, t_tree *root, char **env)
 	if (isbuiltin(root->left->s, env))
 		exit(0);
 	pipe_cmd_exec(root, env, 1);
-	g_global.signal = 1;
 }
 
 int	creat_pipe(t_tree *root, char **env)
@@ -92,5 +89,6 @@ int	creat_pipe(t_tree *root, char **env)
 	close(fd[1]);
 	close(fd[0]);
 	waitpid(id, NULL, 0);
+	wait(0);
 	return (0);
 }

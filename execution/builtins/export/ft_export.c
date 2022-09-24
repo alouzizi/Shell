@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:36:25 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/20 20:38:42 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/24 06:25:58 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	add_to_value(char *arg, char **env, int i, int ptr)
 		{
 			ptr = 1;
 			if (value && !ft_strchr(env[i], '='))
-				env[i] = ft_strjoin(env[i], ft_strjoin("=", value));
+				env[i] = ft_strjoin(env[i], ft_strjoin_no_free("=", value));
 			else
 				env[i] = ft_strjoin(env[i], value);
 		}
@@ -50,11 +50,10 @@ void	add_to_value(char *arg, char **env, int i, int ptr)
 // if it exists it updates the value of the variable
 // if it doesnt it simply adds it to the env arr 
 
-void	add_to_env(char *var, char **env)
+void	add_to_env(char *var, char **env, int b)
 {
 	int	i;
 	int	index;
-	int	b;
 	int	ptr;
 
 	index = -1;
@@ -84,7 +83,7 @@ void	add_to_env(char *var, char **env)
 int	check_arg_export(char *arg, int i, char **env)
 {
 	if (arg[i] == '=')
-		return (add_to_env(arg, env), 1);
+		return (add_to_env(arg, env, 0), 1);
 	else if (arg[i] == '+' && arg[i + 1] == '=')
 		return (add_to_value(arg, env, -1, 0), 1);
 	return (0);

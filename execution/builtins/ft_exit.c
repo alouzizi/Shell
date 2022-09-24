@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 08:16:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/15 02:00:54 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/24 08:22:58 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	ft_exit(char **cmd)
 {
 	int	status;
 
+	status = 1;
 	if (!cmd[1])
 		ft_putendl_fd("exit", 1);
 	else if (arg_isdigit(cmd[1]) && !cmd[2] && a_to_ull(cmd[1]) <= ULLONG_MAX)

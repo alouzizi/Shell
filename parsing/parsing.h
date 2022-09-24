@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:06:36 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/18 05:05:06 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/09/24 05:43:50 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ char	**transfer_list_to_2darray(t_node *node);
 int		creat_pipe(t_tree *root, char **env);
 char	*expand_$(char *s, int start, int lvl);
 char	*expand_$2(char *s, int start);
+
 #endif

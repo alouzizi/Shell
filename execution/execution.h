@@ -6,14 +6,14 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:29:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/20 22:45:02 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/24 06:12:27 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
-# define CNF "command not found: "
+# define CNF ": command not found"
 # define PRMPT_ERR "minishell: "
 # include "../minishell.h"
 
@@ -25,11 +25,12 @@ void				ft_echo(char **cmd);
 
 //env
 void				shlvl_handling(char **env, int i);
-void				ft_update_env(char **env);
+char				**ft_update_env(char **env);
 void				ft_env(char **env);
 
 //export
 char				**ft_arr_copy(char **arr);
+char				*ft_strjoin_no_free(char *s1, char const *s2);
 int					check_arg_export(char *arg, int i, char **env);
 int					arr_len(char **arr);
 int					ft_isalnum_export(int c);
@@ -40,7 +41,7 @@ void				sort_array_alphabetically(char **arr);
 void				add_var_to_env(char *var, char **env);
 void				add_to_value(char *arg, char **env, int i, int ptr);
 void				update_or_add_var(int b, int ptr, char *var, char **env);
-void				add_to_env(char *var, char **env);
+void				add_to_env(char *var, char **env, int b);
 void				add_variable(char *arg, char **env);
 void				add_to_export(char **env, char *cmd);
 void				sort_array_alphabetically(char **arr);

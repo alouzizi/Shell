@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 23:38:41 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/15 02:00:24 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/24 05:49:50 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,31 @@ int	check_var_name(char *arg)
 	return (1);
 }
 
-// self-explanatory
+// sort_array_alphabetically sorts alphabetically from the lowest ascii value
+// to the highest :)
 
-void	update_or_add_var(int b, int ptr, char *var, char **env)
+void	sort_array_alphabetically(char **arr)
 {
-	if (b)
-		env[ptr] = ft_strdup(var);
-	else
-		add_var_to_env(var, env);
+	int		i;
+	int		j;
+	char	*tmp;
+
+	i = 0;
+	while (arr[i])
+	{
+		j = i + 1;
+		while (arr[j])
+		{
+			if (ft_strcmp(arr[i], arr[j]) > 0)
+			{
+				tmp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
 // prints env arr value sorted with some extra stuff 

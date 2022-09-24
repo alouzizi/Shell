@@ -194,7 +194,6 @@ char *expand_$2(char *s, int i)
 	int j;
 	int start;
 	char *dollar;
-	char *str;
 
 	j = start = 0;
 	if (ft_isdigit(s[i + 1]) || (!ft_isalpha(s[i + 1]) && s[i + 1] != '_') )

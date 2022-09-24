@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 00:38:34 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/15 04:34:07 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/24 01:09:11 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,29 @@ void	shlvl_handling(char **env, int i)
 // of SHLVL, if it doesnt exist we add it
 // and set it to 1
 
-void	ft_update_env(char **env)
+char	**ft_update_env(char **env)
 {
-	int	i;
-	int	check;
+	int		i;
+	int		check;
+	char	**new_env;
 
 	check = 0;
 	i = -1;
-	while (env[++i])
+	new_env = ft_arr_copy(env);
+	while (new_env[++i])
 	{
-		if (!ft_strncmp("SHLVL=", env[i], ft_strlen("SHLVL=")))
+		if (!ft_strncmp("SHLVL=", new_env[i], ft_strlen("SHLVL=")))
 		{
 			check = 1;
-			shlvl_handling(env, i);
+			shlvl_handling(new_env, i);
 		}
 		else
-			env[i] = ft_strdup(env[i]);
+			new_env[i] = ft_strdup(new_env[i]);
 	}
 	if (!check)
-		env[i] = ft_strdup("SHLVL=1");
-	env[i + 1] = NULL;
+		new_env[i] = ft_strdup("SHLVL=1");
+	new_env[i + 1] = 0;
+	return (new_env);
 }
 
 // ft_env prints the variables that have value
