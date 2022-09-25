@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:29:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/24 23:53:05 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/25 05:39:52 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void				ft_export(char **cmd, char **env);
 
 //unset
 void				ft_unset(char **cmd, char **env);
+void				remove_from_env(char *cmd, char **env);
 
 //cd
 void				ft_cd(char **cmd, char **env);

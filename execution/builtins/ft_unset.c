@@ -6,38 +6,55 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 09:07:12 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/24 08:34:25 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/25 06:20:14 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
+// void	arr_free(char **arr)
+// {
+// 	int	i;
+
+// 	i = -1;
+// 	while (arr[++i])
+// 		free(arr[i]);
+// 	free(arr);
+// }
+
+// char	**my_realloc(char **env)
+// {
+// 	int		len;
+// 	char	**new_env;
+
+// 	len = arr_len(env);
+// }
+
 // remove_from_env removes a var from env
 // simply
 
-void	remove_from_env(char **cmd, char **env)
+void	remove_from_env(char *cmd, char **env)
 {
 	int	i;
-	int	j;
 
 	i = -1;
-	j = 1;
-	while (env[++i] && cmd[j])
-	{
-		if (!ft_strncmp(env[i], cmd[j], ft_strlen(cmd[j])))
-		{
+	while (env[++i])
+		if (!ft_strncmp(env[i], cmd, ft_strlen(cmd)))
 			env[i] = ft_strdup("");
-			j++;
-		}
-	}
 }
 
 // ft_unset with no args does nothing
 
 void	ft_unset(char **cmd, char **env)
 {
+	int	i;
+
+	i = 0;
 	if (!cmd[1])
 		return ;
 	else
-		remove_from_env(cmd, env);
+	{
+		while (cmd[++i])
+			remove_from_env(cmd[i], env);
+	}
 }

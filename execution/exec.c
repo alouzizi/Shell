@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:14:09 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/25 04:04:16 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/25 06:19:36 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ void	commands_execution(char **paths, char **cmd, char **env)
 		g_global.signal = 1;
 		waitpid(fd, &status, 0);
 	}
-	g_global.status = 127;
+	if (WIFEXITED(status))
+		g_global.status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		g_global.status = 128 + WTERMSIG(status);
 }
 
 // checks if its one of the cmds asked in the subject
