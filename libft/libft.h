@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 15:58:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/15 07:52:30 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/25 04:48:10 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct list
 {
 	struct list	*next;
 	char		*s;
-}t_node;
+}	t_node;
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);

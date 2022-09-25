@@ -12,6 +12,26 @@
 
 #include "parsing.h"
 
+void	operator_selection(t_tree *root, char **env)
+{
+	if (!builtincmp(root->s[0], "|"))
+		creat_pipe(root, env);
+	else if (!builtincmp(root->s[0], "||"))
+		puts("OR");
+	else if (!builtincmp(root->s[0], "&&"))
+		puts("AND");
+	else if (!builtincmp(root->s[0], ">>"))
+		puts("APPEND");
+	else if (!builtincmp(root->s[0], "<<"))
+		puts("HEREDOC");
+	else if (!builtincmp(root->s[0], ">"))
+		puts("REDIRECT OUTPUT");
+	else if (!builtincmp(root->s[0], "<"))
+		puts("REDIRECT INPUT");
+	else
+		execute(root->s, env);
+}
+
 void	tree(char *s, char **env)
 {
 	t_tree	*root;
@@ -103,20 +123,5 @@ void	tree(char *s, char **env)
 	}
 	if (!root || !root->s)
 		return ;
-	if (!builtincmp(root->s[0], "|"))
-		creat_pipe(root, env);
-	else if (!builtincmp(root->s[0], "||"))
-		puts("OR");
-	else if (!builtincmp(root->s[0], "&&"))
-		puts("AND");
-	else if (!builtincmp(root->s[0], ">>"))
-		puts("APPEND");
-	else if (!builtincmp(root->s[0], "<<"))
-		puts("HEREDOC");
-	else if (!builtincmp(root->s[0], ">"))
-		puts("REDIRECT OUTPUT");
-	else if (!builtincmp(root->s[0], "<"))
-		puts("REDIRECT INPUT");
-	else
-		execute(root->s, env);
+	operator_selection(root, env);
 }

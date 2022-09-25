@@ -34,8 +34,9 @@
 
 typedef struct s_data
 {
-	int	signal;
-	int	status;
+	int		signal;
+	int		status;
+	char	**n_env;
 }	t_data;
 
 t_data	g_global;

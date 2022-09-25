@@ -3,6 +3,7 @@ HEADER = minishell.h
 
 SRCS = main.c \
 	parsing/quotes.c \
+	parsing/dollar.c \
 	parsing/signal.c \
 	parsing/tree.c \
 	execution/builtins/export/ft_export.c \

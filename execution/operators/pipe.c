@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:15:24 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/22 04:56:49 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/25 04:03:26 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ int	creat_pipe(t_tree *root, char **env)
 {
 	int	*fd;
 	int	id;
+	int	status;
 
+	status = 0;
 	fd = malloc(sizeof(int) * 2);
 	if (pipe(fd) == -1)
 		perror("Pipe");
@@ -88,7 +90,8 @@ int	creat_pipe(t_tree *root, char **env)
 		pipe_right(fd, root, env);
 	close(fd[1]);
 	close(fd[0]);
-	waitpid(id, NULL, 0);
+	waitpid(id, &status, 0);
 	wait(0);
+	g_global.status = status % 256;
 	return (0);
 }

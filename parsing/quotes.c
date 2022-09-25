@@ -75,11 +75,10 @@ void	handle_quotes(t_node **cmd, char *s, char c, int *i)
 	while (s[*i] != c && s[*i])
 		(*i)++;
 	end = (*i) - 1;
-	printf("start = %c | %d\n", s[start], start);
 	if (s[*i] == '"')
 	{
 		node = create_node(NULL, 0, 0);
-		node->s = expand_$(s, start, 0);
+		node->s = expand_dollar(s, start, 0);
 	}
 	else
 		node = create_node(s, start, end);
@@ -109,7 +108,7 @@ t_node	*create_node(char *str, int start, int end)
 	if (!node)
 		exit(1);
 	node->next = NULL;
-	if(end != 0)
+	if (end != 0)
 	{
 		node->s = malloc(sizeof(char) * (end - start + 1));
 		if (!node->s)
@@ -162,68 +161,4 @@ int	check_quotes(char *s, int i, int j)
 		i++;
 	}
 	return (j);
-}
-
-
-char *expand_$(char *s, int start, int lvl)
-{
-	char *expand;
-	t_node *node;
-	char *dollar;
-	int j = 0;
-	int i = start;
-
-	node = malloc(sizeof(t_node));
-	while(( lvl == 1 || s[start] != '$') && s[start] != '"')
-		start++;
-	expand = malloc( start - i + 1);
-	while(i < start)
-		expand[j++] = s[i++];
-	expand[j] = '\0'; 
-	if (s[i] == '$')
-	{
-		dollar = expand_$2(s, i);
-		if (dollar)
-			expand = ft_strjoin(expand, dollar);
-	}
-	return(expand);
-}
-
-char *expand_$2(char *s, int i)
-{
-	int j;
-	int start;
-	char *dollar;
-
-	j = start = 0;
-	if (ft_isdigit(s[i + 1]) || (!ft_isalpha(s[i + 1]) && s[i + 1] != '_') )
-	{
-		if(ft_isdigit(s[i + 1]))
-			return (expand_$(s, i + 2, 0));
-		else
-			return(expand_$(s, i , 1));
-	}
-	else if (ft_isdigit(s[i + 1]) || ft_isalpha(s[i + 1]) || s[i + 1] == '_' )
-	{
-		++i;
-		while(ft_isdigit(s[i]) || ft_isalpha(s[i]) || s[i] == '_' )
-		{
-			start++;
-			i++;
-		}
-		dollar = malloc(start + 1);
-		i -= start;
-		while(start--)
-			dollar[j++] = s[i++];
-		dollar[j] = '\0';
-		dollar = getenv(dollar);
-	}
-	if(s[i] && s[i] != '"')
-	{
-		if(!dollar)
-			return(expand_$(s, i,0));
-		dollar = ft_strdup(dollar);
-		dollar = ft_strjoin(dollar,expand_$(s, i,0));
-	}
-	return (dollar);
 }

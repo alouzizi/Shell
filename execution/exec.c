@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:14:09 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/24 08:42:29 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/25 04:04:16 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	commands_execution(char **paths, char **cmd, char **env)
 		g_global.signal = 1;
 		waitpid(fd, &status, 0);
 	}
-	g_global.status = status % 256;
+	g_global.status = 127;
 }
 
 // checks if its one of the cmds asked in the subject
