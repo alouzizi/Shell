@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 00:38:34 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/24 01:09:11 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/26 05:29:33 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 // if its not a number or its negative we set its value to 0
 // if its higher than 999 it gets reseted to 1
 
-void	shlvl_handling(char **env, int i)
+void	shlvl_handling(int i)
 {
 	char	*tmp;
 	char	*s;
 	int		t;
 
 	tmp = ft_strdup("SHLVL=");
-	s = ft_strrchr(env[i], '=');
+	s = ft_strrchr(g_global.n_env[i], '=');
 	++s;
 	t = ft_atoi(s) + 1;
 	if (t < 0)
@@ -38,7 +38,7 @@ void	shlvl_handling(char **env, int i)
 		t = 1;
 	}
 	s = ft_itoa(t);
-	env[i] = ft_strjoin(tmp, s);
+	g_global.n_env[i] = ft_strjoin(tmp, s);
 }
 
 // ft_update_env takes the 3rd variable 
@@ -47,29 +47,27 @@ void	shlvl_handling(char **env, int i)
 // of SHLVL, if it doesnt exist we add it
 // and set it to 1
 
-char	**ft_update_env(char **env)
+void	ft_update_env(char **env)
 {
 	int		i;
 	int		check;
-	char	**new_env;
 
 	check = 0;
 	i = -1;
-	new_env = ft_arr_copy(env);
-	while (new_env[++i])
+	g_global.n_env = ft_arr_copy(env);
+	while (g_global.n_env[++i])
 	{
-		if (!ft_strncmp("SHLVL=", new_env[i], ft_strlen("SHLVL=")))
+		if (!ft_strncmp("SHLVL=", g_global.n_env[i], ft_strlen("SHLVL=")))
 		{
 			check = 1;
-			shlvl_handling(new_env, i);
+			shlvl_handling(i);
 		}
 		else
-			new_env[i] = ft_strdup(new_env[i]);
+			g_global.n_env[i] = ft_strdup(g_global.n_env[i]);
 	}
 	if (!check)
-		new_env[i] = ft_strdup("SHLVL=1");
-	new_env[i + 1] = 0;
-	return (new_env);
+		g_global.n_env[i] = ft_strdup("SHLVL=1");
+	g_global.n_env[i + 1] = 0;
 }
 
 // ft_env prints the variables that have value
@@ -78,13 +76,13 @@ char	**ft_update_env(char **env)
 // After executing "env" cmd we set exit status
 // value to 0
 
-void	ft_env(char **env)
+void	ft_env(void)
 {
 	int	i;
 
 	i = -1;
-	while (env[++i])
-		if (ft_strchr(env[i], '='))
-			ft_putendl_fd(env[i], 1);
+	while (g_global.n_env[++i])
+		if (ft_strchr(g_global.n_env[i], '='))
+			ft_putendl_fd(g_global.n_env[i], 1);
 	g_global.status = 0;
 }

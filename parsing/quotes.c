@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   qouts.c                                            :+:      :+:    :+:   */
+/*   qoutes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -108,12 +108,12 @@ t_node	*create_node(char *str, int start, int end)
 	if (!node)
 		exit(1);
 	node->next = NULL;
-		node->s = malloc(sizeof(char) * (end - start + 1));
-		if (!node->s)
-			exit(1);
-		while (start <= end)
-			node->s[i++] = str[start++];
-		node->s[i] = 0;
+	node->s = malloc(sizeof(char) * (end - start + 1));
+	if (!node->s)
+		exit(1);
+	while (start <= end)
+		node->s[i++] = str[start++];
+	node->s[i] = 0;
 	return (node);
 }
 

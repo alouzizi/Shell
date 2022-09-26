@@ -6,13 +6,13 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 15:04:14 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/25 06:15:31 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/26 05:26:22 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	prompt_display(char **env)
+void	prompt_display(void)
 {
 	char	*s;
 
@@ -27,10 +27,11 @@ void	prompt_display(char **env)
 			exit (0);
 		}
 		if (!check_quotes(s, 0, 0))
-			tree(s, env);
+			tree(s);
 		else
 		{
 			g_global.status = 1;
+			g_global.signal = 1;
 			ft_putendl_fd("Syntax Error : Check Quotes!", 2);
 		}
 	}
@@ -38,11 +39,9 @@ void	prompt_display(char **env)
 
 int	main(int ac, char **av, char **env)
 {
-	char	**new_env;
-
 	if (ac != 1 || av[1])
 		return (1);
-	new_env = ft_update_env(env);
+	ft_update_env(env);
 	signals_handling();
-	prompt_display(new_env);
+	prompt_display();
 }

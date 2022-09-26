@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 22:44:12 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/20 22:44:30 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/26 05:45:12 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 // get_path join the cmd with the path in PATH in env arr
 // i. e. /bin/ls
 
-char	**get_path(char *s, char **env)
+char	**get_path(char *s)
 {
 	int		i;
 	char	**paths;
 
-	paths = ft_split(get_env("PATH=", env), ':');
+	paths = ft_split(get_env("PATH="), ':');
 	if (!paths)
 		return (NULL);
 	i = -1;

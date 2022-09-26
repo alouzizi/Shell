@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:15:24 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/25 04:03:26 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/26 05:44:05 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,51 +28,51 @@ void	dup_function(int *fd, int index)
 	}
 }
 
-void	execute_pipe(char **arr, char **env)
+void	execute_pipe(char **arr)
 {
 	char	**paths;
 	char	*path;
 
-	paths = get_path(arr[0], env);
+	paths = get_path(arr[0]);
 	path = check_access(paths);
-	if (path)
-		if (execve(path, arr, env))
-			print_cnf_error(arr[0]);
+	if (!path)
+		print_cnf_error(arr[0]);
+	execve(path, arr, g_global.n_env);
 }
 
-void	pipe_cmd_exec(t_tree *root, char **env, int index)
+void	pipe_cmd_exec(t_tree *root, int index)
 {
 	if (!index)
 	{
-		if (isbuiltin(root->right->s, env))
+		if (isbuiltin(root->right->s))
 			exit(0);
-		execute_pipe(root->right->s, env);
+		execute_pipe(root->right->s);
 	}
 	else
-		execute_pipe(root->left->s, env);
+		execute_pipe(root->left->s);
 }
 
-void	pipe_right(int *fd, t_tree *root, char **env)
+void	pipe_right(int *fd, t_tree *root)
 {
 	dup_function(fd, 0);
 	if (root->right->s[0][0] == '|')
 	{
-		creat_pipe(root->right, env);
+		creat_pipe(root->right);
 		exit(0);
 	}
 	else
-		pipe_cmd_exec(root, env, 0);
+		pipe_cmd_exec(root, 0);
 }
 
-void	pipe_left(int *fd, t_tree *root, char **env)
+void	pipe_left(int *fd, t_tree *root)
 {
 	dup_function(fd, 1);
-	if (isbuiltin(root->left->s, env))
+	if (isbuiltin(root->left->s))
 		exit(0);
-	pipe_cmd_exec(root, env, 1);
+	pipe_cmd_exec(root, 1);
 }
 
-int	creat_pipe(t_tree *root, char **env)
+int	creat_pipe(t_tree *root)
 {
 	int	*fd;
 	int	id;
@@ -84,10 +84,10 @@ int	creat_pipe(t_tree *root, char **env)
 		perror("Pipe");
 	id = fork();
 	if (!id)
-		pipe_left(fd, root, env);
+		pipe_left(fd, root);
 	id = fork();
 	if (!id)
-		pipe_right(fd, root, env);
+		pipe_right(fd, root);
 	close(fd[1]);
 	close(fd[0]);
 	waitpid(id, &status, 0);

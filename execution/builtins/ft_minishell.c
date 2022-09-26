@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 14:33:00 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/15 02:00:57 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/26 05:31:41 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // with this you can just type 'minishell'
 // it will be counted as a cmd
 
-void	ft_minishell(char **cmd, char **env)
+void	ft_minishell(char **cmd)
 {
 	int		pid;
 	int		status;
@@ -23,7 +23,7 @@ void	ft_minishell(char **cmd, char **env)
 	pid = fork();
 	if (!pid)
 	{
-		execve("minishell", cmd, env);
+		execve("minishell", cmd, g_global.n_env);
 		exit (0);
 	}
 	else

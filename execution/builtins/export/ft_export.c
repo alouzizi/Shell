@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:36:25 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/24 06:25:58 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/26 05:42:47 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,22 @@
 // to the the already existing variable in the end,
 // in case the variable isnt in the array it adds it
 
-void	add_to_value(char *arg, char **env, int i, int ptr)
+void	add_to_value(char *arg, int i, int ptr)
 {
 	int		index;
 	char	*value;
 
 	index = has_value(arg, &ptr);
 	value = ft_strchr(arg, '=') + 1;
-	while (env[++i])
+	while (g_global.n_env[++i])
 	{
-		if (!ft_strncmp(arg, env[i], index - 1) && ptr == -1)
+		if (!ft_strncmp(arg, g_global.n_env[i], index - 1) && ptr == -1)
 		{
 			ptr = 1;
-			if (value && !ft_strchr(env[i], '='))
-				env[i] = ft_strjoin(env[i], ft_strjoin_no_free("=", value));
+			if (value && !ft_strchr(g_global.n_env[i], '='))
+				g_global.n_env[i] = ft_strjoin(g_global.n_env[i], ft_strjoin_no_free("=", value));
 			else
-				env[i] = ft_strjoin(env[i], value);
+				g_global.n_env[i] = ft_strjoin(g_global.n_env[i], value);
 		}
 	}
 	i = index - 2;
@@ -41,7 +41,7 @@ void	add_to_value(char *arg, char **env, int i, int ptr)
 	{
 		arg = ft_strjoin(ft_substr(arg, 0, i + 1), \
 			ft_strjoin(ft_strdup("="), value));
-		add_var_to_env(arg, env);
+		add_var_to_env(arg);
 	}
 }
 
@@ -50,7 +50,7 @@ void	add_to_value(char *arg, char **env, int i, int ptr)
 // if it exists it updates the value of the variable
 // if it doesnt it simply adds it to the env arr 
 
-void	add_to_env(char *var, char **env, int b)
+void	add_to_env(char *var, int b)
 {
 	int	i;
 	int	index;
@@ -66,26 +66,26 @@ void	add_to_env(char *var, char **env, int b)
 		}
 	}
 	i = -1;
-	while (env[++i])
+	while (g_global.n_env[++i])
 	{
-		if (!ft_strncmp(var, env[i], index))
+		if (!ft_strncmp(var, g_global.n_env[i], index))
 		{
 			b = 1;
 			ptr = i;
 		}
 	}
-	update_or_add_var(b, ptr, var, env);
+	update_or_add_var(b, ptr, var);
 }
 
 // check_arg_export checks whether to add to a variable
 // already existing or add one simply
 
-int	check_arg_export(char *arg, int i, char **env)
+int	check_arg_export(char *arg, int i)
 {
 	if (arg[i] == '=')
-		return (add_to_env(arg, env, 0), 1);
+		return (add_to_env(arg, 0), 1);
 	else if (arg[i] == '+' && arg[i + 1] == '=')
-		return (add_to_value(arg, env, -1, 0), 1);
+		return (add_to_value(arg, -1, 0), 1);
 	return (0);
 }
 
@@ -96,7 +96,7 @@ int	check_arg_export(char *arg, int i, char **env)
 // with '_' included
 // in case of error it exits with specified error
 
-void	add_to_export(char **env, char *arg)
+void	add_to_export(char *arg)
 {
 	int	i;
 	int	check;
@@ -112,13 +112,13 @@ void	add_to_export(char **env, char *arg)
 	if (check_var_name(arg))
 	{
 		check = 1;
-		add_variable(arg, env);
+		add_variable(arg);
 		return ;
 	}
 	while (arg[i] && arg[i] != '=' && arg[i] != '+')
 	{
 		i++;
-		check = check_arg_export(arg, i, env);
+		check = check_arg_export(arg, i);
 	}
 	if (!check)
 		print_export_error(arg);
@@ -128,7 +128,7 @@ void	add_to_export(char **env, char *arg)
 // alphabetically else checks the arg and adds it to
 // the env array
 
-void	ft_export(char **cmd, char **env)
+void	ft_export(char **cmd)
 {
 	char	**copy;
 	int		i;
@@ -136,10 +136,11 @@ void	ft_export(char **cmd, char **env)
 	i = 0;
 	if (!cmd[1])
 	{
-		copy = ft_arr_copy(env);
+		copy = ft_arr_copy(g_global.n_env);
 		print_export(copy);
+		// free_arr(copy);
 	}
 	else
 		while (cmd[++i])
-			add_to_export(env, cmd[i]);
+			add_to_export(cmd[i]);
 }
