@@ -77,7 +77,7 @@ void	handle_quotes(t_node **cmd, char *s, char c, int *i)
 	end = (*i) - 1;
 	if (s[*i] == '"')
 	{
-		node = create_node(NULL, 0, 0);
+		node = ft_lstnew(NULL);
 		node->s = expand_dollar(s, start, 0);
 	}
 	else
@@ -108,15 +108,12 @@ t_node	*create_node(char *str, int start, int end)
 	if (!node)
 		exit(1);
 	node->next = NULL;
-	if (end != 0)
-	{
 		node->s = malloc(sizeof(char) * (end - start + 1));
 		if (!node->s)
 			exit(1);
 		while (start <= end)
 			node->s[i++] = str[start++];
 		node->s[i] = 0;
-	}
 	return (node);
 }
 
