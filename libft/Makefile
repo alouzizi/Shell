@@ -46,7 +46,8 @@ SRCS =	ft_atoi.c\
 		ft_substr.c\
 		ft_lstlast.c\
 		ft_lstadd_back.c\
-		ft_lstsize.c
+		ft_lstsize.c \
+		ft_lstnew.c
 
 OBJS = $(SRCS:.c=.o)
 CFLAGS = -Wall -Werror -Wextra

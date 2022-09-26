@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 09:07:12 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/25 06:20:14 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/26 05:32:23 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,19 @@
 // remove_from_env removes a var from env
 // simply
 
-void	remove_from_env(char *cmd, char **env)
+void	remove_from_env(char *cmd)
 {
 	int	i;
 
 	i = -1;
-	while (env[++i])
-		if (!ft_strncmp(env[i], cmd, ft_strlen(cmd)))
-			env[i] = ft_strdup("");
+	while (g_global.n_env[++i])
+		if (!ft_strncmp(g_global.n_env[i], cmd, ft_strlen(cmd)))
+			g_global.n_env[i] = ft_strdup("");
 }
 
 // ft_unset with no args does nothing
 
-void	ft_unset(char **cmd, char **env)
+void	ft_unset(char **cmd)
 {
 	int	i;
 
@@ -55,6 +55,6 @@ void	ft_unset(char **cmd, char **env)
 	else
 	{
 		while (cmd[++i])
-			remove_from_env(cmd[i], env);
+			remove_from_env(cmd[i]);
 	}
 }

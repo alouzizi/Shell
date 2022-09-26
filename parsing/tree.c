@@ -12,10 +12,10 @@
 
 #include "parsing.h"
 
-void	operator_selection(t_tree *root, char **env)
+void	operator_selection(t_tree *root)
 {
 	if (!builtincmp(root->s[0], "|"))
-		creat_pipe(root, env);
+		creat_pipe(root);
 	else if (!builtincmp(root->s[0], "||"))
 		puts("OR");
 	else if (!builtincmp(root->s[0], "&&"))
@@ -29,10 +29,10 @@ void	operator_selection(t_tree *root, char **env)
 	else if (!builtincmp(root->s[0], "<"))
 		puts("REDIRECT INPUT");
 	else
-		execute(root->s, env);
+		execute(root->s);
 }
 
-void	tree(char *s, char **env)
+void	tree(char *s)
 {
 	t_tree	*root;
 	t_tree	*temp;
@@ -81,7 +81,7 @@ void	tree(char *s, char **env)
 		{
 			if ((j != 1 && s[i] == '|') || (j == 1 && str[0] == NULL))
 			{
-				ft_putendl_fd("Syntax Error\n", 2);
+				ft_putendl_fd("Syntax Error", 2);
 				return ;
 			}
 			temp->s = malloc(sizeof(char *));
@@ -89,7 +89,7 @@ void	tree(char *s, char **env)
 			{
 				if (s[i] != s[i + 1])
 				{
-					ft_putendl_fd("Syntax Error\n", 2);
+					ft_putendl_fd("Syntax Error", 2);
 					return ;
 				}
 				temp->s[0] = data(2, s[i], s[i + 1]);
@@ -108,7 +108,7 @@ void	tree(char *s, char **env)
 				temp->right = newtree(NULL);
 			else
 			{
-				ft_putendl_fd("Syntax Error\n", 2);
+				ft_putendl_fd("Syntax Error", 2);
 				return ;
 			}
 			temp = temp->right;
@@ -123,5 +123,5 @@ void	tree(char *s, char **env)
 	}
 	if (!root || !root->s)
 		return ;
-	operator_selection(root, env);
+	operator_selection(root);
 }

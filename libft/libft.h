@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 15:58:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/25 04:48:10 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/26 03:29:07 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 t_node	*ft_lstlast(t_node *lst);
 int		ft_lstsize(t_node *lst);
 void	ft_lstadd_back(t_node **lst, t_node *new);
+t_node	*ft_lstnew(char *content);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:14:09 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/25 06:19:36 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/26 05:45:46 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,11 @@ void	print_cnf_error(char *cmd)
 	ft_putstr_fd(PRMPT_ERR, 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putendl_fd(CNF, 2);
-	exit(127);
+	g_global.status = 127;
+	exit(g_global.status);
 }
 
-void	commands_execution(char **paths, char **cmd, char **env)
+void	commands_execution(char **paths, char **cmd)
 {
 	char	*path;
 	int		fd;
@@ -55,7 +56,7 @@ void	commands_execution(char **paths, char **cmd, char **env)
 	fd = fork();
 	if (!fd)
 	{
-		if (execve(path, cmd, env))
+		if (execve(path, cmd, g_global.n_env))
 			print_cnf_error(cmd[0]);
 	}
 	else
@@ -72,7 +73,7 @@ void	commands_execution(char **paths, char **cmd, char **env)
 // checks if its one of the cmds asked in the subject
 // and executes it or else executes it with execve func
 
-int	isbuiltin(char **cmd, char **env)
+int	isbuiltin(char **cmd)
 {
 	if (!cmd[0])
 		return (1);
@@ -81,29 +82,29 @@ int	isbuiltin(char **cmd, char **env)
 	else if (!builtincmp(cmd[0], "echo"))
 		return (ft_echo(cmd), 1);
 	else if (!builtincmp(cmd[0], "env"))
-		return (ft_env(env), 1);
+		return (ft_env(), 1);
 	else if (!builtincmp(cmd[0], "export"))
-		return (ft_export(cmd, env), 1);
+		return (ft_export(cmd), 1);
 	else if (!builtincmp(cmd[0], "unset"))
-		return (ft_unset(cmd, env), 1);
+		return (ft_unset(cmd), 1);
 	else if (!builtincmp(cmd[0], "cd"))
-		return (ft_cd(cmd, env), 1);
+		return (ft_cd(cmd), 1);
 	else if (!builtincmp(cmd[0], "exit"))
 		return (ft_exit(cmd), 1);
 	else
 		return (0);
 }
 
-void	execute(char **s, char **env)
+void	execute(char **s)
 {
 	char	**paths;
 
-	if (!isbuiltin(s, env))
+	if (!isbuiltin(s))
 	{
 		if (s[0][0] == '/' || s[0][0] == '.')
 			paths = s;
 		else
-			paths = get_path(s[0], env);
+			paths = get_path(s[0]);
 		if (!paths)
 		{
 			ft_putstr_fd(PRMPT_ERR, 2);
@@ -111,6 +112,6 @@ void	execute(char **s, char **env)
 			ft_putendl_fd(CNF, 2);
 			return ;
 		}
-		commands_execution(paths, s, env);
+		commands_execution(paths, s);
 	}
 }

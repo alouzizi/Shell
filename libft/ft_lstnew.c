@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_minishell.c                                     :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/15 14:33:00 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/26 05:31:41 by ooumlil          ###   ########.fr       */
+/*   Created: 2022/09/26 03:09:55 by alouzizi          #+#    #+#             */
+/*   Updated: 2022/09/26 03:29:34 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../execution.h"
+#include "libft.h"
 
-// with this you can just type 'minishell'
-// it will be counted as a cmd
-
-void	ft_minishell(char **cmd)
+t_node	*ft_lstnew(char *content)
 {
-	int		pid;
-	int		status;
+	t_node	*s;
 
-	pid = fork();
-	if (!pid)
-	{
-		execve("minishell", cmd, g_global.n_env);
-		exit (0);
-	}
-	else
-	{
-		g_global.signal = 0;
-		waitpid(pid, &status, 0);
-	}
-	g_global.status = status;
+	s = (t_node *)malloc(sizeof(*s));
+	if (!s)
+		return (NULL);
+	s -> s = content;
+	s -> next = NULL;
+	return (s);
 }
