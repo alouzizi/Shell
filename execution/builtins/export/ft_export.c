@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:36:25 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/26 05:42:47 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/26 07:55:27 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,6 @@ void	ft_export(char **cmd)
 	{
 		copy = ft_arr_copy(g_global.n_env);
 		print_export(copy);
-		// free_arr(copy);
 	}
 	else
 		while (cmd[++i])

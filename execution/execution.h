@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:29:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/26 05:41:05 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/26 07:58:55 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void				remove_from_env(char *cmd);
 
 //cd
 void				ft_cd(char **cmd);
+void				cd_error_printing(char *arg);
 char				*get_env(char *str);
 
 //exit

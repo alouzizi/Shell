@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:52:24 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/26 05:31:11 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/26 07:59:44 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,15 @@ char	*get_env(char *str)
 	return (NULL);
 }
 
+// cd error printing
+
+void	cd_error_printing(char *arg)
+{
+	ft_putstr_fd("minishell: cd: ", 2);
+	perror(arg);
+	g_global.status = 1;
+}
+
 // ft_cd changes the current directory to the one in the argument
 // if it got no arguments it goes directly the value in HOME env var
 
@@ -48,19 +57,11 @@ void	ft_cd(char **cmd)
 	if (!cmd[1])
 	{
 		if (chdir(home))
-		{
-			ft_putstr_fd("minishell: cd: ", 2);
-			perror(home);
-			g_global.status = 1;
-		}
+			cd_error_printing(home);
 	}
 	else
 	{
 		if (chdir(cmd[1]))
-		{
-			ft_putstr_fd("minishell: cd: ", 2);
-			perror(cmd[1]);
-			g_global.status = 1;
-		}
+			cd_error_printing(cmd[1]);
 	}
 }
