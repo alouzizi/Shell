@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:50:14 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/20 00:17:19 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/27 06:16:25 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ctl_c(int signum)
 {
-	if (signum == SIGINT && !g_global.signal)
+	if (signum == SIGINT && !g_global.signal && !g_global.is_child)
 	{
 		ft_putstr_fd("\n", 1);
 		rl_on_new_line();
@@ -22,7 +22,12 @@ void	ctl_c(int signum)
 		rl_redisplay();
 		g_global.status = 1;
 	}
-	else if (signum == SIGINT && g_global.signal == 1)
+	else if (signum == SIGINT && !g_global.signal && g_global.is_child == 1)
+	{
+		ft_putstr_fd("\n", 1);
+		g_global.signal = 1;
+	}
+	else if (signum == SIGINT && g_global.signal)
 	{
 		ft_putstr_fd("\n", 1);
 		rl_replace_line("", 0);
@@ -34,8 +39,7 @@ void	ctl_c(int signum)
 
 void	sig_quit(int signum)
 {
-	ft_putstr_fd("", 1);
-	if (signum == SIGQUIT && g_global.signal == 1)
+	if (signum == SIGQUIT && g_global.signal)
 	{
 		ft_putendl_fd("Quit: 3", 1);
 		rl_replace_line("", 0);

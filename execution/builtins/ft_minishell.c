@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 14:33:00 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/26 05:31:41 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/27 06:18:37 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,9 @@ void	ft_minishell(char **cmd)
 	int		status;
 
 	pid = fork();
+	status = 0;
 	if (!pid)
-	{
 		execve("minishell", cmd, g_global.n_env);
-		exit (0);
-	}
 	else
 	{
 		g_global.signal = 0;

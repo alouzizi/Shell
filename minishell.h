@@ -36,6 +36,7 @@ typedef struct s_data
 {
 	int		signal;
 	int		status;
+	int		is_child;
 	char	**n_env;
 }	t_data;
 

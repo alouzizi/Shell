@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 23:38:41 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/26 05:40:06 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/27 01:14:56 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,15 @@ int	check_var_name(char *arg)
 // sort_array_alphabetically sorts alphabetically from the lowest ascii value
 // to the highest :)
 
-void	sort_array_alphabetically(char **arr)
+void	sort_array_alphabetically(char **arr, int i, int j)
 {
-	int		i;
-	int		j;
 	char	*tmp;
 
 	i = 0;
-	while (arr[i] && arr[i][0] != '\0')
+	while (arr[i])
 	{
 		j = i + 1;
-		while (arr[j] && arr[j][0] != '\0')
+		while (arr[j])
 		{
 			if (ft_strcmp(arr[i], arr[j]) > 0)
 			{
@@ -78,15 +76,11 @@ void	sort_array_alphabetically(char **arr)
 
 // prints env arr value sorted with some extra stuff 
 
-void	print_export(char **copy)
+void	print_export(char **copy, int i, int j)
 {
-	int	i;
-	int	j;
 	int	n;
 
-	i = 0;
-	sort_array_alphabetically(copy);
-	while (copy[++i] && copy[i][0] != '\0')
+	while (copy[++i])
 	{
 		j = 0;
 		n = 0;

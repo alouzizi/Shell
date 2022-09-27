@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:14:09 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/26 05:45:46 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/27 07:17:57 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,17 @@ void	print_cnf_error(char *cmd)
 	ft_putstr_fd(cmd, 2);
 	ft_putendl_fd(CNF, 2);
 	g_global.status = 127;
-	exit(g_global.status);
 }
 
-void	commands_execution(char **paths, char **cmd)
+void	exit_status(int status)
+{
+	if (WIFEXITED(status))
+		g_global.status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		g_global.status = 128 + WTERMSIG(status);
+}
+
+int	commands_execution(char **paths, char **cmd)
 {
 	char	*path;
 	int		fd;
@@ -53,6 +60,11 @@ void	commands_execution(char **paths, char **cmd)
 
 	status = 0;
 	path = check_access(paths);
+	if (!path)
+	{
+		print_cnf_error(cmd[0]);
+		return (127);
+	}
 	fd = fork();
 	if (!fd)
 	{
@@ -64,10 +76,8 @@ void	commands_execution(char **paths, char **cmd)
 		g_global.signal = 1;
 		waitpid(fd, &status, 0);
 	}
-	if (WIFEXITED(status))
-		g_global.status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		g_global.status = 128 + WTERMSIG(status);
+	exit_status(status);
+	return (0);
 }
 
 // checks if its one of the cmds asked in the subject
@@ -95,23 +105,25 @@ int	isbuiltin(char **cmd)
 		return (0);
 }
 
-void	execute(char **s)
+int	execute(char **s)
 {
 	char	**paths;
 
-	if (!isbuiltin(s))
+	if (isbuiltin(s))
+		return (0);
+	if (s[0][0] == '/' || s[0][0] == '.')
+		paths = s;
+	else
+		paths = get_path(s[0]);
+	if (!paths)
 	{
-		if (s[0][0] == '/' || s[0][0] == '.')
-			paths = s;
-		else
-			paths = get_path(s[0]);
-		if (!paths)
-		{
-			ft_putstr_fd(PRMPT_ERR, 2);
-			ft_putstr_fd(s[0], 2);
-			ft_putendl_fd(CNF, 2);
-			return ;
-		}
-		commands_execution(paths, s);
+		ft_putstr_fd(PRMPT_ERR, 2);
+		ft_putstr_fd(s[0], 2);
+		ft_putendl_fd(CNF, 2);
+		g_global.status = 127;
+		return (127);
 	}
+	if (commands_execution(paths, s))
+		return (127);
+	return (0);
 }

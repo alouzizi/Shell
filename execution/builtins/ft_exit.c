@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 08:16:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/24 08:22:58 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/27 06:15:24 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	arg_isdigit(char *s)
 	i = -1;
 	while (s[++i])
 	{
-		if (s[i] >= '0' || s[i] <= '9')
-			return (1);
+		if (s[i] < '0' || s[i] > '9')
+			return (0);
 	}
-	return (0);
+	return (1);
 }
 
 // turns ascii to unsigned long long
@@ -69,28 +69,28 @@ void	ft_putstr_fd_2(char *s1, char *s2, char *s3, int fd)
 
 void	ft_exit(char **cmd)
 {
-	int	status;
-
-	status = 1;
+	g_global.status = 0;
 	if (!cmd[1])
-		ft_putendl_fd("exit", 1);
-	else if (arg_isdigit(cmd[1]) && !cmd[2] && a_to_ull(cmd[1]) <= ULLONG_MAX)
 	{
 		ft_putendl_fd("exit", 1);
-		status = (a_to_ull(cmd[1]) % 256);
+		exit(g_global.status);
 	}
-	else if (!cmd[2])
+	if (arg_isdigit(cmd[1]) && !cmd[2] && a_to_ull(cmd[1]) <= ULLONG_MAX)
+	{
+		ft_putendl_fd("exit", 1);
+		g_global.status = (a_to_ull(cmd[1]) % 256);
+	}
+	else if (!arg_isdigit(cmd[1]))
 	{
 		ft_putendl_fd("exit", 2);
 		ft_putstr_fd_2("minishell: exit: ", cmd[1], \
 		": numeric argument required\n", 2);
-		status = 255;
+		g_global.status = 255;
 	}
 	else
 	{
 		ft_putendl_fd("exit\nminishell: exit: too many arguments", 2);
-		status = 1;
+		g_global.status = 1;
 	}
-	g_global.status = status;
-	exit (status);
+	exit(g_global.status);
 }

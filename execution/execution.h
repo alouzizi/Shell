@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:29:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/26 07:58:55 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/27 07:11:00 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,19 @@ int					ft_isalnum_export(int c);
 int					check_var_name(char *arg);
 int					has_value(char *arg, int *ptr);
 void				print_export_error(char *arg);
-void				sort_array_alphabetically(char **arr);
+void				sort_array_alphabetically(char **arr, int i, int j);
 void				add_var_to_env(char *var);
 void				add_to_value(char *arg, int i, int ptr);
 void				update_or_add_var(int b, int ptr, char *var);
 void				add_to_env(char *var, int b);
 void				add_variable(char *arg);
 void				add_to_export(char *cmd);
-void				sort_array_alphabetically(char **arr);
-void				print_export(char **arr);
+void				print_export(char **arr, int i, int j);
 void				ft_export(char **cmd);
 
 //unset
 void				ft_unset(char **cmd);
+void				free_array(char **arr);
 void				remove_from_env(char *cmd);
 
 //cd
@@ -71,8 +71,8 @@ char				**get_path(char *s);
 char				*check_access(char	**paths);
 int					builtincmp(char *s1, char *s2);
 int					isbuiltin(char **cmd);
+int					execute(char **s);
 void				print_cnf_error(char *cmd);
-void				execute(char **s);
-void				commands_execution(char **paths, char **cmd);
+int					commands_execution(char **paths, char **cmd);
 
 #endif

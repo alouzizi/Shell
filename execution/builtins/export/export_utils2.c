@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:20:03 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/24 05:42:13 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/27 02:33:10 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@ int	has_value(char *arg, int *ptr)
 	return (index);
 }
 
+// self-explanatory
+
+void	update_or_add_var(int b, int ptr, char *var)
+{
+	if (b)
+		g_global.n_env[ptr] = ft_strdup(var);
+	else
+		add_var_to_env(var);
+}
+
 // should i even explain
 
 int	arr_len(char **arr)
@@ -37,26 +47,6 @@ int	arr_len(char **arr)
 	while (arr[i])
 		i++;
 	return (i);
-}
-
-// ft_arr_copy copies an array in another one CTL^C CTL^V :)
-
-char	**ft_arr_copy(char **arr)
-{
-	char	**copy;
-	int		i;
-
-	i = 0;
-	copy = (char **)malloc(sizeof(char *) * arr_len(arr) + 1);
-	if (!copy)
-		return (NULL);
-	while (arr[i])
-	{
-		copy[i] = ft_strdup(arr[i]);
-		i++;
-	}
-	copy[i] = 0;
-	return (copy);
 }
 
 char	*ft_strjoin_no_free(char *s1, char const *s2)
