@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 23:38:41 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/27 01:14:56 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/28 22:06:43 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ void	print_export(char **copy, int i, int j)
 	{
 		j = 0;
 		n = 0;
-		ft_putstr_fd("declare -x ", 1);
+		if (copy[i][0] != '\0')
+			ft_putstr_fd("declare -x ", 1);
 		while (copy[i][j])
 		{
 			ft_putchar_fd(copy[i][j], 1);
@@ -97,6 +98,7 @@ void	print_export(char **copy, int i, int j)
 				ft_putchar_fd('\"', 1);
 			j++;
 		}
-		ft_putchar_fd('\n', 1);
+		if (copy[i][0] != '\0')
+			ft_putchar_fd('\n', 1);
 	}
 }

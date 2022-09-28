@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:50:14 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/27 06:16:25 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/28 20:12:57 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ void	sig_quit(int signum)
 		ft_putendl_fd("Quit: 3", 1);
 		rl_replace_line("", 0);
 		rl_redisplay();
+		g_global.status = 131;
+	}
+	else if (signum == SIGQUIT && !g_global.signal && g_global.is_child == 1)
+	{
+		ft_putendl_fd("Quit: 3", 1);
 		g_global.status = 131;
 	}
 	else if (signum == SIGQUIT && !g_global.signal)

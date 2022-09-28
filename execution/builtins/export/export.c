@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:11:06 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/27 03:19:28 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/28 22:00:21 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,19 @@ char	**ft_arr_copy(char **arr)
 	return (copy);
 }
 
+void	copy_to_env(char **arr)
+{
+	int		i;
+
+	i = 0;
+	while (arr[i])
+	{
+		g_global.n_env[i] = ft_strdup(arr[i]);
+		i++;
+	}
+	g_global.n_env[i] = 0;
+}
+
 // directly adds the var to the env arr
 
 void	add_var_to_env(char *var)
@@ -41,9 +54,9 @@ void	add_var_to_env(char *var)
 
 	arr_size = arr_len(g_global.n_env);
 	copy = ft_arr_copy(g_global.n_env);
-	free_array(g_global.n_env);
-	g_global.n_env = (char **)malloc(sizeof(char *) * (arr_size + 2));
-	g_global.n_env = ft_arr_copy(copy);
+	// free_array(g_global.n_env);
+	g_global.n_env = (char **)malloc(sizeof(char *) * (arr_size + 1));
+	copy_to_env(copy);
 	g_global.n_env[arr_size] = ft_strdup(var);
 	g_global.n_env[arr_size + 1] = 0;
 	free_array(copy);
@@ -53,7 +66,7 @@ void	add_var_to_env(char *var)
 // In case of its existence, its ignored. If it isnt in the env
 // arr its added
 
-void	add_variable(char *arg)
+int	add_variable(char *arg)
 {
 	int	i;
 
@@ -61,7 +74,8 @@ void	add_variable(char *arg)
 	while (g_global.n_env[++i])
 	{
 		if (!ft_strncmp(arg, g_global.n_env[i], ft_strlen(arg)))
-			return ;
+			return (1);
 	}
 	add_var_to_env(arg);
+	return (0);
 }

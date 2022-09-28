@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:36:25 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/27 01:26:57 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/28 03:58:28 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	add_to_value(char *arg, int i, int ptr)
 // if it exists it updates the value of the variable
 // if it doesnt it simply adds it to the env arr 
 
-void	add_to_env(char *var, int b)
+int	add_to_env(char *var, int b)
 {
 	int	i;
 	int	index;
@@ -60,10 +60,7 @@ void	add_to_env(char *var, int b)
 	while (var[++index] != '=')
 	{
 		if (!ft_isalnum_export(var[index]))
-		{
-			print_export_error(var);
-			return ;
-		}
+			return (print_export_error(var), 1);
 	}
 	i = -1;
 	while (g_global.n_env[++i])
@@ -75,6 +72,7 @@ void	add_to_env(char *var, int b)
 		}
 	}
 	update_or_add_var(b, ptr, var);
+	return (0);
 }
 
 // check_arg_export checks whether to add to a variable
@@ -96,24 +94,20 @@ int	check_arg_export(char *arg, int i)
 // with '_' included
 // in case of error it exits with specified error
 
-void	add_to_export(char *arg)
+int	add_to_export(char *arg)
 {
 	int	i;
 	int	check;
 
 	i = 0;
 	if (arg[i] == '_' && arg[i + 1] == '=')
-		return ;
+		return (0);
 	if (!ft_isalpha(arg[0]))
-	{
-		print_export_error(arg);
-		return ;
-	}
+		return (print_export_error(arg), 1);
 	if (check_var_name(arg))
 	{
 		check = 1;
-		add_variable(arg);
-		return ;
+		return (add_variable(arg), 0);
 	}
 	while (arg[i] && arg[i] != '=' && arg[i] != '+')
 	{
@@ -121,7 +115,8 @@ void	add_to_export(char *arg)
 		check = check_arg_export(arg, i);
 	}
 	if (!check)
-		print_export_error(arg);
+		return (print_export_error(arg), 1);
+	return (0);
 }
 
 // ft_export with no args prints the env vars sorted

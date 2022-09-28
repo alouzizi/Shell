@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 08:16:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/27 06:15:24 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/27 20:32:53 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft_putstr_fd_2(char *s1, char *s2, char *s3, int fd)
 {
 	ft_putstr_fd(s1, fd);
 	ft_putstr_fd(s2, fd);
-	ft_putstr_fd(s3, fd);
+	ft_putendl_fd(s3, fd);
 }
 
 // exits the program with a specified exit number
@@ -84,7 +84,7 @@ void	ft_exit(char **cmd)
 	{
 		ft_putendl_fd("exit", 2);
 		ft_putstr_fd_2("minishell: exit: ", cmd[1], \
-		": numeric argument required\n", 2);
+		": numeric argument required", 2);
 		g_global.status = 255;
 	}
 	else

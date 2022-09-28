@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 14:33:00 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/27 06:18:37 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/27 20:38:15 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	ft_minishell(char **cmd)
 	else
 	{
 		g_global.signal = 0;
+		g_global.is_child = 1;
 		waitpid(pid, &status, 0);
 	}
-	g_global.status = status;
+	exit_status(status);
 }
