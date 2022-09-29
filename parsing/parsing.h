@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:06:36 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/26 05:21:24 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/29 00:26:44 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		normall_collect(t_node **cmd, char *s, int *i);
 void	handle_quotes(t_node **cmd, char *s, char c, int *i);
 t_node	*create_node(char *str, int start, int end);
 char	**transfer_list_to_2darray(t_node *node);
-int		creat_pipe(t_tree *root);
+int		create_pipe(t_tree *root);
 void	operator_selection(t_tree *root);
 char	*expand_dollar(char *s, int start, int lvl);
 char	*expand_dollar_2(char *s, int i);

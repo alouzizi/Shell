@@ -15,7 +15,7 @@
 void	operator_selection(t_tree *root)
 {
 	if (!builtincmp(root->s[0], "|"))
-		creat_pipe(root);
+		create_pipe(root);
 	else if (!builtincmp(root->s[0], "||"))
 		puts("OR");
 	else if (!builtincmp(root->s[0], "&&"))

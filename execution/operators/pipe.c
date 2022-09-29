@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:15:24 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/27 07:16:47 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/29 00:18:44 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	pipe_right(int *fd, t_tree *root)
 	dup_function(fd, 0);
 	if (root->right->s[0][0] == '|')
 	{
-		creat_pipe(root->right);
+		create_pipe(root->right);
 		exit(g_global.status);
 	}
 	else
@@ -75,7 +75,7 @@ void	pipe_left(int *fd, t_tree *root)
 	pipe_cmd_exec(root, 1);
 }
 
-int	creat_pipe(t_tree *root)
+int	create_pipe(t_tree *root)
 {
 	int	*fd;
 	int	id;

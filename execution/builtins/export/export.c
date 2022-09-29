@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:11:06 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/28 22:00:21 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/29 01:20:04 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int	add_variable(char *arg)
 	while (g_global.n_env[++i])
 	{
 		if (!ft_strncmp(arg, g_global.n_env[i], ft_strlen(arg)))
-			return (1);
+			if (!ft_strncmp(arg, g_global.n_env[i], ft_strlen(g_global.n_env[i])))
+				return (1);
 	}
 	add_var_to_env(arg);
 	return (0);

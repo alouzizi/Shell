@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:29:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/28 22:02:25 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/29 00:26:01 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,13 @@ char				*get_env(char *str);
 unsigned long long	a_to_ull(char *str);
 void				ft_exit(char **cmd);
 
-//pipe
-// void				pipe_right(int *fd, t_tree *root, char **env);
-// void				pipe_left(int *fd, t_tree *root, char **env);
-// int					creat_pipe(t_tree *root, char **env);
+// pipe
+// void				dup_function(int *fd, int index);
+// void				execute_pipe(char **arr);
+// void				pipe_cmd_exec(t_tree *root, int index);
+// void				pipe_right(int *fd, t_tree *root);
+// void				pipe_left(int *fd, t_tree *root);
+// int					create_pipe(t_tree *root);
 
 //executing
 char				**get_path(char *s);
