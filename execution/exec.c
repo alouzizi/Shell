@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:14:09 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/27 07:17:57 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/29 08:58:36 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,6 @@ void	print_cnf_error(char *cmd)
 	ft_putstr_fd(cmd, 2);
 	ft_putendl_fd(CNF, 2);
 	g_global.status = 127;
-}
-
-void	exit_status(int status)
-{
-	if (WIFEXITED(status))
-		g_global.status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		g_global.status = 128 + WTERMSIG(status);
 }
 
 int	commands_execution(char **paths, char **cmd)

@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 22:44:12 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/26 05:45:12 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/29 08:41:15 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@ char	**get_path(char *s)
 	}
 	paths[i] = 0;
 	return (paths);
+}
+
+void	exit_status(int status)
+{
+	if (WIFEXITED(status))
+		g_global.status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		g_global.status = 128 + WTERMSIG(status);
 }
 
 int	builtincmp(char *s1, char *s2)

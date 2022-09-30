@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 08:16:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/27 20:32:53 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/29 23:20:18 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	ft_exit(char **cmd)
 	{
 		ft_putendl_fd("exit", 1);
 		g_global.status = (a_to_ull(cmd[1]) % 256);
+		exit(g_global.status);
 	}
 	else if (!arg_isdigit(cmd[1]))
 	{
@@ -86,11 +87,11 @@ void	ft_exit(char **cmd)
 		ft_putstr_fd_2("minishell: exit: ", cmd[1], \
 		": numeric argument required", 2);
 		g_global.status = 255;
+		exit(g_global.status);
 	}
 	else
 	{
 		ft_putendl_fd("exit\nminishell: exit: too many arguments", 2);
 		g_global.status = 1;
 	}
-	exit(g_global.status);
 }

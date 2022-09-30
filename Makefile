@@ -18,6 +18,7 @@ SRCS = main.c \
 	execution/builtins/ft_unset.c \
 	execution/builtins/ft_exit.c \
 	execution/operators/pipe.c \
+	execution/operators/or.c \
 	execution/exec.c \
 	execution/exec_utils.c \
 	parsing/tree_utils.c

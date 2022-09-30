@@ -12,14 +12,33 @@
 
 #include "parsing.h"
 
-void	operator_selection(t_tree *root)
+int	simple_cmd(t_tree *root)
+{
+	return (execute(root->s));
+}
+
+int	and_operator(t_tree *root)
+{
+	if (!simple_cmd(root->left))
+		simple_cmd(root->right);
+	return (0);
+}
+
+int	or_operator(t_tree *root)
+{
+	if (simple_cmd(root->left))
+		simple_cmd(root->right);
+	return (0);
+}
+
+int	operator_selection(t_tree *root)
 {
 	if (!builtincmp(root->s[0], "|"))
-		create_pipe(root);
+		return (create_pipe(root), 1);
 	else if (!builtincmp(root->s[0], "||"))
-		puts("OR");
+		return (or_operator(root), 1);
 	else if (!builtincmp(root->s[0], "&&"))
-		puts("AND");
+		return (and_operator(root), 1);
 	else if (!builtincmp(root->s[0], ">>"))
 		puts("APPEND");
 	else if (!builtincmp(root->s[0], "<<"))
@@ -29,7 +48,8 @@ void	operator_selection(t_tree *root)
 	else if (!builtincmp(root->s[0], "<"))
 		puts("REDIRECT INPUT");
 	else
-		execute(root->s);
+		return (simple_cmd(root), 1);
+	return (0);
 }
 
 void	tree(char *s)
@@ -56,7 +76,7 @@ void	tree(char *s)
 		{
 			if (s[i] != s[i + 1] || j == 0)
 			{
-				ft_putendl_fd("Syntax Error\n", 2);
+				ft_putendl_fd("Syntax Error", 2);
 				return ;
 			}
 			if (j == 1)
@@ -123,5 +143,6 @@ void	tree(char *s)
 	}
 	if (!root || !root->s)
 		return ;
+	// print_tree(root, 0);
 	operator_selection(root);
 }

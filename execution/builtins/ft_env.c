@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 00:38:34 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/26 05:29:33 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/09/29 08:36:29 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	shlvl_handling(int i)
 		ft_putstr_fd(ft_itoa(t), 2);
 		ft_putendl_fd(") too high, resetting to 1", 2);
 		t = 1;
+		g_global.status = 1;
 	}
 	s = ft_itoa(t);
 	g_global.n_env[i] = ft_strjoin(tmp, s);
