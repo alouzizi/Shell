@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:52:24 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/01 13:43:14 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/01 14:00:28 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	*get_env(char *str)
 	int	i;
 
 	i = -1;
+	str = ft_strjoin(str, ft_strdup("="));
 	while (g_global.n_env[++i])
 	{
 		if (!ft_strncmp(str, g_global.n_env[i], ft_strlen(str)))
