@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 22:44:12 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/29 08:41:15 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/01 13:43:25 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**get_path(char *s)
 	int		i;
 	char	**paths;
 
-	paths = ft_split(get_env("PATH="), ':');
+	paths = ft_split(get_env("PATH"), ':');
 	if (!paths)
 		return (NULL);
 	i = -1;

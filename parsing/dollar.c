@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 23:47:28 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/29 05:38:56 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/01 13:30:17 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*expand_dollar_2(char *s, int i)
 		while (start--)
 			dollar[j++] = s[i++];
 		dollar[j] = '\0';
-		dollar = get_env(dollar) + 1; // a segfault when the variable is not in the environment
+		dollar = get_env(dollar);
 	}
 	if (s[i] && s[i] != '"')
 	{

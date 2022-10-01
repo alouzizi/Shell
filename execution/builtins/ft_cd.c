@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:52:24 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/26 07:59:44 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/01 13:43:14 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_env(char *str)
 	while (g_global.n_env[++i])
 	{
 		if (!ft_strncmp(str, g_global.n_env[i], ft_strlen(str)))
-			return (&g_global.n_env[i][ft_strlen(str)]);
+			return (&g_global.n_env[i][ft_strlen(str) + 1]);
 	}
 	return (NULL);
 }
@@ -47,7 +47,7 @@ void	ft_cd(char **cmd)
 {
 	char	*home;
 
-	home = get_env("HOME=");
+	home = get_env("HOME");
 	if (!home)
 	{
 		ft_putendl_fd("minishell: cd: HOME not set", 2);
