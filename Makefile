@@ -21,7 +21,8 @@ SRCS = main.c \
 	execution/operators/or.c \
 	execution/exec.c \
 	execution/exec_utils.c \
-	parsing/tree_utils.c
+	parsing/tree_utils.c \
+	parsing/redirection_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -33,7 +34,7 @@ RL_LIB = -L/goinfre/$(USER)/.brew/opt/readline/lib
 
 LIBFT = ./libft/libft.a
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -W -W -W
 
 RM = rm -f
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:06:36 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/29 09:19:02 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/07 08:11:16 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,7 @@ int		operator_selection(t_tree *root);
 char	*expand_dollar(char *s, int start, int lvl);
 char	*expand_dollar_2(char *s, int i);
 void	signals_handling(void);
+char	**redirection_parse(char *str , int i);
+char	**ft_strjoin2d(char **s, char **s0);
 
 #endif
