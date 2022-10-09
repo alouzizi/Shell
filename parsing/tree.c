@@ -52,11 +52,45 @@ int	operator_selection(t_tree *root)
 	return (0);
 }
 
+int	and_or(t_tree *root, char **str,char *s, int j)
+{
+	t_tree *temp;
+	t_tree *temp2;
+	int		l;
+	//if (s[i] == '&' || (s[i] == '|' && s[i + 1] == '|'))
+	//{
+	l = 0;
+		if (s[l] != s[l + 1] || j == 0)
+		{
+			ft_putendl_fd("Syntax Error", 2);
+			return (l );
+		}
+		if (j == 1)
+		{
+			temp->s = str;
+			temp->right = NULL;
+			temp->left = NULL;
+			//j = 0;
+		}
+		temp2 = malloc(sizeof(t_tree));
+		temp2->s = malloc(sizeof(char *) * 2);
+		temp2->s[0] = data(2, s[l], s[l + 1]);
+		l++;
+		temp2->left = root;
+		root = temp2;
+	//	j = 0;
+		l++;
+		root->right = malloc(sizeof(t_tree));
+		temp = root->right;
+	//}		
+	return (l);	
+
+}
+
 void	tree(char *s)
 {
 	t_tree	*root;
 	t_tree	*temp;
-	t_tree	*temp2;
 	char	**str;
 	int		i;
 	int		j;
@@ -72,66 +106,17 @@ void	tree(char *s)
 			str = transfer_list_to_2darray(get_cmd(s, &i));
 			j = 1;
 		}
-		if (s[i] == '&' || (s[i] == '|' && s[i + 1] == '|'))
-		{
-			if (s[i] != s[i + 1] || j == 0)
-			{
-				ft_putendl_fd("Syntax Error", 2);
-				return ;
-			}
-			if (j == 1)
-			{
-				temp->s = str;
-				temp->right = NULL;
-				temp->left = NULL;
-				j = 0;
-			}
-			temp2 = malloc(sizeof(t_tree));
-			temp2->s = malloc(sizeof(char *) * 2);
-			temp2->s[0] = data(2, s[i], s[i + 1]);
-			i++;
-			temp2->left = root;
-			root = temp2;
-			j = 0;
-			i++;
-			root->right = malloc(sizeof(t_tree));
-			temp = root->right;
-		}
+		// if (s[i] == '&' || (s[i] == '|' && s[i + 1] == '|'))
+		// {
+		// 	i += and_or(root, str, &s[i], j);
+		// 	j = 0;
+		// }
 		if ((s[i] == '|' || s[i] == '<' || s[i] == '>') && s[i])
 		{
-			if ((j != 1 && s[i] == '|') || (j == 1 && str[0] == NULL))
-			{
-				ft_putendl_fd("Syntax Error", 2);
+			j = pipe_redirection(&temp, &s[i], str, j);
+			if (j == 0)
 				return ;
-			}
-			temp->s = malloc(sizeof(char *));
-			if ((s[i + 1] == '<' || s[i + 1] == '>') && (s[i] == '<' || s[i] == '>'))
-			{
-				if (s[i] != s[i + 1])
-				{
-					ft_putendl_fd("Syntax Error", 2);
-					return ;
-				}
-				temp->s[0] = data(2, s[i], s[i + 1]);
-				i++;
-			}
-			else
-				temp->s[0] = data(1, s[i], 0);
-			if (j == 1)
-				temp->left = newtree(str);
-			else
-				temp->left = NULL;
-			i++;
-			j = i;
-			str = transfer_list_to_2darray(get_cmd(s, &j));
-			if (str[0])
-				temp->right = newtree(NULL);
-			else
-			{
-				ft_putendl_fd("Syntax Error", 2);
-				return ;
-			}
-			temp = temp->right;
+			i += j;
 			j = 0;
 		}
 	}
@@ -143,6 +128,63 @@ void	tree(char *s)
 	}
 	if (!root || !root->s)
 		return ;
-	// print_tree(root, 0);
+	print_tree(root, 0);
+	int k = 0;
+	while(root->left->s[k])
+		printf("[%s]\n",root->left->s[k++]);
 	operator_selection(root);
+}
+
+int pipe_redirection(t_tree **temp, char *s, char **str, int j)
+{
+	int	i;
+	t_redirct *r;
+	i = 0; 
+	if ((j != 1 && s[i] == '|') || (j == 1 && str[0] == NULL))
+	{
+		ft_putendl_fd("Syntax Error", 2);
+			return (0);
+	}
+	(*temp)->s = malloc(sizeof(char *));
+	if ((s[i + 1] == '<' || s[i + 1] == '>') && (s[i] == '<' || s[i] == '>'))
+	{
+		if (s[i] != s[i + 1])
+		{
+			ft_putendl_fd("Syntax Error", 2);
+			return (0);
+		}
+		(*temp)->s[0] = data(2, s[i], s[i + 1]);
+		i++;
+	}
+	else
+		(*temp)->s[0] = data(1, s[i], 0);
+	if (j == 1)
+	{
+		(*temp)->left = newtree(str);
+		if (s[i] == '>' || s[i] == '<')
+		{
+			r = redirection_parse(*temp, s, &i);
+			//int d = 0;
+			//while(r->param[d])
+			// 	printf("param = %s\n", r->param[d++]);
+			// d =0;
+			// while(r->file[d])
+			// 	printf("file = %s\n", r->file[d++]);
+			(*temp)->left->s = ft_strjoin2d((*temp)->left->s, r->param);
+			(*temp)->right = newtree(r->file);
+			return (i);
+		}
+	}
+	i++;
+	j = i;
+	str = transfer_list_to_2darray(get_cmd(s, &j));
+	if (str[0])
+		(*temp)->right = newtree(NULL);
+	else
+	{
+		ft_putendl_fd("Syntax Error", 2);
+		return (0);
+	}
+	(*temp) = (*temp)->right;
+	return (i);
 }

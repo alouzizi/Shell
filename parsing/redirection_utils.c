@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 09:34:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/07 16:28:00 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/09 18:09:06 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,36 +20,59 @@ int	ft_isalnum_redirections(int c)
 	return (0);
 }
 
-char	**redirection_parse(char *str , int i)
+
+int	get_redirect_file(t_redirct *p, char *str ,int i)
 {
-	char **s;
-	char **tab;
-	i += 1;
-	while(str[i++] == ' ');
-	while( str[i] && ((str[i] != '>' || str[i] != '<' || str[i] != '|' || str[i] != ' ') && ft_isalnum_redirections(str[i])))
+	int	j;
+	int l;
+
+	j = i;
+	p->file = malloc(sizeof(char *) * 2);
+	if (!p->file)
+		exit(1);
+	p->file[1] = NULL;
+	while( str[j] && ((str[i] != '>' || str[i] != '<' || str[i] != '|' 
+			|| str[i] != ' ') && ft_isalnum_redirections(str[i])))
 		i++;
-	if (str[i] != '<' || str[i] != '>')
+	p->file[0] = malloc(i - j + 1);
+	if (!p->file[0])
+		exit (1);
+	l = 0;
+	while (j < i)
+		p->file[0][l++] = str[j++];
+	p->file[0][l] = '\0';
+	return (i);
+}
+
+t_redirct	*redirection_parse(t_tree *root,char *str , int *i)
+{
+	t_redirct	*p;
+	t_redirct	*temp;
+	char		**tab;
+	int			j;
+
+	j = *i;
+	j += 1;
+	p = malloc(sizeof(t_redirct));
+	if (!p)
+		exit(1);
+	while(str[j] == ' ')
+		j++;
+	j = get_redirect_file(p, str, j);
+	if ((str[j]) && (str[j] != '<' || str[j] != '>'))
 	{
-		
-		s =  transfer_list_to_2darray(get_cmd(str, &i));
-		 puts(">>>>>>>>>>>>>");
-		 int j =0;
-	while(s[j])
-		printf("rd = [%s]\n",s[j++]);
-	puts(">>>>>>>>>>>>>");
-	printf("index = %d\n",i);
+		p->param =  transfer_list_to_2darray(get_cmd(str, &j));
+
 	}
-	if (str[i] == '<' || str[i] == '>')
+	if ((str[j]) && (str[j] == '<' || str[j] == '>'))
 	{
-		printf("------------\n");
-		tab = redirection_parse(str , i);
-	// 	int j =0;
-	// while(tab[j])
-	// 	puts(tab[j++]);
-		s = ft_strjoin2d(s, tab);	
+		temp = redirection_parse(root, str , &j);
+		puts("********* seg hire");
+		p->param = ft_strjoin2d(p->param, temp->param);	
 	}
-	i = 0;
-	return (s);
+	*i = j;
+	//ft_strjoin2d()
+	return (p);
 }
 
 char	**ft_strjoin2d(char **s, char **s0)
@@ -57,7 +80,7 @@ char	**ft_strjoin2d(char **s, char **s0)
 	int	i;
 	int j;
 	char **s1;
-
+		
 	j = 0;
 	i = arr_len(s);
 	i += arr_len(s0);
@@ -73,15 +96,5 @@ char	**ft_strjoin2d(char **s, char **s0)
 	while(s0[j])
 		s1[i++] = s0[j++];
 	s1[i] = NULL;
-
-	 j=0;
-	 puts(">>>>>>>>>>>>>");
-	while(s1[j])
-		printf("s = [%s]\n",s1[j++]);
-	puts(">>>>>>>>>>>>>");
 	return (s1);
 }
-
-
-
-
