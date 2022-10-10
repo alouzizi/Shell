@@ -129,9 +129,6 @@ void	tree(char *s)
 	if (!root || !root->s)
 		return ;
 	print_tree(root, 0);
-	int k = 0;
-	while(root->left->s[k])
-		printf("[%s]\n",root->left->s[k++]);
 	operator_selection(root);
 }
 
