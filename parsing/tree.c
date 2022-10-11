@@ -39,14 +39,14 @@ int	operator_selection(t_tree *root)
 		return (or_operator(root), 1);
 	else if (!builtincmp(root->s[0], "&&"))
 		return (and_operator(root), 1);
+	else if (!builtincmp(root->s[0], ">"))
+		return (redirecte_output(root, 0), 1);
+	else if (!builtincmp(root->s[0], "<"))
+		return (redirect_intput(root), 1);
 	else if (!builtincmp(root->s[0], ">>"))
-		puts("APPEND");
+		return (redirecte_output(root, 1), 1);
 	else if (!builtincmp(root->s[0], "<<"))
 		puts("HEREDOC");
-	else if (!builtincmp(root->s[0], ">"))
-		puts("REDIRECT OUTPUT");
-	else if (!builtincmp(root->s[0], "<"))
-		puts("REDIRECT INPUT");
 	else
 		return (simple_cmd(root), 1);
 	return (0);
@@ -57,8 +57,7 @@ int	and_or(t_tree *root, char **str,char *s, int j)
 	t_tree *temp;
 	t_tree *temp2;
 	int		l;
-	//if (s[i] == '&' || (s[i] == '|' && s[i + 1] == '|'))
-	//{
+
 	l = 0;
 		if (s[l] != s[l + 1] || j == 0)
 		{
@@ -70,7 +69,6 @@ int	and_or(t_tree *root, char **str,char *s, int j)
 			temp->s = str;
 			temp->right = NULL;
 			temp->left = NULL;
-			//j = 0;
 		}
 		temp2 = malloc(sizeof(t_tree));
 		temp2->s = malloc(sizeof(char *) * 2);
@@ -78,11 +76,9 @@ int	and_or(t_tree *root, char **str,char *s, int j)
 		l++;
 		temp2->left = root;
 		root = temp2;
-	//	j = 0;
 		l++;
 		root->right = malloc(sizeof(t_tree));
-		temp = root->right;
-	//}		
+		temp = root->right;	
 	return (l);	
 
 }
@@ -128,14 +124,15 @@ void	tree(char *s)
 	}
 	if (!root || !root->s)
 		return ;
-	print_tree(root, 0);
+	//print_tree(root, 0);
 	operator_selection(root);
 }
 
 int pipe_redirection(t_tree **temp, char *s, char **str, int j)
 {
 	int	i;
-	t_redirct *r;
+t_redirct *r;
+
 	i = 0; 
 	if ((j != 1 && s[i] == '|') || (j == 1 && str[0] == NULL))
 	{

@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:06:36 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/09 13:41:17 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/11 14:47:15 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ char	*expand_dollar_2(char *s, int i);
 void	signals_handling(void);
 t_redirct	*redirection_parse(t_tree *root,char *str , int *i);
 char	**ft_strjoin2d(char **s, char **s0);
-int	and_or(t_tree *root, char **str,char *s, int j);
-int pipe_redirection(t_tree **temp, char *s, char **str, int j);
+int		and_or(t_tree *root, char **str,char *s, int j);
+int		pipe_redirection(t_tree **temp, char *s, char **str, int j);
+int		redirect_intput(t_tree *root);
+int redirecte_output(t_tree *root, int j);
 
 #endif
