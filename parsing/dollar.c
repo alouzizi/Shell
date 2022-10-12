@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 23:47:28 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/01 17:38:47 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/12 14:14:33 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-char	*expand_dollar(char *s, int start, int lvl)
+char	*expand_dollar(char *s, int start, int lvl, char c)
 {
 	char	*expand;
 	t_node	*node;
@@ -23,7 +23,7 @@ char	*expand_dollar(char *s, int start, int lvl)
 	j = 0;
 	i = start;
 	node = malloc(sizeof(t_node));
-	while ((lvl == 1 || s[start] != '$') && s[start] != '"')
+	while ((lvl == 1 || s[start] != '$') && s[start] != c)
 		start++;
 	expand = malloc(start - i + 1);
 	while (i < start)
@@ -49,12 +49,12 @@ char	*expand_dollar_2(char *s, int i)
 	if (ft_isdigit(s[i + 1]) || (!ft_isalpha(s[i + 1]) && s[i + 1] != '_'))
 	{
 		if (ft_isdigit(s[i + 1]))
-			return (expand_dollar(s, i + 2, 0));
+			return (expand_dollar(s, i + 2, 0, '"'));
 		else if (s[i + 1] == '?')
 			dollar = ft_itoa(g_global.status);
 		else
-			return (expand_dollar(s, i, 1));
-		return (ft_strjoin(dollar, expand_dollar(s, i + 2, 0)));
+			return (expand_dollar(s, i, 1, '"'));
+		return (ft_strjoin(dollar, expand_dollar(s, i + 2, 0, '"')));
 	}
 	else if (ft_isdigit(s[i + 1]) || ft_isalpha(s[i + 1]) || s[i + 1] == '_')
 	{
@@ -74,9 +74,11 @@ char	*expand_dollar_2(char *s, int i)
 	if (s[i] && s[i] != '"')
 	{
 		if (!dollar)
-			return (expand_dollar(s, i, 0));
+			return (expand_dollar(s, i, 0, '"'));
 		dollar = ft_strdup(dollar);
-		dollar = ft_strjoin(dollar, expand_dollar(s, i, 0));
+		dollar = ft_strjoin(dollar, expand_dollar(s, i, 0, '"'));
 	}
 	return (dollar);
 }
+
+

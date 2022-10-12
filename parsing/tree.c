@@ -131,7 +131,7 @@ void	tree(char *s)
 int pipe_redirection(t_tree **temp, char *s, char **str, int j)
 {
 	int	i;
-t_redirct *r;
+	t_redirct *r;
 
 	i = 0; 
 	if ((j != 1 && s[i] == '|') || (j == 1 && str[0] == NULL))
@@ -158,6 +158,9 @@ t_redirct *r;
 		if (s[i] == '>' || s[i] == '<')
 		{
 			r = redirection_parse(*temp, s, &i);
+			printf("iii = %d\n", r->i);
+			if (r->i == -1)
+				return (0);
 			//int d = 0;
 			//while(r->param[d])
 			// 	printf("param = %s\n", r->param[d++]);
@@ -176,7 +179,7 @@ t_redirct *r;
 		(*temp)->right = newtree(NULL);
 	else
 	{
-		ft_putendl_fd("Syntax Error", 2);
+		ft_putendl_fd("Syntax Error33", 2);
 		return (0);
 	}
 	(*temp) = (*temp)->right;

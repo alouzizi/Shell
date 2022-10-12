@@ -43,7 +43,7 @@ int	normall_collect(t_node **cmd, char *s, int *i)
 
 	list = NULL;
 	star = *i;
-	while (s[*i] && s[*i] != '\'' && s[*i] != '"' && s[*i] != ' ')
+	while (s[*i] && s[*i] != '\'' && s[*i] != '"' && s[*i] != ' ' && s[*i] != '$')
 	{
 		if (s[*i] == '|' || s[*i] == '<' || s[*i] == '>' || s[*i] == '&')
 			break ;
@@ -51,6 +51,15 @@ int	normall_collect(t_node **cmd, char *s, int *i)
 	}
 	end = (*i) - 1;
 	node = create_node(s, star, end);
+	if (s[*i] == '$' && s[*i])
+	{
+		node = ft_lstnew(NULL);
+		node->s = expand_dollar(s, star, 0, ' ');
+		printf("node = %s\n", node->s);
+		//3ndak tnsa tside redirection
+		while( s[*i] && (s[*i] != ' ' && s[*i] != '|'  && s[*i] != '"' && s[*i] != '<'))
+			(*i)++;
+	}
 	if ((s[*i] == '\'' || s[*i] == '"') && s[*i])
 	{
 		handle_quotes(&list, s, s[*i], i);
@@ -78,7 +87,7 @@ void	handle_quotes(t_node **cmd, char *s, char c, int *i)
 	if (s[*i] == '"')
 	{
 		node = ft_lstnew(NULL);
-		node->s = expand_dollar(s, start, 0);
+		node->s = expand_dollar(s, start, 0, c);
 	}
 	else
 		node = create_node(s, start, end);
@@ -111,6 +120,7 @@ t_node	*create_node(char *str, int start, int end)
 	node->s = malloc(sizeof(char) * (end - start + 1));
 	if (!node->s)
 		exit(1);
+	// write eroore blast exit
 	while (start <= end)
 		node->s[i++] = str[start++];
 	node->s[i] = 0;

@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:06:36 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/11 14:47:15 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/12 14:09:16 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef struct tree
 typedef struct redirct
 {
 	char	**param;
-	char	**file;	
+	char	**file;
+	int		i;
 }t_redirct;
 
 void	print_tree(t_tree *root, int space);
@@ -40,7 +41,7 @@ t_node	*create_node(char *str, int start, int end);
 char	**transfer_list_to_2darray(t_node *node);
 int		create_pipe(t_tree *root);
 int		operator_selection(t_tree *root);
-char	*expand_dollar(char *s, int start, int lvl);
+char	*expand_dollar(char *s, int start, int lvl ,char c);
 char	*expand_dollar_2(char *s, int i);
 void	signals_handling(void);
 t_redirct	*redirection_parse(t_tree *root,char *str , int *i);

@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 09:34:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/10 09:53:46 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:20:38 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,12 @@ t_redirct	*redirection_parse(t_tree *root,char *str , int *i)
 	if(!str[j])
 	{
 		ft_putendl_fd("Syntax Error", 2);
-		
+		p->i = -1;
+		return (p);
 	}
 	j = get_redirect_file(p, str, j);
 	if ((str[j]) && (str[j] != '<' || str[j] != '>'))
-	{
 		p->param =  transfer_list_to_2darray(get_cmd(str, &j));
-
-	}
 	else
 		p->param = NULL;
 	if ((str[j]) && (str[j] == '<' || str[j] == '>'))
@@ -76,6 +74,8 @@ t_redirct	*redirection_parse(t_tree *root,char *str , int *i)
 		temp = redirection_parse(root, str , &j);
 		p->param = ft_strjoin2d(p->param, temp->param);
 		p->file = ft_strjoin2d(p->file, temp->file);
+		if (temp->i == -1)
+			return (p);
 	}
 	*i = j;
 	return (p);
@@ -89,10 +89,7 @@ char	**ft_strjoin2d(char **s, char **s0)
 		
 	j = 0;
 	if (!s0)
-	{
-		puts(s[0]);
 		return(s);
-	}
 	i = arr_len(s);
 	i += arr_len(s0);
 	s1 = malloc(sizeof(char*) *(i + 1));
