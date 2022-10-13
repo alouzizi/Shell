@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   star.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 22:17:33 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/05 18:56:37 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/13 15:22:14 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ int	find_star(char *line)
 
 char	*expand_star(char *line)
 {
+	int		i;
 	// char	cwd[PATH_MAX];
 	// char	*path;
-	int		i;
 
 	// path = getcwd(cwd, sizeof(cwd));
 	i = 0;

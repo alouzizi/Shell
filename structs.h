@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 01:11:44 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/13 01:13:46 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/13 14:59:55 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct redirct
 {
 	char	**param;
 	char	**file;
-	int		i;
+	int		j;
 }t_redirct;
 
 #endif

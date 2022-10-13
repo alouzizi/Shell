@@ -52,10 +52,10 @@ int	operator_selection(t_tree *root)
 	return (0);
 }
 
-int	and_or(t_tree *root, char **str,char *s, int j)
+int	and_or(t_tree *root, char **str, char *s, int j)
 {
-	t_tree *temp;
-	t_tree *temp2;
+	t_tree	*temp;
+	t_tree	*temp2;
 	int		l;
 
 	l = 0;
@@ -79,9 +79,8 @@ int	and_or(t_tree *root, char **str,char *s, int j)
 	root = temp2;
 	l++;
 	root->right = malloc(sizeof(t_tree));
-	temp = root->right;	
-	return (l);	
-
+	temp = root->right;
+	return (l);
 }
 
 void	tree(char *s)
@@ -92,7 +91,8 @@ void	tree(char *s)
 	int		i;
 	int		j;
 
-	i = j = 0;
+	i = 0;
+	j = 0;
 	root = newtree(NULL);
 	temp = root;
 	str = NULL;
@@ -103,11 +103,6 @@ void	tree(char *s)
 			str = transfer_list_to_2darray(get_cmd(s, &i));
 			j = 1;
 		}
-		// if (s[i] == '&' || (s[i] == '|' && s[i + 1] == '|'))
-		// {
-		// 	i += and_or(root, str, &s[i], j);
-		// 	j = 0;
-		// }
 		if ((s[i] == '|' || s[i] == '<' || s[i] == '>') && s[i])
 		{
 			j = pipe_redirection(&temp, &s[i], str, j);
@@ -125,22 +120,16 @@ void	tree(char *s)
 	}
 	if (!root || !root->s)
 		return ;
-	int d = 0;
-	while(root->right->s[d])
-		puts(root->right->s[d++]);
-	d =0;
-	while(root->left->s[d])
-		puts(root->left->s[d++]);
 	print_tree(root, 0);
 	operator_selection(root);
 }
 
-int pipe_redirection(t_tree **temp, char *s, char **str, int j)
+int	pipe_redirection(t_tree **temp, char *s, char **str, int j)
 {
-	int	i;
-	t_redirct *r;
+	t_redirct	*r;
+	int			i;
 
-	i = 0; 
+	i = 0;
 	if ((j != 1 && s[i] == '|') || (j == 1 && str[0] == NULL))
 	{
 		ft_putendl_fd("Syntax Error", 2);

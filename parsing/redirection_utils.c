@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 09:34:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/13 14:38:56 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:01:39 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 int	ft_isalnum_redirections(int c)
 {
-	if ( (c >= 43 && c <= 46) || ((c >= 65 && c <= 95) \
-		|| (c >= 97 && c <= 122)) || ((c >= '0') && (c <= '9')))
+	if ((c >= 43 && c <= 46) || ((c >= 65 && c <= 95)
+			|| (c >= 97 && c <= 122)) || ((c >= '0') && (c <= '9')))
 		return (1);
 	return (0);
 }
 
-int	get_redirect_file(t_redirct *p, char *str ,int i)
+int	get_redirect_file(t_redirct *p, char *str, int i)
 {
 	int	j;
-	int l;
+	int	l;
 
 	j = i;
 	p->file = malloc(sizeof(char *) * 2);
 	if (!p->file)
 		exit(1);
 	p->file[1] = NULL;
-	while( str[j] && ((str[i] != '>' || str[i] != '<' || str[i] != '|' 
-			|| str[i] != ' ') && ft_isalnum_redirections(str[i])))
+	while (str[j] && ((str[i] != '>' || str[i] != '<' || str[i] != '|'
+				|| str[i] != ' ') && ft_isalnum_redirections(str[i])))
 		i++;
 	p->file[0] = malloc(i - j + 1);
 	if (!p->file[0])
@@ -43,64 +43,61 @@ int	get_redirect_file(t_redirct *p, char *str ,int i)
 	return (i);
 }
 
-t_redirct	*redirection_parse(t_tree *root,char *str , int *i)
+t_redirct	*redirection_parse(t_tree *root, char *str, int *i)
 {
 	t_redirct	*p;
 	t_redirct	*temp;
 
-	int			j;
-	p->i = 10;
-	j = *i;
-	j += 1;
+	(*i) += 1;
 	p = malloc(sizeof(t_redirct));
 	if (!p)
 		exit(1);
-	while(str[j] == ' ')
-		j++;
-	if(!str[j])
+	p->j = 1;
+	while (str[*i] == ' ')
+		(*i)++;
+	if (!str[*i])
 	{
 		ft_putendl_fd("Syntax Error", 2);
-		p->i = -1;
+		p->j = -1;
 		return (p);
 	}
-	j = get_redirect_file(p, str, j);
-	if ((str[j]) && (str[j] != '<' || str[j] != '>'))
-		p->param =  transfer_list_to_2darray(get_cmd(str, &j));
+	*i = get_redirect_file(p, str, *i);
+	if ((str[*i]) && (str[*i] != '<' || str[*i] != '>'))
+		p->param = transfer_list_to_2darray(get_cmd(str, &*i));
 	else
 		p->param = NULL;
-	if ((str[j]) && (str[j] == '<' || str[j] == '>'))
+	if ((str[*i]) && (str[*i] == '<' || str[*i] == '>'))
 	{
-		temp = redirection_parse(root, str , &j);
+		temp = redirection_parse(root, str, &*i);
 		p->param = ft_strjoin2d(p->param, temp->param);
 		p->file = ft_strjoin2d(p->file, temp->file);
-		if (temp->i == -1)
+		if (temp->j == -1)
 			return (p);
 	}
-	*i = j;
 	return (p);
 }
 
 char	**ft_strjoin2d(char **s, char **s0)
 {
-	int	i;
-	int j;
-	char **s1;
-		
+	char	**s1;
+	int		i;
+	int		j;
+
 	j = 0;
 	if (!s0)
-		return(s);
+		return (s);
 	i = arr_len(s);
 	i += arr_len(s0);
-	s1 = malloc(sizeof(char*) *(i + 1));
+	s1 = malloc(sizeof(char *) * (i + 1));
 	if (!s1)
 		exit(1);
 	i = 0;
-	while(s[i])
+	while (s[i])
 	{
 		s1[i] = s[i];
 		i++;
 	}
-	while(s0[j])
+	while (s0[j])
 		s1[i++] = s0[j++];
 	s1[i] = NULL;
 	return (s1);

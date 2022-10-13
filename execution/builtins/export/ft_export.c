@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:36:25 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/29 01:18:01 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/13 15:24:29 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	add_to_value(char *arg, int i, int ptr)
 		{
 			ptr = 1;
 			if (value && !ft_strchr(g_global.n_env[i], '='))
-				g_global.n_env[i] = ft_strjoin(g_global.n_env[i], ft_strjoin_no_free("=", value));
+				g_global.n_env[i] = ft_strjoin(g_global.n_env[i],
+						ft_strjoin_no_free("=", value));
 			else
 				g_global.n_env[i] = ft_strjoin(g_global.n_env[i], value);
 		}

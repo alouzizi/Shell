@@ -43,7 +43,8 @@ int	normall_collect(t_node **cmd, char *s, int *i)
 
 	list = NULL;
 	star = *i;
-	while (s[*i] && s[*i] != '\'' && s[*i] != '"' && s[*i] != ' ' && s[*i] != '$')
+	while (s[*i] && s[*i] != '\'' && s[*i] != '"' && s[*i] != ' '
+		&& s[*i] != '$')
 	{
 		if (s[*i] == '|' || s[*i] == '<' || s[*i] == '>' || s[*i] == '&')
 			break ;
@@ -53,12 +54,12 @@ int	normall_collect(t_node **cmd, char *s, int *i)
 	node = create_node(s, star, end);
 	if (s[*i] == '$' && s[*i])
 	{
-		if(node->s)
+		if (node->s)
 			node->s = ft_strjoin(node->s, expand_dollar(s, star, 0, ' '));
 		else
 			node->s = expand_dollar(s, star, 0, ' ');
-		while( s[*i] && (s[*i] != ' ' && s[*i] != '|'  && s[*i] != '"' && s[*i] != '<'
-				&& s[*i] != '&' && s[*i] !='|' && s[*i] != '>'))
+		while (s[*i] && (s[*i] != ' ' && s[*i] != '|' && s[*i] != '"' && s[*i]
+				!= '<' && s[*i] != '&' && s[*i] != '|' && s[*i] != '>'))
 			(*i)++;
 	}
 	if ((s[*i] == '\'' || s[*i] == '"') && s[*i])
@@ -121,7 +122,6 @@ t_node	*create_node(char *str, int start, int end)
 	node->s = malloc(sizeof(char) * (end - start + 1));
 	if (!node->s)
 		exit(1);
-	// write eroore blast exit
 	while (start <= end)
 		node->s[i++] = str[start++];
 	node->s[i] = 0;

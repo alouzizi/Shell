@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 23:47:28 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/13 08:17:57 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/13 14:48:25 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,3 @@ char	*expand_dollar_2(char *s, int i)
 	}
 	return (dollar);
 }
-
-

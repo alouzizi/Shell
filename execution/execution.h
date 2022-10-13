@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:29:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/13 08:06:00 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/13 15:14:40 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int					commands_execution(char **paths, char **cmd);
 void				exit_status(int status);
 void				print_cnf_error(char *cmd);
 
-int redirecte_output(t_tree *root, int j);
-int redirect_intput(t_tree *root);
+int					redirecte_output(t_tree *root, int j);
+int					redirect_intput(t_tree *root);
 
 #endif
