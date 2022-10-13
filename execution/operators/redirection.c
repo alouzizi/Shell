@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 09:46:28 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/11 15:57:53 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/13 08:52:32 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 int redirecte_output(t_tree *root, int j)
 {
-	int	*fd;
+	// int	*fd;
 	int	pid;
 	int	i;
 	int f;
 
-	
 	i = 0;
 	while(root->right->s[i + 1])
 	{
@@ -33,22 +32,21 @@ int redirecte_output(t_tree *root, int j)
 	else
 		f = open(root->right->s[i], O_CREAT | O_WRONLY, 0777);
 	pid = fork();
-	if (pid == 0)
+	if (!pid)
 	{
 		if(f < 0)
 			return (-1);
 		dup2(f, 1);
-		//hnaya dire fct dyal exec
+		close(f);
 		if (isbuiltin(root->left->s))
 			exit(g_global.status);
-		execlp("ls", "ls", "-la",NULL);
-		close(f);
-		exit(0);
+		execute_pipe(root->left->s);
 	}
 	wait(NULL);
 	close(f);
 	return (0);
 }
+
 int redirect_intput(t_tree *root)
 {
 	int	pid;
@@ -58,7 +56,7 @@ int redirect_intput(t_tree *root)
 	i = 0;
 	while(root->right->s[i])
 	{
-		if (access(root->right->s[i], F_OK ))
+		if (access(root->right->s[i], F_OK))
 		{
 			write(2, "no such file or directory: ", 27);
 			ft_putendl_fd(root->right->s[i],2);
@@ -76,15 +74,13 @@ int redirect_intput(t_tree *root)
 	pid = fork();
 	if (!pid)
 	{
-		if(f < 0)
+		if (f < 0)
 			return (-1);
 		dup2(f, STDIN_FILENO);
 		close(f);
-		//hnaya dire fct dyal exec
-		execlp("wc", "wc", "-l", NULL);
-		if(isbuiltin(root->left->s))
+		if (isbuiltin(root->left->s))
 			exit(g_global.status);
-	 	exit(0);
+		execute_pipe(root->left->s);
 	}
 	wait(NULL);
 	close(f);

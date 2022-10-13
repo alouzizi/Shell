@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:06:36 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/12 14:09:16 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/13 02:42:56 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,21 @@
 # define PARSING_H
 
 # include "../minishell.h"
+// # include "../execution/execution.h"
 
-typedef struct tree
-{
-	struct tree	*right;
-	struct tree	*left;
-	char		**s;
-}	t_tree;
+// typedef struct tree
+// {
+// 	struct tree	*right;
+// 	struct tree	*left;
+// 	char		**s;
+// }	t_tree;
 
-typedef struct redirct
-{
-	char	**param;
-	char	**file;
-	int		i;
-}t_redirct;
+// typedef struct redirct
+// {
+// 	char	**param;
+// 	char	**file;
+// 	int		i;
+// }t_redirct;
 
 void	print_tree(t_tree *root, int space);
 char	*data(int j, char c, char c2);
@@ -48,7 +49,5 @@ t_redirct	*redirection_parse(t_tree *root,char *str , int *i);
 char	**ft_strjoin2d(char **s, char **s0);
 int		and_or(t_tree *root, char **str,char *s, int j);
 int		pipe_redirection(t_tree **temp, char *s, char **str, int j);
-int		redirect_intput(t_tree *root);
-int redirecte_output(t_tree *root, int j);
 
 #endif

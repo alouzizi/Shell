@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:15:24 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/29 05:13:38 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/13 08:08:05 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,7 @@ int	create_pipe(t_tree *root)
 	close(fd[1]);
 	close(fd[0]);
 	waitpid(id, &status, 0);
-	// wait(0);
-	if (WIFEXITED(status))
-		g_global.status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		g_global.status = 128 + WTERMSIG(status);
+	wait(0);
+	exit_status(status);
 	return (0);
 }

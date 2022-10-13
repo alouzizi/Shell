@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 09:34:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/12 17:20:38 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/13 00:14:46 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_redirct	*redirection_parse(t_tree *root,char *str , int *i)
 {
 	t_redirct	*p;
 	t_redirct	*temp;
-	char		**tab;
+	// char		**tab;
 	int			j;
 
 	j = *i;

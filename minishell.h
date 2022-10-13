@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/09 14:50:01 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/09 14:50:01 by alouzizi         ###   ########.fr       */
+/*   Created: 2022/10/13 02:49:44 by ooumlil           #+#    #+#             */
+/*   Updated: 2022/10/13 02:49:44 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -25,20 +26,13 @@
 # include <fcntl.h>
 # include <termios.h>
 # include <limits.h>
+# include "structs.h"
 # include "libft/libft.h"
 # include "parsing/parsing.h"
 # include "execution/execution.h"
 
 # define CTL_D "\033[A\033[12Cexit\n"
 # define COUNT 10
-
-typedef struct s_data
-{
-	int		signal;
-	int		status;
-	int		is_child;
-	char	**n_env;
-}	t_data;
 
 t_data	g_global;
 

@@ -34,21 +34,21 @@ int	or_operator(t_tree *root)
 int	operator_selection(t_tree *root)
 {
 	if (!builtincmp(root->s[0], "|"))
-		return (create_pipe(root), 1);
+		return (create_pipe(root));
 	else if (!builtincmp(root->s[0], "||"))
-		return (or_operator(root), 1);
+		return (or_operator(root));
 	else if (!builtincmp(root->s[0], "&&"))
-		return (and_operator(root), 1);
+		return (and_operator(root));
 	else if (!builtincmp(root->s[0], ">"))
-		return (redirecte_output(root, 0), 1);
+		return (redirecte_output(root, 0));
 	else if (!builtincmp(root->s[0], "<"))
-		return (redirect_intput(root), 1);
+		return (redirect_intput(root));
 	else if (!builtincmp(root->s[0], ">>"))
-		return (redirecte_output(root, 1), 1);
+		return (redirecte_output(root, 1));
 	else if (!builtincmp(root->s[0], "<<"))
 		puts("HEREDOC");
 	else
-		return (simple_cmd(root), 1);
+		return (simple_cmd(root));
 	return (0);
 }
 
@@ -59,26 +59,27 @@ int	and_or(t_tree *root, char **str,char *s, int j)
 	int		l;
 
 	l = 0;
-		if (s[l] != s[l + 1] || j == 0)
-		{
-			ft_putendl_fd("Syntax Error", 2);
-			return (l );
-		}
-		if (j == 1)
-		{
-			temp->s = str;
-			temp->right = NULL;
-			temp->left = NULL;
-		}
-		temp2 = malloc(sizeof(t_tree));
-		temp2->s = malloc(sizeof(char *) * 2);
-		temp2->s[0] = data(2, s[l], s[l + 1]);
-		l++;
-		temp2->left = root;
-		root = temp2;
-		l++;
-		root->right = malloc(sizeof(t_tree));
-		temp = root->right;	
+	temp = NULL;
+	if (s[l] != s[l + 1] || j == 0)
+	{
+		ft_putendl_fd("Syntax Error", 2);
+		return (l);
+	}
+	if (j == 1)
+	{
+		temp->s = str;
+		temp->right = NULL;
+		temp->left = NULL;
+	}
+	temp2 = malloc(sizeof(t_tree));
+	temp2->s = malloc(sizeof(char *) * 2);
+	temp2->s[0] = data(2, s[l], s[l + 1]);
+	l++;
+	temp2->left = root;
+	root = temp2;
+	l++;
+	root->right = malloc(sizeof(t_tree));
+	temp = root->right;	
 	return (l);	
 
 }
@@ -137,7 +138,7 @@ int pipe_redirection(t_tree **temp, char *s, char **str, int j)
 	if ((j != 1 && s[i] == '|') || (j == 1 && str[0] == NULL))
 	{
 		ft_putendl_fd("Syntax Error", 2);
-			return (0);
+		return (0);
 	}
 	(*temp)->s = malloc(sizeof(char *));
 	if ((s[i + 1] == '<' || s[i + 1] == '>') && (s[i] == '<' || s[i] == '>'))

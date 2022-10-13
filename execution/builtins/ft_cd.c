@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:52:24 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/01 18:35:55 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/13 04:05:54 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_env(char *str)
 	while (g_global.n_env[++i])
 	{
 		if (!ft_strncmp(str, g_global.n_env[i], ft_strlen(str)))
-			return (&g_global.n_env[i][ft_strlen(str) + 1]);
+			return (&g_global.n_env[i][ft_strlen(str)]);
 	}
 	return (NULL);
 }
