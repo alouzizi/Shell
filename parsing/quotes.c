@@ -53,11 +53,12 @@ int	normall_collect(t_node **cmd, char *s, int *i)
 	node = create_node(s, star, end);
 	if (s[*i] == '$' && s[*i])
 	{
-		node = ft_lstnew(NULL);
-		node->s = expand_dollar(s, star, 0, ' ');
-		printf("node = %s\n", node->s);
-		//3ndak tnsa tside redirection
-		while( s[*i] && (s[*i] != ' ' && s[*i] != '|'  && s[*i] != '"' && s[*i] != '<'))
+		if(node->s)
+			node->s = ft_strjoin(node->s, expand_dollar(s, star, 0, ' '));
+		else
+			node->s = expand_dollar(s, star, 0, ' ');
+		while( s[*i] && (s[*i] != ' ' && s[*i] != '|'  && s[*i] != '"' && s[*i] != '<'
+				&& s[*i] != '&' && s[*i] !='|' && s[*i] != '>'))
 			(*i)++;
 	}
 	if ((s[*i] == '\'' || s[*i] == '"') && s[*i])
