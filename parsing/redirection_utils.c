@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 09:34:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/13 00:14:46 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/13 14:38:56 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	ft_isalnum_redirections(int c)
 		return (1);
 	return (0);
 }
-
 
 int	get_redirect_file(t_redirct *p, char *str ,int i)
 {
@@ -48,9 +47,9 @@ t_redirct	*redirection_parse(t_tree *root,char *str , int *i)
 {
 	t_redirct	*p;
 	t_redirct	*temp;
-	// char		**tab;
-	int			j;
 
+	int			j;
+	p->i = 10;
 	j = *i;
 	j += 1;
 	p = malloc(sizeof(t_redirct));

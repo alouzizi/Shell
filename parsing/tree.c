@@ -125,7 +125,13 @@ void	tree(char *s)
 	}
 	if (!root || !root->s)
 		return ;
-	//print_tree(root, 0);
+	int d = 0;
+	while(root->right->s[d])
+		puts(root->right->s[d++]);
+	d =0;
+	while(root->left->s[d])
+		puts(root->left->s[d++]);
+	print_tree(root, 0);
 	operator_selection(root);
 }
 
@@ -153,25 +159,18 @@ int pipe_redirection(t_tree **temp, char *s, char **str, int j)
 	}
 	else
 		(*temp)->s[0] = data(1, s[i], 0);
-	if (j == 1)
+	(*temp)->left = newtree(str);
+	if (s[i] == '>' || s[i] == '<')
 	{
-		(*temp)->left = newtree(str);
-		if (s[i] == '>' || s[i] == '<')
-		{
-			r = redirection_parse(*temp, s, &i);
-			printf("iii = %d\n", r->i);
-			if (r->i == -1)
-				return (0);
-			//int d = 0;
-			//while(r->param[d])
-			// 	printf("param = %s\n", r->param[d++]);
-			// d =0;
-			// while(r->file[d])
-			// 	printf("file = %s\n", r->file[d++]);
+		r = redirection_parse(*temp, s, &i);
+		if (r->i == -1)
+			return (0);
+		if (j == 0)
+			(*temp)->left->s = r->param;
+		else
 			(*temp)->left->s = ft_strjoin2d((*temp)->left->s, r->param);
-			(*temp)->right = newtree(r->file);
-			return (i);
-		}
+		(*temp)->right = newtree(r->file);
+		return (i);
 	}
 	i++;
 	j = i;
