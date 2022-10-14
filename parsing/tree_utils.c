@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 04:57:35 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/13 23:56:49 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/14 15:49:59 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	print_tree(t_tree *root, int space)
 	printf("\n");
 	while (++i < space)
 		printf(" ");
-	printf("[%s]\n", root->s[0]);
+	if(root->s)
+		printf("[%s]\n", root->s[0]);
 	print_tree(root->left, space);
 }
 

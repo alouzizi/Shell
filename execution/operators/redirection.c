@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 09:46:28 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/13 23:01:02 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/14 17:00:09 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	redirecte_output(t_tree *root, int j)
 	i = 0;
 	while (root->right->s[i + 1])
 	{
-		f = open(root->right->s[i], O_CREAT | O_RDONLY, 0777);
+		f = open(root->right->s[i], O_CREAT | O_RDONLY | O_TRUNC, 0777);
 		if (f < 0)
 			return (-1);
 		i++;
@@ -29,7 +29,7 @@ int	redirecte_output(t_tree *root, int j)
 	if (j)
 		f = open(root->right->s[i], O_CREAT | O_WRONLY | O_APPEND, 0777);
 	else
-		f = open(root->right->s[i], O_CREAT | O_WRONLY, 0777);
+		f = open(root->right->s[i], O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	pid = fork();
 	if (!pid)
 	{
@@ -37,9 +37,10 @@ int	redirecte_output(t_tree *root, int j)
 			return (-1);
 		dup2(f, 1);
 		close(f);
-		if (isbuiltin(root->left->s))
-			exit(g_global.status);
-		execute_pipe(root->left->s);
+		operator_selection(root->left);
+		// if (isbuiltin(root->left->s))
+		exit(g_global.status);
+		// execute_pipe(root->left->s);
 	}
 	return (wait(0), close(f), 0);
 }
@@ -75,9 +76,10 @@ int	redirect_intput(t_tree *root)
 			return (-1);
 		dup2(f, STDIN_FILENO);
 		close(f);
-		if (isbuiltin(root->left->s))
+		operator_selection(root->left);
+		// if (isbuiltin(root->left->s))
 			exit(g_global.status);
-		execute_pipe(root->left->s);
+		// execute_pipe(root->left->s);
 	}
 	return (wait(0), close(f), 0);
 }

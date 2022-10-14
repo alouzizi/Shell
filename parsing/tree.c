@@ -31,31 +31,27 @@ int	operator_selection(t_tree *root)
 	return (0);
 }
 
-int	and_or(t_tree *root, char **str, char *s, int j)
+int	and_or(t_tree **root, char **str, char *s, int j)
 {
-	t_tree	*temp;
 	t_tree	*temp2;
 	int		l;
-
 	l = 0;
-	temp = NULL;
-	if (s[l] != s[l + 1] || j == 0)
-		return (ft_putendl_fd("Syntax Error", 2), l);
-	if (j == 1)
+	if (j != 1 && j != 2)
 	{
-		temp->s = str;
-		temp->right = NULL;
-		temp->left = NULL;
+		ft_putendl_fd("Syntax Error", 2);
+		return (0);
 	}
-	temp2 = malloc(sizeof(t_tree));
-	temp2->s = malloc(sizeof(char *) * 2);
-	temp2->s[0] = data(2, s[l], s[l + 1]);
+	temp2 = *root;
+	(*root) = newtree(NULL);
+	(*root)->s = malloc(sizeof(char *) * 2);
+	(*root)->s[0] = data(1, s[l], 0);
 	l++;
-	temp2->left = root;
-	root = temp2;
+	if (j == 1)
+		(*root)->left = newtree(str);
+	else
+		(*root)->left = temp2;
+	(*root)->right = newtree(NULL);
 	l++;
-	root->right = malloc(sizeof(t_tree));
-	temp = root->right;
 	return (l);
 }
 
@@ -79,25 +75,30 @@ void	tree(char *s)
 			str = transfer_list_to_2darray(get_cmd(s, &i));
 			j = 1;
 		}
-		if ((s[i] == '|' || s[i] == '<' || s[i] == '>') && s[i])
+		if (s[i] == '|' && s[i])
+		{
+			j = and_or(&root, str, &s[i], j);
+			if (j == 0)
+				return ;
+			i += j;
+			temp = root->right;
+			j = 0;
+		}
+		if ((s[i] == '<' || s[i] == '>') && s[i])
 		{
 			j = pipe_redirection(&temp, &s[i], str, j);
 			if (j == 0)
 				return ;
 			i += j;
-			j = 0;
+			j = 2;
 		}
 	}
 	if (j == 1)
-	{
 		temp->s = str;
-		temp->left = NULL;
-		temp->right = NULL;
-	}
 	if (!root || !root->s)
 		return ;
-	// print_tree(root, 0);
-	check_heredoc(root);
+	//print_tree(root, 0);
+	//check_heredoc(root);
 	operator_selection(root);
 }
 
@@ -107,11 +108,6 @@ int	pipe_redirection(t_tree **temp, char *s, char **str, int j)
 	int			i;
 
 	i = 0;
-	if ((j != 1 && s[i] == '|') || (j == 1 && str[0] == NULL))
-	{
-		ft_putendl_fd("Syntax Error", 2);
-		return (0);
-	}
 	(*temp)->s = malloc(sizeof(char *));
 	if ((s[i + 1] == '<' || s[i + 1] == '>') && (s[i] == '<' || s[i] == '>'))
 	{

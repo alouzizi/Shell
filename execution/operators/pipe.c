@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:15:24 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/13 22:49:36 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/14 16:50:37 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,24 @@ void	pipe_cmd_exec(t_tree *root, int index)
 void	pipe_right(int *fd, t_tree *root)
 {
 	dup_function(fd, 0);
-	if (root->right->s[0][0] == '|')
-	{
-		create_pipe(root->right);
-		exit(g_global.status);
-	}
-	else
-		pipe_cmd_exec(root, 0);
+	operator_selection(root->right);
+	// if (root->right->s[0][0] == '|')
+	// {
+	// 	create_pipe(root->right);
+	exit(g_global.status);
+	// }
+	// else
+	// 	pipe_cmd_exec(root, 0);
+	exit (0);
 }
 
 void	pipe_left(int *fd, t_tree *root)
 {
 	dup_function(fd, 1);
-	if (isbuiltin(root->left->s))
-		exit(g_global.status);
-	pipe_cmd_exec(root, 1);
+	operator_selection(root->left);
+	// if (isbuiltin(root->left->s))
+	 exit(g_global.status);
+	// pipe_cmd_exec(root, 1);
 }
 
 int	create_pipe(t_tree *root)
