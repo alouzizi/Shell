@@ -97,7 +97,7 @@ void	tree(char *s)
 	if (!root || !root->s)
 		return ;
 	// print_tree(root, 0);
-	// check_heredoc(root);
+	check_heredoc(root);
 	operator_selection(root);
 }
 
