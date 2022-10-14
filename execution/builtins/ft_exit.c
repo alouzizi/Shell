@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 08:16:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/29 23:20:18 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/14 12:58:29 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,25 @@ int	arg_isdigit(char *s)
 {
 	int	i;
 
-	i = -1;
-	while (s[++i])
+	i = 0;
+	while (s[i])
 	{
+		if (s[i] == '-' || s[i] == '+')
+			i++;
 		if (s[i] < '0' || s[i] > '9')
 			return (0);
+		i++;
 	}
 	return (1);
 }
 
 // turns ascii to unsigned long long
 
-unsigned long long	a_to_ull(char *str)
+long long	a_to_ll(char *str)
 {
-	int					i;
-	int					sign;
-	unsigned long long	result;
+	int			i;
+	int			sign;
+	long long	result;
 
 	i = 0;
 	sign = 1;
@@ -75,10 +78,10 @@ void	ft_exit(char **cmd)
 		ft_putendl_fd("exit", 1);
 		exit(g_global.status);
 	}
-	if (arg_isdigit(cmd[1]) && !cmd[2] && a_to_ull(cmd[1]) <= ULLONG_MAX)
+	if (!cmd[2] && arg_isdigit(cmd[1]) && a_to_ll(cmd[1]) >= LLONG_MIN && a_to_ll(cmd[1]) <= LLONG_MAX)
 	{
 		ft_putendl_fd("exit", 1);
-		g_global.status = (a_to_ull(cmd[1]) % 256);
+		g_global.status = (a_to_ll(cmd[1]) % 256);
 		exit(g_global.status);
 	}
 	else if (!arg_isdigit(cmd[1]))

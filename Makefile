@@ -40,7 +40,7 @@ RL_LIB = -L/goinfre/$(USER)/.brew/opt/readline/lib
 
 LIBFT = ./libft/libft.a
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = 
 
 RM = rm -f
 
