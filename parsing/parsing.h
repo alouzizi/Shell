@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:06:36 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/14 02:53:30 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/14 12:56:29 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ int			and_or(t_tree *root, char **str, char *s, int j);
 int			pipe_redirection(t_tree **temp, char *s, char **str, int j);
 void		open_heredoc(t_tree *root);
 void		check_heredoc(t_tree *root);
+char    **ft_split_space(char const *s);
 
 #endif
