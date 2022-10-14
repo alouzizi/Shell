@@ -2,7 +2,10 @@ NAME = minishell
 HEADER = minishell.h
 
 SRCS = main.c \
+	gnl/get_next_line.c \
+	gnl/get_next_line_utils.c \
 	parsing/quotes.c \
+	parsing/heredoc.c \
 	parsing/dollar.c \
 	parsing/signal.c \
 	parsing/tree.c \
@@ -18,7 +21,9 @@ SRCS = main.c \
 	execution/builtins/ft_unset.c \
 	execution/builtins/ft_exit.c \
 	execution/operators/pipe.c \
+	execution/operators/pipe_utils.c \
 	execution/operators/or.c \
+	execution/operators/and.c \
 	execution/operators/redirection.c \
 	execution/exec.c \
 	execution/exec_utils.c \

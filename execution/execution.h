@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:29:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/13 15:14:40 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/13 22:47:19 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int					has_value(char *arg, int *ptr);
 void				print_export_error(char *arg);
 void				sort_array_alphabetically(char **arr, int i, int j);
 void				add_var_to_env(char *var);
-void				add_to_value(char *arg, int i, int ptr);
+void				add_to_value(char *arg, int i, int ptr, int index);
 void				update_or_add_var(int b, int ptr, char *var);
 int					add_to_env(char *var, int b);
 int					add_to_export(char *cmd);
@@ -81,5 +81,9 @@ void				print_cnf_error(char *cmd);
 
 int					redirecte_output(t_tree *root, int j);
 int					redirect_intput(t_tree *root);
+
+int					or_operator(t_tree *root);
+int					and_operator(t_tree *root);
+int					simple_cmd(t_tree *root);
 
 #endif

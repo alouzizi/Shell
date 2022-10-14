@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:15:24 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/13 08:08:05 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/13 22:49:36 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,6 @@ void	dup_function(int *fd, int index)
 		close(fd[0]);
 		close(fd[1]);
 	}
-}
-
-void	execute_pipe(char **arr)
-{
-	char	**paths;
-	char	*path;
-
-	paths = get_path(arr[0]);
-	path = check_access(paths);
-	if (!path)
-	{
-		print_cnf_error(arr[0]);
-		exit (g_global.status);
-	}
-	execve(path, arr, g_global.n_env);
 }
 
 void	pipe_cmd_exec(t_tree *root, int index)

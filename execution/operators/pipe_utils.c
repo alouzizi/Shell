@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   or.c                                               :+:      :+:    :+:   */
+/*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/29 00:14:59 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/13 22:47:36 by ooumlil          ###   ########.fr       */
+/*   Created: 2022/10/13 22:48:21 by ooumlil           #+#    #+#             */
+/*   Updated: 2022/10/13 22:49:41 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-int	or_operator(t_tree *root)
+void	execute_pipe(char **arr)
 {
-	if (simple_cmd(root->left))
-		simple_cmd(root->right);
-	return (0);
+	char	**paths;
+	char	*path;
+
+	paths = get_path(arr[0]);
+	path = check_access(paths);
+	if (!path)
+	{
+		print_cnf_error(arr[0]);
+		exit (g_global.status);
+	}
+	execve(path, arr, g_global.n_env);
 }

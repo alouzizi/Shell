@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   or.c                                               :+:      :+:    :+:   */
+/*   and.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/29 00:14:59 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/13 22:47:36 by ooumlil          ###   ########.fr       */
+/*   Created: 2022/10/13 22:35:07 by ooumlil           #+#    #+#             */
+/*   Updated: 2022/10/13 22:37:44 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-int	or_operator(t_tree *root)
+int	simple_cmd(t_tree *root)
 {
-	if (simple_cmd(root->left))
+	return (execute(root->s));
+}
+
+int	and_operator(t_tree *root)
+{
+	if (!simple_cmd(root->left))
 		simple_cmd(root->right);
 	return (0);
 }

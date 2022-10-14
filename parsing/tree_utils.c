@@ -6,11 +6,50 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 04:57:35 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/09/29 23:01:09 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/13 23:56:49 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+int	normall_collect(t_node **cmd, char *s, int *i)
+{
+	t_node	*node;
+	t_node	*list;
+	int		star;
+	int		end;
+
+	list = NULL;
+	star = *i;
+	while (s[*i] && s[*i] != '\'' && s[*i] != '"' && s[*i] != ' '
+		&& s[*i] != '$')
+	{
+		if (s[*i] == '|' || s[*i] == '<' || s[*i] == '>' || s[*i] == '&')
+			break ;
+		(*i)++;
+	}
+	end = (*i) - 1;
+	node = create_node(s, star, end);
+	if (s[*i] == '$' && s[*i])
+	{
+		if (node->s)
+			node->s = ft_strjoin(node->s, expand_dollar(s, star, 0, ' '));
+		else
+			node->s = expand_dollar(s, star, 0, ' ');
+		while (s[*i] && (s[*i] != ' ' && s[*i] != '|' && s[*i] != '"' && s[*i]
+				!= '<' && s[*i] != '&' && s[*i] != '|' && s[*i] != '>'))
+			(*i)++;
+	}
+	if ((s[*i] == '\'' || s[*i] == '"') && s[*i])
+	{
+		handle_quotes(&list, s, s[*i], i);
+		node->s = ft_strjoin(node->s, list->s);
+		free(list->s);
+		list = NULL;
+	}
+	ft_lstadd_back(cmd, node);
+	return (0);
+}
 
 t_tree	*newtree(char **content)
 {

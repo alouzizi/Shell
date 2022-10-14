@@ -34,45 +34,6 @@ t_node	*get_cmd(char *s, int *i)
 	return (cmd);
 }
 
-int	normall_collect(t_node **cmd, char *s, int *i)
-{
-	t_node	*node;
-	t_node	*list;
-	int		star;
-	int		end;
-
-	list = NULL;
-	star = *i;
-	while (s[*i] && s[*i] != '\'' && s[*i] != '"' && s[*i] != ' '
-		&& s[*i] != '$')
-	{
-		if (s[*i] == '|' || s[*i] == '<' || s[*i] == '>' || s[*i] == '&')
-			break ;
-		(*i)++;
-	}
-	end = (*i) - 1;
-	node = create_node(s, star, end);
-	if (s[*i] == '$' && s[*i])
-	{
-		if (node->s)
-			node->s = ft_strjoin(node->s, expand_dollar(s, star, 0, ' '));
-		else
-			node->s = expand_dollar(s, star, 0, ' ');
-		while (s[*i] && (s[*i] != ' ' && s[*i] != '|' && s[*i] != '"' && s[*i]
-				!= '<' && s[*i] != '&' && s[*i] != '|' && s[*i] != '>'))
-			(*i)++;
-	}
-	if ((s[*i] == '\'' || s[*i] == '"') && s[*i])
-	{
-		handle_quotes(&list, s, s[*i], i);
-		node->s = ft_strjoin(node->s, list->s);
-		free(list->s);
-		list = NULL;
-	}
-	ft_lstadd_back(cmd, node);
-	return (0);
-}
-
 void	handle_quotes(t_node **cmd, char *s, char c, int *i)
 {
 	t_node	*node;

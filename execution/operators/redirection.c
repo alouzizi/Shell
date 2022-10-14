@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 09:46:28 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/13 15:20:27 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/13 23:01:02 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ int	redirecte_output(t_tree *root, int j)
 			exit(g_global.status);
 		execute_pipe(root->left->s);
 	}
-	wait(NULL);
-	close(f);
-	return (0);
+	return (wait(0), close(f), 0);
 }
 
 int	redirect_intput(t_tree *root)
@@ -81,7 +79,5 @@ int	redirect_intput(t_tree *root)
 			exit(g_global.status);
 		execute_pipe(root->left->s);
 	}
-	wait(NULL);
-	close(f);
-	return (0);
+	return (wait(0), close(f), 0);
 }

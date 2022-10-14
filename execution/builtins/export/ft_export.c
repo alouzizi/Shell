@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:36:25 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/13 15:24:29 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/13 22:46:58 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 // to the the already existing variable in the end,
 // in case the variable isnt in the array it adds it
 
-void	add_to_value(char *arg, int i, int ptr)
+void	add_to_value(char *arg, int i, int ptr, int index)
 {
-	int		index;
 	char	*value;
 
 	index = has_value(arg, &ptr);
@@ -84,7 +83,7 @@ int	check_arg_export(char *arg, int i)
 	if (arg[i] == '=')
 		return (add_to_env(arg, 0), 1);
 	else if (arg[i] == '+' && arg[i + 1] == '=')
-		return (add_to_value(arg, -1, 0), 1);
+		return (add_to_value(arg, -1, 0, 0), 1);
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 23:47:28 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/13 14:48:25 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/13 22:34:09 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*expand_dollar_2(char *s, int i)
 	else if (ft_isdigit(s[i + 1]) || ft_isalpha(s[i + 1]) || s[i + 1] == '_')
 	{
 		++i;
-		while (ft_isdigit(s[i]) || ft_isalpha(s[i]) || s[i] == '_' )
+		while (ft_isdigit(s[i]) || ft_isalpha(s[i]) || s[i] == '_')
 		{
 			start++;
 			i++;
