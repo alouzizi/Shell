@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:52:24 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/13 04:05:54 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/14 12:39:08 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ void	ft_cd(char **cmd)
 	char	*home;
 
 	home = get_env("HOME");
-	if (!home)
-	{
-		ft_putendl_fd("minishell: cd: HOME not set", 2);
-		g_global.status = 1;
-		return ;
-	}
 	if (!cmd[1])
 	{
+		if (!home)
+		{
+			ft_putendl_fd("minishell: cd: HOME not set", 2);
+			g_global.status = 1;
+			return ;
+		}
 		if (chdir(home))
 			cd_error_printing(home);
 	}

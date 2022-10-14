@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:29:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/13 22:47:19 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/14 12:48:43 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void				cd_error_printing(char *arg);
 char				*get_env(char *str);
 
 //exit
-unsigned long long	a_to_ull(char *str);
+long long			a_to_ll(char *str);
 void				ft_exit(char **cmd);
 
 // pipe
