@@ -36,12 +36,15 @@ int	and_or(t_tree **root, char **str, char *s, int j)
 	t_tree	*temp2;
 	int		l;
 	l = 0;
-	if (j != 1 && j != 2)
+	static int i =0;
+	if (j != 1 && j != 2 && j != 3)
 	{
 		ft_putendl_fd("Syntax Error", 2);
 		return (0);
 	}
-	temp2 = *root;
+	if (root)
+		temp2 = *root;
+	i++;
 	(*root) = newtree(NULL);
 	(*root)->s = malloc(sizeof(char *) * 2);
 	(*root)->s[0] = data(1, s[l], 0);
@@ -52,6 +55,7 @@ int	and_or(t_tree **root, char **str, char *s, int j)
 		(*root)->left = temp2;
 	(*root)->right = newtree(NULL);
 	l++;
+	(*root)->right->s = transfer_list_to_2darray(get_cmd(s, &l));
 	return (l);
 }
 
@@ -82,7 +86,7 @@ void	tree(char *s)
 				return ;
 			i += j;
 			temp = root->right;
-			j = 0;
+			j = 3;
 		}
 		if ((s[i] == '<' || s[i] == '>') && s[i])
 		{
@@ -98,7 +102,7 @@ void	tree(char *s)
 	if (!root || !root->s)
 		return ;
 	//print_tree(root, 0);
-	//check_heredoc(root);
+	 check_heredoc(root);
 	operator_selection(root);
 }
 

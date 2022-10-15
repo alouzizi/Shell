@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:15:24 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/14 16:50:37 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:14:46 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ void	pipe_right(int *fd, t_tree *root)
 	// }
 	// else
 	// 	pipe_cmd_exec(root, 0);
-	exit (0);
 }
 
 void	pipe_left(int *fd, t_tree *root)
 {
+	puts("hh");
 	dup_function(fd, 1);
 	operator_selection(root->left);
 	// if (isbuiltin(root->left->s))

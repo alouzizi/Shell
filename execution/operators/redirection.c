@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 09:46:28 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/14 17:00:09 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:26:47 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,18 @@ int	redirecte_output(t_tree *root, int j)
 		i++;
 	}
 	if (j)
-		f = open(root->right->s[i], O_CREAT | O_WRONLY | O_APPEND, 0777);
+	{
+		if ((f = open(root->right->s[i], O_CREAT | O_WRONLY | O_APPEND, 0777)) < 0)
+			perror(PRMPT_ERR);
+	}
 	else
-		f = open(root->right->s[i], O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	{
+		if ((f = open(root->right->s[i], O_CREAT | O_WRONLY | O_TRUNC, 0777)) < 0)
+			perror(PRMPT_ERR);
+	}
 	pid = fork();
 	if (!pid)
 	{
-		if (f < 0)
-			return (-1);
 		dup2(f, 1);
 		close(f);
 		operator_selection(root->left);
