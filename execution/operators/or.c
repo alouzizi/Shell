@@ -6,15 +6,35 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 00:14:59 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/13 22:47:36 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 09:43:00 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-int	or_operator(t_tree *root)
+int	operator_selection(t_tree *root, t_vars *v)
 {
-	if (simple_cmd(root->left))
-		simple_cmd(root->right);
+	if (!builtincmp(root->s[0], "|"))
+		return (create_pipe(root, v));
+	else if (!builtincmp(root->s[0], "||"))
+		return (or_operator(root, v));
+	else if (!builtincmp(root->s[0], "&&"))
+		return (and_operator(root, v));
+	else if (!builtincmp(root->s[0], ">"))
+		return (redirecte_output(root, 0, v));
+	else if (!builtincmp(root->s[0], "<"))
+		return (redirect_intput(root, v));
+	else if (!builtincmp(root->s[0], ">>"))
+		return (redirecte_output(root, 1, v));
+	else
+		return (simple_cmd(root, v));
+	return (0);
+}
+
+
+int	or_operator(t_tree *root, t_vars *v)
+{
+	if (simple_cmd(root->left, v))
+		simple_cmd(root->right, v);
 	return (0);
 }

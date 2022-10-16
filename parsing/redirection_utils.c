@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 09:34:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/15 20:42:49 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/16 08:23:32 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	get_redirect_file(t_redirct *p, char *str, int i)
 	return (i);
 }
 
-t_redirct	*redirection_parse(t_tree *root, char *str, int *i)
+t_redirct	*redirection_parse(t_tree *root, char *str, int *i, t_vars *v)
 {
 	t_redirct	*p;
 	t_redirct	*temp;
@@ -63,12 +63,12 @@ t_redirct	*redirection_parse(t_tree *root, char *str, int *i)
 	}
 	*i = get_redirect_file(p, str, *i);
 	if ((str[*i]) && (str[*i] != '<' || str[*i] != '>'))
-		p->param = transfer_list_to_2darray(get_cmd(str, &*i));
+		p->param = transfer_list_to_2darray(get_cmd(str, &*i, v));
 	else
 		p->param = NULL;
 	if ((str[*i]) && (str[*i] == '<' || str[*i] == '>'))
 	{
-		temp = redirection_parse(root, str, &*i);
+		temp = redirection_parse(root, str, &*i, v);
 		p->param = ft_strjoin2d(p->param, temp->param);
 		p->file = ft_strjoin2d(p->file, temp->file);
 		if (temp->j == -1)

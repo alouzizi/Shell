@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 22:40:19 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/15 02:00:47 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 13:03:38 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_echo(char **cmd)
 
 	i = 1;
 	check = 0;
-	if (!cmd[1])
+	if (!cmd[1] || cmd[1][0] == '\0')
 		return (ft_putstr_fd("\n", 1));
 	while (cmd[i] && !check_n(cmd[i]))
 	{

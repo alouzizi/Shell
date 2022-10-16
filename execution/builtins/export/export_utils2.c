@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:20:03 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/16 00:49:25 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 09:33:34 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ int	has_value(char *arg, int *ptr)
 
 // self-explanatory
 
-void	update_or_add_var(int b, int ptr, char *var)
+void	update_or_add_var(int b, int ptr, char *var, char **env)
 {
 	if (b)
-		g_global.n_env[ptr] = ft_strdup(var);
+		env[ptr] = ft_strdup(var);
 	else
-		add_var_to_env(var);
+		add_var_to_env(var, env);
 }
 
 // should i even explain

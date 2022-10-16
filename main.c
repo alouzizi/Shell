@@ -6,13 +6,13 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 15:04:14 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/14 12:06:19 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 12:52:27 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	prompt_display(void)
+void	prompt_display(t_vars *v)
 {
 	char	*s;
 
@@ -28,7 +28,7 @@ void	prompt_display(void)
 			exit (g_global.status);
 		}
 		if (!check_quotes(s, 0, 0))
-			tree(s);
+			tree(s, v);
 		else
 		{
 			g_global.status = 1;
@@ -39,10 +39,12 @@ void	prompt_display(void)
 
 int	main(int ac, char **av, char **env)
 {
+	t_vars	v;
+
 	if (ac != 1 || av[1])
 		return (1);
 	g_global.status = 0;
-	ft_update_env(env);
+	v.env = ft_update_env(env);
 	signals_handling();
-	prompt_display();
+	prompt_display(&v);
 }

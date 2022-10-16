@@ -6,13 +6,13 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 04:57:35 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/16 00:59:09 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 08:18:38 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-int	normall_collect(t_node **cmd, char *s, int *i)
+int	normall_collect(t_node **cmd, char *s, int *i, t_vars *v)
 {
 	t_node	*node;
 	t_node	*list;
@@ -33,16 +33,16 @@ int	normall_collect(t_node **cmd, char *s, int *i)
 	if (s[*i] == '$' && s[*i])
 	{
 		if (node->s)
-			node->s = ft_strjoin(node->s, expand_dollar(s, star, 0, ' '), 1);
+			node->s = ft_strjoin(node->s, expand_dollar(s, star, 0, ' ', v), 1);
 		else
-			node->s = expand_dollar(s, star, 0, ' ');
+			node->s = expand_dollar(s, star, 0, ' ', v);
 		while (s[*i] && (s[*i] != ' ' && s[*i] != '|' && s[*i] != '"' && s[*i]
 				!= '<' && s[*i] != '&' && s[*i] != '|' && s[*i] != '>'))
 			(*i)++;
 	}
 	if ((s[*i] == '\'' || s[*i] == '"') && s[*i])
 	{
-		handle_quotes(&list, s, s[*i], i);
+		handle_quotes(&list, s, s[*i], i, v);
 		node->s = ft_strjoin(node->s, list->s, 3);
 		list = NULL;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:15:24 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/15 20:14:46 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/16 10:38:25 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,42 +28,22 @@ void	dup_function(int *fd, int index)
 	}
 }
 
-void	pipe_cmd_exec(t_tree *root, int index)
-{
-	if (!index)
-	{
-		if (isbuiltin(root->right->s))
-			exit(g_global.status);
-		execute_pipe(root->right->s);
-	}
-	else
-		execute_pipe(root->left->s);
-}
 
-void	pipe_right(int *fd, t_tree *root)
+void	pipe_right(int *fd, t_tree *root, t_vars *v)
 {
 	dup_function(fd, 0);
-	operator_selection(root->right);
-	// if (root->right->s[0][0] == '|')
-	// {
-	// 	create_pipe(root->right);
+	operator_selection(root->right, v);
 	exit(g_global.status);
-	// }
-	// else
-	// 	pipe_cmd_exec(root, 0);
 }
 
-void	pipe_left(int *fd, t_tree *root)
+void	pipe_left(int *fd, t_tree *root, t_vars *v)
 {
-	puts("hh");
 	dup_function(fd, 1);
-	operator_selection(root->left);
-	// if (isbuiltin(root->left->s))
-	 exit(g_global.status);
-	// pipe_cmd_exec(root, 1);
+	operator_selection(root->left, v);
+	exit(g_global.status);
 }
 
-int	create_pipe(t_tree *root)
+int	create_pipe(t_tree *root, t_vars *v)
 {
 	int	*fd;
 	int	id;
@@ -76,10 +56,10 @@ int	create_pipe(t_tree *root)
 		perror("Pipe");
 	id = fork();
 	if (!id)
-		pipe_left(fd, root);
+		pipe_left(fd, root, v);
 	id = fork();
 	if (!id)
-		pipe_right(fd, root);
+		pipe_right(fd, root, v);
 	close(fd[1]);
 	close(fd[0]);
 	waitpid(id, &status, 0);

@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 22:44:12 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/16 00:46:46 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 13:00:28 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 // get_path join the cmd with the path in PATH in env arr
 // i. e. /bin/ls
 
-char	**get_path(char *s)
+char	*get_path(char *s, t_vars *v)
 {
 	int		i;
 	char	**paths;
+	char	*path;
 
-	paths = ft_split(get_env("PATH"), ':');
+	paths = ft_split(get_env("PATH", v), ':');
 	if (!paths)
 		return (NULL);
 	i = -1;
@@ -30,7 +31,20 @@ char	**get_path(char *s)
 		paths[i] = ft_strjoin(paths[i], s, 1);
 	}
 	paths[i] = 0;
-	return (paths);
+	i = -1;
+	path = 0;
+	while (paths[++i])
+	{
+		if (!access(paths[i], X_OK | F_OK))
+		{
+			path = ft_strdup(paths[i]);
+			break ;
+		}
+	}
+	free_array(paths);
+	if (!path)
+		return (NULL);
+	return (path);
 }
 
 void	exit_status(int status)

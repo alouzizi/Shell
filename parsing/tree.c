@@ -12,26 +12,7 @@
 
 #include "parsing.h"
 
-int	operator_selection(t_tree *root)
-{
-	if (!builtincmp(root->s[0], "|"))
-		return (create_pipe(root));
-	else if (!builtincmp(root->s[0], "||"))
-		return (or_operator(root));
-	else if (!builtincmp(root->s[0], "&&"))
-		return (and_operator(root));
-	else if (!builtincmp(root->s[0], ">"))
-		return (redirecte_output(root, 0));
-	else if (!builtincmp(root->s[0], "<"))
-		return (redirect_intput(root));
-	else if (!builtincmp(root->s[0], ">>"))
-		return (redirecte_output(root, 1));
-	else
-		return (simple_cmd(root));
-	return (0);
-}
-
-int	and_or(t_tree **root, char **str, char *s, int j)
+int	and_or(t_tree **root, char **str, char *s, int j, t_vars *v)
 {
 	t_tree	*temp2;
 	int		l;
@@ -55,11 +36,11 @@ int	and_or(t_tree **root, char **str, char *s, int j)
 		(*root)->left = temp2;
 	(*root)->right = newtree(NULL);
 	l++;
-	(*root)->right->s = transfer_list_to_2darray(get_cmd(s, &l));
+	(*root)->right->s = transfer_list_to_2darray(get_cmd(s, &l, v));
 	return (l);
 }
 
-void	tree(char *s)
+void	tree(char *s, t_vars *v)
 {
 	t_tree	*root;
 	t_tree	*temp;
@@ -76,12 +57,12 @@ void	tree(char *s)
 	{
 		if (s[i] != '|' && s[i] != '<' && s[i] != '>' && s[i] != '&')
 		{
-			str = transfer_list_to_2darray(get_cmd(s, &i));
+			str = transfer_list_to_2darray(get_cmd(s, &i, v));
 			j = 1;
 		}
 		if (s[i] == '|' && s[i])
 		{
-			j = and_or(&root, str, &s[i], j);
+			j = and_or(&root, str, &s[i], j, v);
 			if (j == 0)
 				return ;
 			i += j;
@@ -90,7 +71,7 @@ void	tree(char *s)
 		}
 		if ((s[i] == '<' || s[i] == '>') && s[i])
 		{
-			j = pipe_redirection(&temp, &s[i], str, j);
+			j = pipe_redirection(&temp, &s[i], str, j, v);
 			if (j == 0)
 				return ;
 			i += j;
@@ -101,12 +82,11 @@ void	tree(char *s)
 		temp->s = str;
 	if (!root || !root->s)
 		return ;
-	//print_tree(root, 0);
-	 check_heredoc(root);
-	operator_selection(root);
+	// print_tree(root, 0);
+	operator_selection(root, v);
 }
 
-int	pipe_redirection(t_tree **temp, char *s, char **str, int j)
+int	pipe_redirection(t_tree **temp, char *s, char **str, int j, t_vars *v)
 {
 	t_redirct	*r;
 	int			i;
@@ -128,7 +108,7 @@ int	pipe_redirection(t_tree **temp, char *s, char **str, int j)
 	(*temp)->left = newtree(str);
 	if (s[i] == '>' || s[i] == '<')
 	{
-		r = redirection_parse(*temp, s, &i);
+		r = redirection_parse(*temp, s, &i, v);
 		if (r->j == -1)
 			return (0);
 		if (j == 0)
@@ -140,7 +120,7 @@ int	pipe_redirection(t_tree **temp, char *s, char **str, int j)
 	}
 	i++;
 	j = i;
-	str = transfer_list_to_2darray(get_cmd(s, &j));
+	str = transfer_list_to_2darray(get_cmd(s, &j, v));
 	if (str[0])
 		(*temp)->right = newtree(NULL);
 	else

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 09:46:28 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/15 20:26:47 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/16 08:35:05 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-int	redirecte_output(t_tree *root, int j)
+int	redirecte_output(t_tree *root, int j, t_vars *v)
 {
 	int	pid;
 	int	i;
@@ -41,7 +41,7 @@ int	redirecte_output(t_tree *root, int j)
 	{
 		dup2(f, 1);
 		close(f);
-		operator_selection(root->left);
+		operator_selection(root->left, v);
 		// if (isbuiltin(root->left->s))
 		exit(g_global.status);
 		// execute_pipe(root->left->s);
@@ -49,7 +49,7 @@ int	redirecte_output(t_tree *root, int j)
 	return (wait(0), close(f), 0);
 }
 
-int	redirect_intput(t_tree *root)
+int	redirect_intput(t_tree *root, t_vars *v)
 {
 	int	pid;
 	int	i;
@@ -80,7 +80,7 @@ int	redirect_intput(t_tree *root)
 			return (-1);
 		dup2(f, STDIN_FILENO);
 		close(f);
-		operator_selection(root->left);
+		operator_selection(root->left, v);
 		// if (isbuiltin(root->left->s))
 			exit(g_global.status);
 		// execute_pipe(root->left->s);

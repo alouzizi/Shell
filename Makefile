@@ -15,11 +15,9 @@ SRCS = main.c \
 	execution/builtins/ft_pwd.c \
 	execution/builtins/ft_env.c \
 	execution/builtins/ft_cd.c \
-	execution/builtins/ft_minishell.c \
 	execution/builtins/ft_unset.c \
 	execution/builtins/ft_exit.c \
 	execution/operators/pipe.c \
-	execution/operators/pipe_utils.c \
 	execution/operators/or.c \
 	execution/operators/and.c \
 	execution/operators/redirection.c \
@@ -38,7 +36,7 @@ RL_LIB = -L/goinfre/$(USER)/.brew/opt/readline/lib
 
 LIBFT = ./libft/libft.a
 
-CFLAGS = 
+CFLAGS = -Wall -Wextra -Werror
 
 RM = rm -f
 

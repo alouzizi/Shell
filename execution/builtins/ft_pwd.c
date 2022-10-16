@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 22:40:13 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/27 07:18:44 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 09:10:48 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	ft_pwd(void)
 {
 	char	s[1024];
 
-	getcwd(s, sizeof(s));
+	if (!getcwd(s, sizeof(s)))
+		perror(PRMPT_ERR);
 	ft_putstr_fd(s, 1);
 	ft_putstr_fd("\n", 1);
 	g_global.status = 0;

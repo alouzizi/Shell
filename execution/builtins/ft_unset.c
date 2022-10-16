@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 09:07:12 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/16 03:15:50 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 13:11:20 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,25 @@ void	free_array(char **arr)
 // remove_from_env removes a var from env
 // simply
 
-void	copy_after_unset(char **copy, int i)
+char	**copy_after_unset(char **copy, int i)
 {
-	int	u;
-	int	j;
+	int		u;
+	int		j;
+	char	**env;
 
 	u = -1;
 	j = 0;
-	g_global.n_env = malloc(sizeof(char *) * arr_len(copy));
+	env = malloc(sizeof(char *) * arr_len(copy));
 	while (copy[++u])
 	{
 		if (u != i)
 		{
-			g_global.n_env[j] = ft_strdup(copy[u]);
+			env[j] = ft_strdup(copy[u]);
 			j++;
 		}
 	}
-	g_global.n_env[j] = NULL;
+	env[j] = 0;
+	return (env);
 }
 
 void	print_unset_error(char *arg)
@@ -52,7 +54,7 @@ void	print_unset_error(char *arg)
 	g_global.status = 1;
 }
 
-int	remove_from_env(char *cmd)
+int	remove_from_env(char *cmd, char **env)
 {
 	char	**copy;
 	char	*name;
@@ -63,14 +65,14 @@ int	remove_from_env(char *cmd)
 		return (0);
 	if (!ft_isalpha(cmd[0]) || !check_var_name(cmd))
 		return (print_unset_error(cmd), 1);
-	while (g_global.n_env[++i])
+	while (env[++i])
 	{
-		name = get_name(g_global.n_env[i], '=');
+		name = get_name(env[i], '=');
 		if (!ft_strcmp(name, cmd))
 		{
-			copy = ft_arr_copy(g_global.n_env);
-			// free_array(g_global.n_env);
-			copy_after_unset(copy, i);
+			copy = ft_arr_copy(env);
+			free_array(env);
+			env = copy_after_unset(copy, i);
 			free(name);
 			free_array(copy);
 			break ;
@@ -82,7 +84,7 @@ int	remove_from_env(char *cmd)
 
 // ft_unset with no args does nothing
 
-void	ft_unset(char **cmd)
+void	ft_unset(char **cmd, char **env)
 {
 	int	i;
 
@@ -93,6 +95,6 @@ void	ft_unset(char **cmd)
 	else
 	{
 		while (cmd[++i])
-			remove_from_env(cmd[i]);
+			remove_from_env(cmd[i], env);
 	}
 }

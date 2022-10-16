@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:11:06 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/16 03:10:57 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 10:25:57 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,39 @@ char	**ft_arr_copy(char **arr)
 	return (copy);
 }
 
-void	copy_to_env(char **arr)
+char	**copy_to_env(char **arr, int arr_size)
 {
+	char	**env;
 	int		i;
 
 	i = 0;
+	env = (char **)malloc(sizeof(char *) * (arr_size + 1));
+	if (!env)
+		return (NULL);
 	while (arr[i])
 	{
-		g_global.n_env[i] = ft_strdup(arr[i]);
+		env[i] = ft_strdup(arr[i]);
 		i++;
 	}
-	g_global.n_env[i] = 0;
+	env[i] = 0;
+	return (env);
 }
 
 // directly adds the var to the env arr
 
-void	add_var_to_env(char *var)
+void	add_var_to_env(char *var, char **env)
 {
 	int		arr_size;
 	char	**copy;
 
-	arr_size = arr_len(g_global.n_env);
-	copy = ft_arr_copy(g_global.n_env);
-	// free_array(g_global.n_env);
-	g_global.n_env = (char **)malloc(sizeof(char *) * (arr_size + 1));
-	copy_to_env(copy);
-	g_global.n_env[arr_size] = ft_strdup(var);
-	g_global.n_env[arr_size + 1] = 0;
+	arr_size = arr_len(env);
+	copy = ft_arr_copy(env);
+	free_array(env);
+	env = copy_to_env(copy, arr_size);
+	if (!env)
+		return ;
+	env[arr_size] = ft_strdup(var);
+	env[arr_size + 1] = 0;
 	free_array(copy);
 }
 
@@ -66,18 +72,20 @@ void	add_var_to_env(char *var)
 // In case of its existence, its ignored. If it isnt in the env
 // arr its added
 
-int	add_variable(char *arg)
+int	add_variable(char *arg, char **env)
 {
-	int	i;
+	char	*name;
+	int		i;
 
 	i = -1;
-	while (g_global.n_env[++i])
-	{
-		if (!ft_strncmp(arg, g_global.n_env[i], ft_strlen(arg)))
-			// if (!ft_strncmp(arg, g_global.n_env[i], ft_strlen(g_global.n_env[i])))
-				return (1);
+	while (env[++i])
+	{	
+		name = get_name(env[i], '=');
+		if (!ft_strcmp(arg, name))
+			return (free(name), 1);
+		free(name);
 	}
-	add_var_to_env(arg);
+	add_var_to_env(arg, env);
 	return (0);
 }
 
