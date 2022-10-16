@@ -26,7 +26,6 @@
 # include <termios.h>
 # include <limits.h>
 # include "structs.h"
-# include "gnl/get_next_line.h"
 # include "libft/libft.h"
 # include "parsing/parsing.h"
 # include "execution/execution.h"

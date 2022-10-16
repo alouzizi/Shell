@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 04:57:35 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/14 15:49:59 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/16 00:59:09 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	normall_collect(t_node **cmd, char *s, int *i)
 	if (s[*i] == '$' && s[*i])
 	{
 		if (node->s)
-			node->s = ft_strjoin(node->s, expand_dollar(s, star, 0, ' '));
+			node->s = ft_strjoin(node->s, expand_dollar(s, star, 0, ' '), 1);
 		else
 			node->s = expand_dollar(s, star, 0, ' ');
 		while (s[*i] && (s[*i] != ' ' && s[*i] != '|' && s[*i] != '"' && s[*i]
@@ -43,8 +43,7 @@ int	normall_collect(t_node **cmd, char *s, int *i)
 	if ((s[*i] == '\'' || s[*i] == '"') && s[*i])
 	{
 		handle_quotes(&list, s, s[*i], i);
-		node->s = ft_strjoin(node->s, list->s);
-		free(list->s);
+		node->s = ft_strjoin(node->s, list->s, 3);
 		list = NULL;
 	}
 	ft_lstadd_back(cmd, node);

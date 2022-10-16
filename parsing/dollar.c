@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 23:47:28 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/13 22:34:09 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 00:52:47 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*expand_dollar(char *s, int start, int lvl, char c)
 	{
 		dollar = expand_dollar_2(s, i);
 		if (dollar)
-			expand = ft_strjoin(expand, dollar);
+			expand = ft_strjoin(expand, dollar, 1);
 	}
 	return (expand);
 }
@@ -54,7 +54,7 @@ char	*expand_dollar_2(char *s, int i)
 			dollar = ft_itoa(g_global.status);
 		else
 			return (expand_dollar(s, i, 1, '"'));
-		return (ft_strjoin(dollar, expand_dollar(s, i + 2, 0, '"')));
+		return (ft_strjoin(dollar, expand_dollar(s, i + 2, 0, '"'), 1));
 	}
 	else if (ft_isdigit(s[i + 1]) || ft_isalpha(s[i + 1]) || s[i + 1] == '_')
 	{
@@ -76,7 +76,7 @@ char	*expand_dollar_2(char *s, int i)
 		if (!dollar)
 			return (expand_dollar(s, i, 0, '"'));
 		dollar = ft_strdup(dollar);
-		dollar = ft_strjoin(dollar, expand_dollar(s, i, 0, '"'));
+		dollar = ft_strjoin(dollar, expand_dollar(s, i, 0, '"'), 1);
 	}
 	return (dollar);
 }

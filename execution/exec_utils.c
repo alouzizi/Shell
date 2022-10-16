@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 22:44:12 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/01 13:43:25 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 00:46:46 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ char	**get_path(char *s)
 	i = -1;
 	while (paths[++i])
 	{
-		paths[i] = ft_strjoin(paths[i], "/");
-		paths[i] = ft_strjoin(paths[i], s);
+		paths[i] = ft_strjoin(paths[i], "/", 1);
+		paths[i] = ft_strjoin(paths[i], s, 1);
 	}
 	paths[i] = 0;
 	return (paths);

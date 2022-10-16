@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:29:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/14 12:48:43 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 00:46:58 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void				ft_env(void);
 
 //export
 char				**ft_arr_copy(char **arr);
-char				*ft_strjoin_no_free(char *s1, char const *s2);
 int					check_arg_export(char *arg, int i);
 int					arr_len(char **arr);
 int					ft_isalnum_export(int c);

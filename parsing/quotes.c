@@ -58,14 +58,12 @@ void	handle_quotes(t_node **cmd, char *s, char c, int *i)
 	if ((s[*i] == '\'' || s[*i] == '"') && s[*i])
 	{
 		handle_quotes(&list, s, s[*i], i);
-		node->s = ft_strjoin(node->s, list->s);
-		free(list->s);
+		node->s = ft_strjoin(node->s, list->s, 3);
 	}
 	if (s[*i] != ' ' && s[*i])
 	{
 		normall_collect(&list, s, i);
-		node->s = ft_strjoin(node->s, list->s);
-		free(list->s);
+		node->s = ft_strjoin(node->s, list->s, 3);
 	}
 	ft_lstadd_back(cmd, node);
 }

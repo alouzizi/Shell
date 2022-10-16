@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   star.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 22:17:33 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/13 15:22:14 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/16 00:58:34 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*open_directory(void)
 		while (de)
 		{
 			if (de->d_name[0] != '.')
-				value = ft_strjoin(ft_strjoin(value, " "), de->d_name);
+				value = ft_strjoin(ft_strjoin(value, " ", 2), de->d_name, 1);
 			de = readdir(dr);
 		}
 		closedir(dr);
@@ -73,7 +73,7 @@ char	*replace_star(char *line)
 		{
 			while (line[i] == '*' && line[i])
 				i++;
-			expand = ft_strjoin(expand, open_directory());
+			expand = ft_strjoin(expand, open_directory(), 1);
 		}
 		if (i < len)
 			expand = ft_strjoin_char(expand, &line[i]);

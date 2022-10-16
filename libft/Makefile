@@ -56,12 +56,12 @@ AR = @ar -rcs
 
 all: $(NAME)
 
-$(NAME):$(OBJS)
+$(NAME):$(OBJS) $(INC)
 	@$(AR) $(NAME) $(OBJS)
 
 %.o : %.c $(INC)
 	@$(CC) $(CFLAGS) -c $< -o $@
-	
+
 clean:
 	@$(RM) $(OBJS)
 
