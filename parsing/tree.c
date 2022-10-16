@@ -26,6 +26,8 @@ int	operator_selection(t_tree *root)
 		return (redirect_intput(root));
 	else if (!builtincmp(root->s[0], ">>"))
 		return (redirecte_output(root, 1));
+	else if (!builtincmp(root->s[0], "<<"))
+		return (redirect_intput(root));
 	else
 		return (simple_cmd(root));
 	return (0);
@@ -101,10 +103,76 @@ void	tree(char *s)
 		temp->s = str;
 	if (!root || !root->s)
 		return ;
-	//print_tree(root, 0);
-	 check_heredoc(root);
+	print_tree(root, 0);
+	check_herdocintree(&root);
+	//herdoc(&root);
 	operator_selection(root);
 }
+
+void check_herdocintree(t_tree **root)
+{
+	t_tree *temp;
+
+	temp = *root;
+	if (temp)
+	{
+		check_herdocintree(&temp->left);
+		if(!ft_strcmp(temp->s[0],"<<"))
+			herdoc(&temp);
+		check_herdocintree(&temp->right);
+	}
+	else
+		return ;
+}
+
+void	herdoc(t_tree **root)
+{
+	t_tree *temp;
+	char	*s;
+	char	*her;
+	static	int o = 0;
+	int 	i;
+
+	temp = (*root);
+	s = NULL;
+	if (!ft_strcmp(temp->s[0],"<<"))
+	{
+		i  = -1;
+		her = NULL;
+		while(temp->right->s[++i])
+		{
+				// if(!s)
+				// { 
+				// 	//  i++;
+				// 	// s = readline("> ");
+				// 	break ;
+
+				// }
+
+			//	s = readline("> ");
+				while(ft_strcmp(s , temp->right->s[i]))
+				{
+					her = ft_strjoin(her, s);
+					her = ft_strjoin(her ,"\n");
+					s =  readline(">");
+					if (!s)
+					{
+						i++;
+						break ;
+					}
+				}
+				o++;
+				int j = 0;
+				s  = ft_strjoin("/tmp/" ,ft_itoa(o));
+				int f = open(s, O_CREAT | O_TRUNC | O_RDWR , 0777);
+				ft_putstr_fd(her ,f);
+				temp->right->s[i] = ft_strdup(s);
+				free(her);
+		}
+	}
+	return ;
+}
+
 
 int	pipe_redirection(t_tree **temp, char *s, char **str, int j)
 {
@@ -121,7 +189,6 @@ int	pipe_redirection(t_tree **temp, char *s, char **str, int j)
 			return (0);
 		}
 		(*temp)->s[0] = data(2, s[i], s[i + 1]);
-		i++;
 	}
 	else
 		(*temp)->s[0] = data(1, s[i], 0);

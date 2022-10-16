@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:15:24 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/15 20:14:46 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/16 00:21:12 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	pipe_right(int *fd, t_tree *root)
 
 void	pipe_left(int *fd, t_tree *root)
 {
-	puts("hh");
 	dup_function(fd, 1);
 	operator_selection(root->left);
 	// if (isbuiltin(root->left->s))

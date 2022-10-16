@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 09:34:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/15 20:42:49 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/16 03:08:02 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	get_redirect_file(t_redirct *p, char *str, int i)
 	if (!p->file[0])
 		exit (1);
 	l = 0;
-	while (j < i)
+	while (str[j] && j < i)
 		p->file[0][l++] = str[j++];
 	p->file[0][l] = '\0';
 	return (i);
@@ -48,6 +48,8 @@ t_redirct	*redirection_parse(t_tree *root, char *str, int *i)
 	t_redirct	*p;
 	t_redirct	*temp;
 
+	if (str[(*i) + 1] == '<' || str[(*i) + 1] == '>')
+		(*i)++;
 	(*i) += 1;
 	p = malloc(sizeof(t_redirct));
 	if (!p)

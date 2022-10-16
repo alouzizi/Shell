@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:00:54 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/15 22:22:11 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/16 00:54:51 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,4 @@ void	open_heredoc(t_tree *root)
 	free(line);
 	free(root->s[0]);
 	root->s[0] = heredoc;
-}
-
-void	check_heredoc(t_tree *root)
-{
-	if (root)
-	{
-		if (!builtincmp(root->s[0], "<<"))
-		{
-			open_heredoc(root->right);
-			puts(root->right->s[0]);
-		}
-		check_heredoc(root->left);
-		check_heredoc(root->right);
-	}
-	return ;
 }
