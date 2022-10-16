@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:36:25 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/16 00:50:43 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 01:48:12 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	add_to_value(char *arg, int i, int ptr, int index)
 	if (!ptr || ptr == -1)
 	{
 		arg = ft_strjoin(ft_substr(arg, 0, i + 1), \
-			ft_strjoin(ft_strdup("="), value, 1), 1);
+			ft_strjoin(ft_strdup("="), value, 1), 3);
 		add_var_to_env(arg);
 	}
 }

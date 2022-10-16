@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 00:38:34 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/16 00:48:41 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 01:46:03 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	shlvl_handling(int i)
 		g_global.status = 1;
 	}
 	s = ft_itoa(t);
-	g_global.n_env[i] = ft_strjoin(tmp, s, 1);
+	g_global.n_env[i] = ft_strjoin(tmp, s, 3);
 }
 
 // ft_update_env takes the 3rd variable 

@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 09:07:12 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/09/28 23:12:25 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 03:15:50 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,27 @@ void	print_unset_error(char *arg)
 int	remove_from_env(char *cmd)
 {
 	char	**copy;
+	char	*name;
 	int		i;
 
 	i = -1;
 	if (cmd[0] == '_' && !cmd[1])
 		return (0);
-	if (!ft_isalpha(cmd[0]))
-		return (print_unset_error(cmd), 1);
-	if (!check_var_name(cmd))
+	if (!ft_isalpha(cmd[0]) || !check_var_name(cmd))
 		return (print_unset_error(cmd), 1);
 	while (g_global.n_env[++i])
 	{
-		if (!ft_strncmp(g_global.n_env[i], cmd, ft_strlen(cmd)))
+		name = get_name(g_global.n_env[i], '=');
+		if (!ft_strcmp(name, cmd))
 		{
 			copy = ft_arr_copy(g_global.n_env);
 			// free_array(g_global.n_env);
 			copy_after_unset(copy, i);
+			free(name);
 			free_array(copy);
 			break ;
 		}
+		free(name);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:11:06 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/13 04:02:37 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 03:10:57 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,24 @@ int	add_variable(char *arg)
 	}
 	add_var_to_env(arg);
 	return (0);
+}
+
+char	*get_name(char *s, int c)
+{
+	char	*r;
+	int		i;
+	int		len;
+
+	i = 0;
+	len = ft_strlen(s) - ft_strlen(ft_strchr(s, c));
+	r = (char *)malloc(sizeof(char) * (len + 1));
+	if (!r)
+		return (NULL);
+	while (len--)
+	{
+		r[i] = s[i];
+		i++;
+	}
+	r[i] = 0;
+	return (r);
 }

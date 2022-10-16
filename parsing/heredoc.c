@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:00:54 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/16 00:53:18 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 02:14:37 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ void	open_heredoc(t_tree *root)
 	while (line && ft_strcmp(line, root->s[0]))
 	{
 		tmp_heredoc = heredoc;
-		tmp_line = ft_strjoin(line, "\n", 0);
+		tmp_line = ft_strjoin(line, "\n", 1);
 		heredoc = ft_strjoin(tmp_heredoc, tmp_line, 3);
-		free(line);
 		line = readline("> ");
 	}
 	free(line);

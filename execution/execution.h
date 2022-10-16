@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:29:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/16 00:46:58 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 02:37:40 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void				print_export(char **arr, int i, int j);
 void				ft_export(char **cmd);
 
 //unset
+char				*get_name(char *s, int c);
 void				ft_unset(char **cmd);
 void				free_array(char **arr);
 int					remove_from_env(char *cmd);
