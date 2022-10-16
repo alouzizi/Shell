@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 01:11:44 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/13 14:59:55 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/16 21:33:11 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct tree
 	struct tree	*right;
 	struct tree	*left;
 	char		**s;
+	char		**redr;
 }	t_tree;
 
 typedef struct redirct

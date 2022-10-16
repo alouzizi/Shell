@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 09:34:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/16 03:08:02 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/16 20:00:41 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@ t_redirct	*redirection_parse(t_tree *root, char *str, int *i)
 {
 	t_redirct	*p;
 	t_redirct	*temp;
+	char		c;
 
 	if (str[(*i) + 1] == '<' || str[(*i) + 1] == '>')
 		(*i)++;
+	c = str[*i];
 	(*i) += 1;
 	p = malloc(sizeof(t_redirct));
 	if (!p)
@@ -64,11 +66,13 @@ t_redirct	*redirection_parse(t_tree *root, char *str, int *i)
 		return (p);
 	}
 	*i = get_redirect_file(p, str, *i);
+	//if ((str[*i]) && (str[*i] != c))
 	if ((str[*i]) && (str[*i] != '<' || str[*i] != '>'))
 		p->param = transfer_list_to_2darray(get_cmd(str, &*i));
 	else
 		p->param = NULL;
-	if ((str[*i]) && (str[*i] == '<' || str[*i] == '>'))
+	// if ((str[*i]) && (str[*i] == '<' || str[*i] == '>'))
+	if (str[*i] && str[*i] == c)
 	{
 		temp = redirection_parse(root, str, &*i);
 		p->param = ft_strjoin2d(p->param, temp->param);

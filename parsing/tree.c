@@ -37,8 +37,10 @@ int	and_or(t_tree **root, char **str, char *s, int j)
 {
 	t_tree	*temp2;
 	int		l;
+	int		i;
+
 	l = 0;
-	static int i =0;
+	i = 1;
 	if (j != 1 && j != 2 && j != 3)
 	{
 		ft_putendl_fd("Syntax Error", 2);
@@ -46,7 +48,6 @@ int	and_or(t_tree **root, char **str, char *s, int j)
 	}
 	if (root)
 		temp2 = *root;
-	i++;
 	(*root) = newtree(NULL);
 	(*root)->s = malloc(sizeof(char *) * 2);
 	(*root)->s[0] = data(1, s[l], 0);
@@ -57,7 +58,24 @@ int	and_or(t_tree **root, char **str, char *s, int j)
 		(*root)->left = temp2;
 	(*root)->right = newtree(NULL);
 	l++;
-	(*root)->right->s = transfer_list_to_2darray(get_cmd(s, &l));
+	i = l;
+	while (s[i] != '|' && s[i])
+	{
+		if (s[i] == '<' || s[i] == '>')
+		{
+			i = 0;
+			break ;
+		}
+		i++;
+	}
+	if (i)
+		(*root)->right->s = transfer_list_to_2darray(get_cmd(s, &l));
+	else
+		l = 1;
+
+	//printf();
+	puts("*****");
+	printf("l = %d\n", l);
 	return (l);
 }
 
@@ -92,7 +110,7 @@ void	tree(char *s)
 		}
 		if ((s[i] == '<' || s[i] == '>') && s[i])
 		{
-			j = pipe_redirection(&temp, &s[i], str, j);
+			j = redirection(&temp, &s[i], str, j);
 			if (j == 0)
 				return ;
 			i += j;
@@ -135,46 +153,51 @@ void	herdoc(t_tree **root)
 
 	temp = (*root);
 	s = NULL;
+	int j = 1;
 	if (!ft_strcmp(temp->s[0],"<<"))
 	{
 		i  = -1;
 		her = NULL;
 		while(temp->right->s[++i])
 		{
-				// if(!s)
-				// { 
-				// 	//  i++;
-				// 	// s = readline("> ");
-				// 	break ;
-
-				// }
-
-			//	s = readline("> ");
-				while(ft_strcmp(s , temp->right->s[i]))
-				{
+			j = 1;
+			puts(temp->right->s[i]);
+			s = readline("> ");
+			if (!s)
+			{ 
+				o++;
+				s  = ft_strjoin("/tmp/" ,ft_itoa(o));
+				int f = open(s, O_CREAT | O_TRUNC | O_RDWR , 0777);
+				temp->right->s[i] = ft_strdup(s);
+				j = 0;
+				free (s);
+			}
+			while(ft_strcmp(s , temp->right->s[i]) && j != 0)
+			{
 					her = ft_strjoin(her, s);
 					her = ft_strjoin(her ,"\n");
 					s =  readline(">");
 					if (!s)
-					{
-						i++;
 						break ;
-					}
-				}
+			}
+			if (j != 0)
+			{
 				o++;
-				int j = 0;
 				s  = ft_strjoin("/tmp/" ,ft_itoa(o));
 				int f = open(s, O_CREAT | O_TRUNC | O_RDWR , 0777);
 				ft_putstr_fd(her ,f);
+				printf("i === %d\n", i);
 				temp->right->s[i] = ft_strdup(s);
 				free(her);
+				her = NULL;
+			}
 		}
 	}
 	return ;
 }
 
 
-int	pipe_redirection(t_tree **temp, char *s, char **str, int j)
+int	redirection(t_tree **temp, char *s, char **str, int j)
 {
 	t_redirct	*r;
 	int			i;
@@ -196,6 +219,7 @@ int	pipe_redirection(t_tree **temp, char *s, char **str, int j)
 	if (s[i] == '>' || s[i] == '<')
 	{
 		r = redirection_parse(*temp, s, &i);
+		printf(" i == %d\n", i);
 		if (r->j == -1)
 			return (0);
 		if (j == 0)
@@ -203,8 +227,9 @@ int	pipe_redirection(t_tree **temp, char *s, char **str, int j)
 		else
 			(*temp)->left->s = ft_strjoin2d((*temp)->left->s, r->param);
 		(*temp)->right = newtree(r->file);
-		return (i);
+		//return (i);
 	}
+	puts("*****************|||");
 	i++;
 	j = i;
 	str = transfer_list_to_2darray(get_cmd(s, &j));
@@ -212,9 +237,9 @@ int	pipe_redirection(t_tree **temp, char *s, char **str, int j)
 		(*temp)->right = newtree(NULL);
 	else
 	{
-		ft_putendl_fd("Syntax Error33", 2);
+		ft_putendl_fd("Syntax Error", 2);
 		return (0);
 	}
 	(*temp) = (*temp)->right;
-	return (i);
+	return (i -1);
 }
