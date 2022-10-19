@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:15:24 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/16 10:38:25 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/19 01:10:04 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	dup_function(int *fd, int index)
 		close(fd[1]);
 	}
 }
-
 
 void	pipe_right(int *fd, t_tree *root, t_vars *v)
 {

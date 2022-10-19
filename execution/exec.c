@@ -6,35 +6,28 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:14:09 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/16 12:57:13 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/18 22:36:24 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-// commands_execution checks whether the command
-// can be executed or not
+int	builtincmp(char *s1, char *s2)
+{
+	int	i;
 
-// char	*check_access(char	**paths)
-// {
-// 	char	*path;
-// 	int		i;
+	if (!s1 || !s2)
+		return (0);
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
-// 	i = 0;
-// 	path = 0;
-// 	while (paths[i])
-// 	{
-// 		if (!access(paths[i], X_OK | F_OK))
-// 		{
-// 			path = paths[i];
-// 			break ;
-// 		}
-// 		i++;
-// 	}
-// 	if (!path)
-// 		return (NULL);
-// 	return (path);
-// }
 
 void	print_cnf_error(char *cmd)
 {
@@ -85,9 +78,9 @@ int	isbuiltin(char **cmd, t_vars *v)
 	else if (!builtincmp(cmd[0], "env"))
 		return (ft_env(v->env), 1);
 	else if (!builtincmp(cmd[0], "export"))
-		return (ft_export(cmd, v->env), 1);
+		return (ft_export(cmd, v), 1);
 	else if (!builtincmp(cmd[0], "unset"))
-		return (ft_unset(cmd, v->env), 1);
+		return (ft_unset(cmd, v), 1);
 	else if (!builtincmp(cmd[0], "cd"))
 		return (ft_cd(cmd, v), 1);
 	else if (!builtincmp(cmd[0], "exit"))
@@ -102,19 +95,13 @@ int	execute(char **s, t_vars *v)
 
 	if (isbuiltin(s, v))
 		return (0);
-	// if (s[0][0] == '/' || s[0][0] == '.')
-	// 	path = s;
-	// else
-	path = get_path(s[0], v);
-	// puts("")
+	// add a way to execute paths like /bin/ls directly or ./minishell
+	if (s[0][0] == '.' || s[0][0] == '/')
+		path = check_absolute_path(s[0]);
+	else
+		path = check_access(get_path(s[0], v), -1);
 	if (!path)
-	{
-		ft_putstr_fd(PRMPT_ERR, 2);
-		ft_putstr_fd(s[0], 2);
-		ft_putendl_fd(CNF, 2);
-		g_global.status = 127;
-		return (127);
-	}
+		return (print_cnf_error(s[0]), 127);
 	if (commands_execution(path, s, v))
 		return (127);
 	return (0);

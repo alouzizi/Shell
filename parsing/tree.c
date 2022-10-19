@@ -12,7 +12,18 @@
 
 #include "parsing.h"
 
-int	and_or(t_tree **root, char **str, char *s, int j, t_vars *v)
+void	free_tree(t_tree *root)
+{
+	if (root != NULL)
+	{
+		free_tree(root->right);
+		free_array(root->s);
+		free_tree(root->left);
+		free(root);
+	}
+}
+
+int	pipe_parsing(t_tree **root, char **str, char *s, int j, t_vars *v)
 {
 	t_tree	*temp2;
 	int		l;
@@ -35,8 +46,8 @@ int	and_or(t_tree **root, char **str, char *s, int j, t_vars *v)
 	else
 		(*root)->left = temp2;
 	(*root)->right = newtree(NULL);
-	l++;
 	(*root)->right->s = transfer_list_to_2darray(get_cmd(s, &l, v));
+	l++;
 	return (l);
 }
 
@@ -62,7 +73,7 @@ void	tree(char *s, t_vars *v)
 		}
 		if (s[i] == '|' && s[i])
 		{
-			j = and_or(&root, str, &s[i], j, v);
+			j = pipe_parsing(&root, str, &s[i], j, v);
 			if (j == 0)
 				return ;
 			i += j;
@@ -71,7 +82,7 @@ void	tree(char *s, t_vars *v)
 		}
 		if ((s[i] == '<' || s[i] == '>') && s[i])
 		{
-			j = pipe_redirection(&temp, &s[i], str, j, v);
+			j = redirection(&temp, &s[i], str, j, v);
 			if (j == 0)
 				return ;
 			i += j;
@@ -84,9 +95,10 @@ void	tree(char *s, t_vars *v)
 		return ;
 	// print_tree(root, 0);
 	operator_selection(root, v);
+	free_tree(root);
 }
 
-int	pipe_redirection(t_tree **temp, char *s, char **str, int j, t_vars *v)
+int	redirection(t_tree **temp, char *s, char **str, int j, t_vars *v)
 {
 	t_redirct	*r;
 	int			i;

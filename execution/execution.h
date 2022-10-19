@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:29:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/16 10:39:15 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/19 00:02:26 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,29 @@ void				ft_env(char **env);
 
 //export
 char				**ft_arr_copy(char **arr);
-int					check_arg_export(char *arg, int i, char **env);
+char				**arr_copy_export(char **arr, int size);
+int					check_arg_export(char *arg, t_vars *v, t_exp *ex);
 int					arr_len(char **arr);
 int					ft_isalnum_export(int c);
 int					check_var_name(char *arg);
-int					has_value(char *arg, int *ptr);
+void				has_value(char *arg, t_exp *ex);
 void				print_export_error(char *arg);
 void				sort_array_alphabetically(char **arr, int i, int j);
-void				add_var_to_env(char *var, char **env);
-void				add_to_value(char *arg, int i, int ptr, int index, char **env);
-void				update_or_add_var(int b, int ptr, char *var, char **env);
-int					add_to_env(char *var, int b, char **env);
-int					add_variable(char *arg, char **env);
-int					add_to_export(char *cmd, char **env);
+void				add_var_to_env(char *var, t_vars *v);
+void				add_to_value(char *arg, t_exp *ex, t_vars *v);
+void				update_or_add_var(t_exp *ex, char *var, t_vars *v);
+int					add_to_env(char *var, t_exp *ex, t_vars *v);
+int					add_variable(char *arg, t_vars *v, t_exp *ex);
+int					add_to_export(char *cmd, t_vars *v);
 void				print_export(char **arr, int i, int j);
-void				ft_export(char **cmd, char **env);
+void				ft_export(char **cmd, t_vars *v);
 
 //unset
 char				**copy_after_unset(char **copy, int i);
 char				*get_name(char *s, int c);
-void				ft_unset(char **cmd, char **env);
+void				ft_unset(char **cmd, t_vars *v);
 void				free_array(char **arr);
-int					remove_from_env(char *cmd, char **env);
+int					remove_from_env(char *cmd, t_vars *v);
 
 //cd
 void				ft_cd(char **cmd, t_vars *v);
@@ -60,6 +61,9 @@ char				*get_env(char *str, t_vars *v);
 
 //exit
 long long			a_to_ll(char *str);
+int					arg_isdigit(char *s);
+void				numeric_argument_error(char *cmd);
+void				ft_putstr_fd_2(char *s1, char *s2, char *s3, int fd);
 void				ft_exit(char **cmd);
 
 // pipe
@@ -70,8 +74,9 @@ void				pipe_left(int *fd, t_tree *root, t_vars *v);
 int					create_pipe(t_tree *root, t_vars *v);
 
 //executing
-char				*get_path(char *s, t_vars *v);
-// char				*check_access(char	**paths);
+char				**get_path(char *s, t_vars *v);
+char				*check_access(char **paths, int i);
+char				*check_absolute_path(char *s);
 int					builtincmp(char *s1, char *s2);
 int					isbuiltin(char **cmd, t_vars *v);
 int					execute(char **s, t_vars *v);

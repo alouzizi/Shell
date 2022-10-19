@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 22:44:12 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/16 13:00:28 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/18 10:08:29 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 // get_path join the cmd with the path in PATH in env arr
 // i. e. /bin/ls
 
-char	*get_path(char *s, t_vars *v)
+char	**get_path(char *s, t_vars *v)
 {
 	int		i;
 	char	**paths;
-	char	*path;
 
 	paths = ft_split(get_env("PATH", v), ':');
 	if (!paths)
@@ -31,7 +30,16 @@ char	*get_path(char *s, t_vars *v)
 		paths[i] = ft_strjoin(paths[i], s, 1);
 	}
 	paths[i] = 0;
-	i = -1;
+	return (paths);
+}
+
+// commands_execution checks whether the command
+// can be executed or not
+
+char	*check_access(char **paths, int i)
+{
+	char	*path;
+
 	path = 0;
 	while (paths[++i])
 	{
@@ -47,26 +55,22 @@ char	*get_path(char *s, t_vars *v)
 	return (path);
 }
 
+char	*check_absolute_path(char *s)
+{
+	char	*path;
+
+	if (!access(s, X_OK | F_OK))
+	{
+		path = ft_strdup(s);
+		return (path);
+	}
+	return (NULL);
+}
+
 void	exit_status(int status)
 {
 	if (WIFEXITED(status))
 		g_global.status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		g_global.status = 128 + WTERMSIG(status);
-}
-
-int	builtincmp(char *s1, char *s2)
-{
-	int	i;
-
-	if (!s1 || !s2)
-		return (0);
-	i = 0;
-	while (s1[i] || s2[i])
-	{
-		if (s1[i] != s2[i])
-			return (1);
-		i++;
-	}
-	return (0);
 }

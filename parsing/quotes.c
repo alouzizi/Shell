@@ -76,11 +76,11 @@ t_node	*create_node(char *str, int start, int end)
 	i = 0;
 	node = malloc(sizeof(t_node));
 	if (!node)
-		exit(1);
+		return (NULL);
 	node->next = NULL;
-	node->s = malloc(sizeof(char) * (end - start + 1));
+	node->s = (char *)malloc(sizeof(char) * (end - start + 1));
 	if (!node->s)
-		exit(1);
+		return (NULL);
 	while (start <= end)
 		node->s[i++] = str[start++];
 	node->s[i] = 0;
@@ -90,6 +90,7 @@ t_node	*create_node(char *str, int start, int end)
 char	**transfer_list_to_2darray(t_node *node)
 {
 	char	**tab;
+	t_node	*tmp;
 	int		i;
 
 	i = ft_lstsize(node) + 1;
@@ -102,6 +103,12 @@ char	**transfer_list_to_2darray(t_node *node)
 		node = node->next;
 	}
 	tab[i] = 0;
+	while (node)
+    {
+       tmp = node;
+       node = node->next;
+       free(tmp);
+    }
 	return (tab);
 }
 

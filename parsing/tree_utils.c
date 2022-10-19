@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 04:57:35 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/16 08:18:38 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/17 02:17:54 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	print_tree(t_tree *root, int space)
 		return ;
 	space += COUNT;
 	print_tree(root->right, space);
-	printf("\n");
+	ft_putendl_fd("", 1);
 	while (++i < space)
-		printf(" ");
+		ft_putstr_fd(" ", 1);
 	if(root->s)
 		printf("[%s]\n", root->s[0]);
 	print_tree(root->left, space);
@@ -88,7 +88,7 @@ char	*data(int j, char c, char c2)
 	i = 0;
 	s = malloc(j + 1);
 	if (!s)
-		exit(1);
+		return (NULL);
 	s[i++] = c;
 	if (j == 2)
 		s[i++] = c2;

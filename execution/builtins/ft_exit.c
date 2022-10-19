@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 08:16:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/14 12:58:29 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 13:39:36 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,15 @@ void	ft_putstr_fd_2(char *s1, char *s2, char *s3, int fd)
 	ft_putendl_fd(s3, fd);
 }
 
+void	numeric_argument_error(char *cmd)
+{
+	ft_putendl_fd("exit", 2);
+	ft_putstr_fd_2("minishell: exit: ", cmd, \
+	": numeric argument required", 2);
+	g_global.status = 255;
+	exit(g_global.status);
+}
+
 // exits the program with a specified exit number
 // entred by the user
 
@@ -78,20 +87,15 @@ void	ft_exit(char **cmd)
 		ft_putendl_fd("exit", 1);
 		exit(g_global.status);
 	}
-	if (!cmd[2] && arg_isdigit(cmd[1]) && a_to_ll(cmd[1]) >= LLONG_MIN && a_to_ll(cmd[1]) <= LLONG_MAX)
+	if (!cmd[2] && arg_isdigit(cmd[1])
+		&& a_to_ll(cmd[1]) >= LLONG_MIN && a_to_ll(cmd[1]) <= LLONG_MAX)
 	{
 		ft_putendl_fd("exit", 1);
 		g_global.status = (a_to_ll(cmd[1]) % 256);
 		exit(g_global.status);
 	}
 	else if (!arg_isdigit(cmd[1]))
-	{
-		ft_putendl_fd("exit", 2);
-		ft_putstr_fd_2("minishell: exit: ", cmd[1], \
-		": numeric argument required", 2);
-		g_global.status = 255;
-		exit(g_global.status);
-	}
+		numeric_argument_error(cmd[1]);
 	else
 	{
 		ft_putendl_fd("exit\nminishell: exit: too many arguments", 2);

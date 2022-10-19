@@ -8,7 +8,7 @@ SRCS = main.c \
 	parsing/signal.c \
 	parsing/tree.c \
 	execution/builtins/export/ft_export.c \
-	execution/builtins/export/export.c \
+	execution/builtins/export/add_var.c \
 	execution/builtins/export/export_utils.c \
 	execution/builtins/export/export_utils2.c \
 	execution/builtins/ft_echo.c \

@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 00:38:34 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/16 12:56:44 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/16 13:34:17 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ void	ft_env(char **env)
 {
 	int	i;
 
-	i = -1;
 	if (!env)
 		return ;
+	i = -1;
 	while (env[++i])
 		if (ft_strchr(env[i], '='))
 			ft_putendl_fd(env[i], 1);

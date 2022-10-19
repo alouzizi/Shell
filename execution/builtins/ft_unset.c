@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 09:07:12 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/16 13:11:20 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/19 00:05:32 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	free_array(char **arr)
 
 char	**copy_after_unset(char **copy, int i)
 {
+	char	**env;
 	int		u;
 	int		j;
-	char	**env;
 
 	u = -1;
 	j = 0;
@@ -54,7 +54,7 @@ void	print_unset_error(char *arg)
 	g_global.status = 1;
 }
 
-int	remove_from_env(char *cmd, char **env)
+int	remove_from_env(char *cmd, t_vars *v)
 {
 	char	**copy;
 	char	*name;
@@ -65,14 +65,14 @@ int	remove_from_env(char *cmd, char **env)
 		return (0);
 	if (!ft_isalpha(cmd[0]) || !check_var_name(cmd))
 		return (print_unset_error(cmd), 1);
-	while (env[++i])
+	while (v->env[++i])
 	{
-		name = get_name(env[i], '=');
+		name = get_name(v->env[i], '=');
 		if (!ft_strcmp(name, cmd))
 		{
-			copy = ft_arr_copy(env);
-			free_array(env);
-			env = copy_after_unset(copy, i);
+			copy = ft_arr_copy(v->env);
+			free_array(v->env);
+			v->env = copy_after_unset(copy, i);
 			free(name);
 			free_array(copy);
 			break ;
@@ -84,7 +84,7 @@ int	remove_from_env(char *cmd, char **env)
 
 // ft_unset with no args does nothing
 
-void	ft_unset(char **cmd, char **env)
+void	ft_unset(char **cmd, t_vars *v)
 {
 	int	i;
 
@@ -95,6 +95,6 @@ void	ft_unset(char **cmd, char **env)
 	else
 	{
 		while (cmd[++i])
-			remove_from_env(cmd[i], env);
+			remove_from_env(cmd[i], v);
 	}
 }
