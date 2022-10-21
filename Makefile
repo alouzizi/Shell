@@ -9,8 +9,9 @@ SRCS = main.c \
 	parsing/tree.c \
 	execution/builtins/export/ft_export.c \
 	execution/builtins/export/add_var.c \
-	execution/builtins/export/export_utils.c \
-	execution/builtins/export/export_utils2.c \
+	execution/builtins/export/append_value.c \
+	execution/builtins/export/print.c \
+	execution/builtins/export/utils.c \
 	execution/builtins/ft_echo.c \
 	execution/builtins/ft_pwd.c \
 	execution/builtins/ft_env.c \
@@ -59,3 +60,6 @@ fclean : clean
 	@make fclean -C libft
 
 re : fclean all
+
+run : re
+	@rm -rf $(OBJS) && ./$(NAME)

@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:14:09 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/18 22:36:24 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/21 04:50:06 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	builtincmp(char *s1, char *s2)
 	}
 	return (0);
 }
-
 
 void	print_cnf_error(char *cmd)
 {
@@ -95,7 +94,6 @@ int	execute(char **s, t_vars *v)
 
 	if (isbuiltin(s, v))
 		return (0);
-	// add a way to execute paths like /bin/ls directly or ./minishell
 	if (s[0][0] == '.' || s[0][0] == '/')
 		path = check_absolute_path(s[0]);
 	else

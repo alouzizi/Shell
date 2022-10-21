@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 00:14:59 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/16 09:43:00 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/21 04:37:25 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	operator_selection(t_tree *root, t_vars *v)
 		return (simple_cmd(root, v));
 	return (0);
 }
-
 
 int	or_operator(t_tree *root, t_vars *v)
 {

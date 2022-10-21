@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:11:06 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/19 09:40:10 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/20 22:57:55 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,34 +66,8 @@ void	add_var_to_env(char *var, t_vars *v)
 	v->env = copy_to_env(copy, arr_size);
 	v->env[arr_size] = ft_strdup(var);
 	v->env[arr_size + 1] = 0;
-	// free(var);
+	free(var);
 	free_array(copy);
-}
-
-// get_name : gets the name of a variable in the env
-// example : HOME=/Users/ooumlil 
-// this function returns in this case HOME only
-
-char	*get_name(char *s, int c)
-{
-	char	*r;
-	int		i;
-	int		len;
-
-	if (!s)
-		return (NULL);
-	len = ft_strlen(s) - ft_strlen(ft_strchr(s, c));
-	r = (char *)malloc(sizeof(char) * (len + 1));
-	if (!r)
-		return (NULL);
-	i = 0;
-	while (len--)
-	{
-		r[i] = s[i];
-		i++;
-	}
-	r[i] = 0;
-	return (r);
 }
 
 // add_variable checks for the existence of the name in the arr.

@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:29:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/19 00:02:26 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/20 23:51:45 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ void				ft_pwd(void);
 void				ft_echo(char **cmd);
 
 //env
-void				shlvl_handling(int i, char **arr);
-char				**ft_update_env(char **env);
+void				shlvl_reset(t_vars *v);
+void				shlvl_handling(t_vars *v);
+void				ft_update_env(char **env, t_vars *v);
 void				ft_env(char **env);
 
 //export
@@ -41,6 +42,7 @@ void				sort_array_alphabetically(char **arr, int i, int j);
 void				add_var_to_env(char *var, t_vars *v);
 void				add_to_value(char *arg, t_exp *ex, t_vars *v);
 void				update_or_add_var(t_exp *ex, char *var, t_vars *v);
+void				append_to_existing_var(t_vars *v, t_exp *ex);
 int					add_to_env(char *var, t_exp *ex, t_vars *v);
 int					add_variable(char *arg, t_vars *v, t_exp *ex);
 int					add_to_export(char *cmd, t_vars *v);

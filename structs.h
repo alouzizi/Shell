@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 01:11:44 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/18 22:38:14 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/21 04:36:16 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,26 @@ typedef struct redirct
 typedef struct s_vars
 {
 	int		i;
-	int 	j;
+	int		j;
 	int		l;
+	int		check;
+	char	*tmp;
+	char	*s;
+	int		t;
 	char	**env;
 }	t_vars;
 
 typedef struct s_exp
 {
-	int	i;
-	int	j;
-	int	b;
-	int	index;
-	int	check;
-	int	ptr;
+	int		i;
+	int		j;
+	int		b;
+	int		index;
+	int		check;
+	int		ptr;
+	char	*var_name;
+	char	*arg_name;
+	char	*arg_value;
 }	t_exp;
 
 #endif

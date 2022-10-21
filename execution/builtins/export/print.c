@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils.c                                     :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 23:38:41 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/19 05:11:11 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/20 01:06:45 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@ int	ft_isalnum_export(int c)
 		|| ((c >= '0') && (c <= '9')) || c == '_')
 		return (1);
 	return (0);
-}
-
-// print_export_error self-explanatory
-
-void	print_export_error(char *arg)
-{
-	ft_putstr_fd("minishell: export: `", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putendl_fd("': not a valid identifier", 2);
-	g_global.status = 1;
 }
 
 // checks the whole name for imposter chars
@@ -47,6 +37,16 @@ int	check_var_name(char *arg)
 		i++;
 	}
 	return (1);
+}
+
+// print_export_error self-explanatory
+
+void	print_export_error(char *arg)
+{
+	ft_putstr_fd("minishell: export: `", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putendl_fd("': not a valid identifier", 2);
+	g_global.status = 1;
 }
 
 // sort_array_alphabetically sorts alphabetically from the lowest ascii value

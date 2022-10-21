@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils2.c                                    :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:20:03 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/19 09:46:34 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/20 23:22:39 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	has_value(char *arg, t_exp *ex)
 	while (arg[ex->index] != '=')
 		ex->index++;
 	if (arg[ex->index] == '=')
-		ex->ptr = -1;
+		ex->ptr = 0;
 }
 
 // if b is true the variable exists in the env
@@ -47,6 +47,7 @@ void	update_or_add_var(t_exp *ex, char *var, t_vars *v)
 	if (ex->b)
 	{
 		free(v->env[ex->ptr]);
+		free(var);
 		v->env[ex->ptr] = ft_strdup(var);
 	}
 	else

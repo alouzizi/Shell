@@ -6,44 +6,11 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:36:25 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/19 09:42:35 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/20 08:26:32 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../execution.h"
-
-// add_to_value as the name suggests it adds the value
-// to the the already existing variable in the end,
-// in case the variable isnt in the array it adds it
-
-void	add_to_value(char *arg, t_exp *ex, t_vars *v)
-{
-	char	*value;
-
-	has_value(arg, ex);
-	value = ft_strchr(arg, '=') + 1;
-	while (v->env[++ex->i])
-	{
-		if (!ft_strncmp(arg, v->env[ex->i], ex->index - 1) && ex->ptr == -1)
-		{
-			ex->ptr = 1;
-			if (value && !ft_strchr(v->env[ex->i], '='))
-				v->env[ex->i] = ft_strjoin(v->env[ex->i],
-						ft_strjoin("=", value, 0), 1);
-			else
-				v->env[ex->i] = ft_strjoin(v->env[ex->i], value, 1);
-		}
-	}
-	ex->i = ex->index - 2;
-	if (arg[ex->i] == '+')
-		ex->i--;
-	if (!ex->ptr || ex->ptr == -1)
-	{
-		arg = ft_strjoin(ft_strchr(arg, '=') + 1,
-			ft_strjoin(ft_strdup("="), value, 3), 3);
-		add_var_to_env(arg, v);
-	}
-}
 
 // add_to_env after some error checking ,
 // it checks for the existence of the variable,
@@ -56,14 +23,13 @@ int	add_to_env(char *var, t_exp *ex, t_vars *v)
 	while (var[++ex->index] != '=')
 	{
 		if (!ft_isalnum_export(var[ex->index]))
-			return (print_export_error(var), 1);
+			return (free(var), 1);
 	}
 	ex->i = -1;
 	while (v->env[++ex->i])
 	{
 		if (!ft_strncmp(var, v->env[ex->i], ex->index))
 		{
-			
 			ex->b = 1;
 			ex->ptr = ex->i;
 		}
@@ -90,12 +56,6 @@ int	check_arg_export(char *arg, t_vars *v, t_exp *ex)
 // returns an error and the name of the var must be alphanumeric
 // with '_' included
 // in case of error it exits with specified error
-
-// void	puts_env(char **env)
-// {
-// 	for (size_t z = 0; env[z]; z++)
-// 		ft_putendl_fd(env[z], 1);
-// }
 
 int	add_to_export(char *arg, t_vars *v)
 {
@@ -138,5 +98,5 @@ void	ft_export(char **cmd, t_vars *v)
 	}
 	else
 		while (cmd[++i])
-			add_to_export(cmd[i], v);
+			add_to_export(ft_strdup(cmd[i]), v);
 }
