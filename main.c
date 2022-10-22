@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 15:04:14 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/22 01:43:31 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/22 01:56:03 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	main(int ac, char **av, char **env)
 
 	if (ac != 1 || av[1])
 		return (1);
+	g_global.signal = 0;
+	g_global.is_child = 0;
 	g_global.status = 0;
 	ft_update_env(env, &v);
 	signals_handling();

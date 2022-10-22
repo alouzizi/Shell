@@ -6,38 +6,29 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:15:24 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/22 00:51:25 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/22 09:54:19 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-void	dup_function(int *fd, int index)
+void	dup_function(int fd1, int fd2, int i)
 {
-	if (index)
-	{
-		dup2(fd[1], index);
-		close(fd[1]);
-		close(fd[0]);
-	}
-	else
-	{
-		dup2(fd[0], index);
-		close(fd[0]);
-		close(fd[1]);
-	}
+	dup2(fd1, i);
+	close(fd1);
+	close(fd2);
 }
 
 void	pipe_right(int *fd, t_tree *root, t_vars *v)
 {
-	dup_function(fd, 0);
+	dup_function(fd[0], fd[1], 0);
 	operator_selection(root->right, v);
 	exit(g_global.status);
 }
 
 void	pipe_left(int *fd, t_tree *root, t_vars *v)
 {
-	dup_function(fd, 1);
+	dup_function(fd[1], fd[0], 1);
 	operator_selection(root->left, v);
 	exit(g_global.status);
 }
@@ -52,7 +43,7 @@ int	create_pipe(t_tree *root, t_vars *v)
 	status = 0;
 	fd = malloc(sizeof(int) * 2);
 	if (pipe(fd) == -1)
-		perror("Pipe");
+		return (1);
 	id = fork();
 	if (!id)
 		pipe_left(fd, root, v);

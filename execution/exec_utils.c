@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 22:44:12 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/18 10:08:29 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/22 22:39:15 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	**get_path(char *s, t_vars *v)
 	int		i;
 	char	**paths;
 
+	if (!v->env)
+		return (NULL);
 	paths = ft_split(get_env("PATH", v), ':');
 	if (!paths)
 		return (NULL);
@@ -40,6 +42,8 @@ char	*check_access(char **paths, int i)
 {
 	char	*path;
 
+	if (!paths)
+		return (NULL);
 	path = 0;
 	while (paths[++i])
 	{
@@ -59,6 +63,8 @@ char	*check_absolute_path(char *s)
 {
 	char	*path;
 
+	if (!s)
+		return (NULL);
 	if (!access(s, X_OK | F_OK))
 	{
 		path = ft_strdup(s);

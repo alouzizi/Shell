@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:29:26 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/20 23:51:45 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/22 09:54:05 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void				ft_putstr_fd_2(char *s1, char *s2, char *s3, int fd);
 void				ft_exit(char **cmd);
 
 // pipe
-void				dup_function(int *fd, int index);
+void				dup_function(int fd1, int fd2, int i);
 void				execute_pipe(char **arr, t_vars *v);
 void				pipe_right(int *fd, t_tree *root, t_vars *v);
 void				pipe_left(int *fd, t_tree *root, t_vars *v);
