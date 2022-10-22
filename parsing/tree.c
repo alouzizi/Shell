@@ -27,8 +27,8 @@ int	pipe_parsing(t_tree **root, char **str, char *s, int j, t_vars *v)
 {
 	t_tree	*temp2;
 	int		l;
+
 	l = 0;
-	static int i =0;
 	if (j != 1 && j != 2 && j != 3)
 	{
 		ft_putendl_fd("Syntax Error", 2);
@@ -36,7 +36,6 @@ int	pipe_parsing(t_tree **root, char **str, char *s, int j, t_vars *v)
 	}
 	if (root)
 		temp2 = *root;
-	i++;
 	(*root) = newtree(NULL);
 	(*root)->s = malloc(sizeof(char *) * 2);
 	(*root)->s[0] = data(1, s[l], 0);
@@ -47,7 +46,6 @@ int	pipe_parsing(t_tree **root, char **str, char *s, int j, t_vars *v)
 		(*root)->left = temp2;
 	(*root)->right = newtree(NULL);
 	(*root)->right->s = transfer_list_to_2darray(get_cmd(s, &l, v));
-	l++;
 	return (l);
 }
 
@@ -93,9 +91,9 @@ void	tree(char *s, t_vars *v)
 		temp->s = str;
 	if (!root || !root->s)
 		return ;
-	// print_tree(root, 0);
+	//print_tree(root, 0);
 	operator_selection(root, v);
-	// free_tree(root);
+	//free_tree(root);
 }
 
 int	redirection(t_tree **temp, char *s, char **str, int j, t_vars *v)
