@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 15:04:14 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/20 04:05:27 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/22 01:43:31 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	prompt_display(t_vars *v)
 		g_global.signal = 0;
 		g_global.is_child = 0;
 		s = readline("minishell $ ");
-		if (ft_strlen(s) > 1)
+		if (ft_strlen(s))
 			add_history(s);
 		if (!s)
 		{

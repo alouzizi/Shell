@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:50:14 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/22 00:44:31 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/22 01:47:57 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ void	ctl_c(int signum)
 		g_global.status = 1;
 	}
 	else if (signum == SIGINT && !g_global.signal && g_global.is_child == 1)
-	{
-		ft_putstr_fd("\n", 1);
 		g_global.signal = 1;
-	}
 	else if (signum == SIGINT && g_global.signal)
 	{
 		ft_putstr_fd("\n", 1);

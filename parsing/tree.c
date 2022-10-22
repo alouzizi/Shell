@@ -95,7 +95,7 @@ void	tree(char *s, t_vars *v)
 		return ;
 	// print_tree(root, 0);
 	operator_selection(root, v);
-	free_tree(root);
+	// free_tree(root);
 }
 
 int	redirection(t_tree **temp, char *s, char **str, int j, t_vars *v)

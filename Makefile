@@ -62,4 +62,4 @@ fclean : clean
 re : fclean all
 
 run : re
-	@rm -rf $(OBJS) && ./$(NAME)
+	@rm -rf $(OBJS)
