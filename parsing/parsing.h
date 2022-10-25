@@ -29,7 +29,7 @@ char		*expand_dollar_2(char *s, int i, t_vars *v);
 void		signals_handling(void);
 t_redirct	*redirection_parse(t_tree *root, char *str, int *i, t_vars *v);
 char		**ft_strjoin2d(char **s, char **s0);
-int			pipe_parsing(t_tree **root, char **str, char *s, int j, t_vars *v);
+int			pipe_parsing(t_tree **root, char **str, char *s, int j);
 int			redirection(t_tree **temp, char *s, char **str, int j, t_vars *v);
 void		open_heredoc(t_tree *root);
 void		check_heredoc(t_tree *root);

@@ -12,17 +12,15 @@
 
 #include "parsing.h"
 
-char	*expand_dollar(char *s, int start, int lvl, char c, t_vars *v)
+char *expand_dollar(char *s, int start, int lvl, char c, t_vars *v)
 {
-	char	*expand;
-	t_node	*node;
-	char	*dollar;
-	int		j;
-	int		i;
+	char *expand;
+	char *dollar;
+	int j;
+	int i;
 
 	j = 0;
 	i = start;
-	node = malloc(sizeof(t_node));
 	while ((lvl == 1 || s[start] != '$') && s[start] != c)
 		start++;
 	expand = malloc(start - i + 1);
@@ -38,11 +36,11 @@ char	*expand_dollar(char *s, int start, int lvl, char c, t_vars *v)
 	return (expand);
 }
 
-char	*expand_dollar_2(char *s, int i, t_vars *v)
+char *expand_dollar_2(char *s, int i, t_vars *v)
 {
-	char	*dollar;
-	int		j;
-	int		start;
+	char *dollar;
+	int j;
+	int start;
 
 	j = 0;
 	start = 0;

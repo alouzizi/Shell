@@ -99,16 +99,12 @@ char	**transfer_list_to_2darray(t_node *node)
 	while (node != NULL)
 	{
 		tab[i] = node->s;
+		tmp = node;
 		i++;
 		node = node->next;
+		free(tmp);
 	}
 	tab[i] = 0;
-	while (node)
-    {
-       tmp = node;
-       node = node->next;
-       free(tmp);
-    }
 	return (tab);
 }
 
