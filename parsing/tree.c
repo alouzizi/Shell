@@ -12,21 +12,24 @@
 
 #include "parsing.h"
 
-void	free_tree(t_tree *root)
+void free_tree(t_tree *root)
 {
-	if (root != NULL)
+	if (root == NULL)
+		return ;
+	else
 	{
 		free_tree(root->right);
+		puts(root->s[0]);
 		free_array(root->s);
 		free_tree(root->left);
 		free(root);
 	}
 }
 
-int	pipe_parsing(t_tree **root, char **str, char *s, int j, t_vars *v)
+int pipe_parsing(t_tree **root, char **str, char *s, int j, t_vars *v)
 {
-	t_tree	*temp2;
-	int		l;
+	t_tree *temp2;
+	int l;
 
 	l = 0;
 	if (j != 1 && j != 2 && j != 3)
@@ -39,23 +42,22 @@ int	pipe_parsing(t_tree **root, char **str, char *s, int j, t_vars *v)
 	(*root) = newtree(NULL);
 	(*root)->s = malloc(sizeof(char *) * 2);
 	(*root)->s[0] = data(1, s[l], 0);
+	(*root)->s[1] = NULL;
 	l++;
 	if (j == 1)
 		(*root)->left = newtree(str);
 	else
 		(*root)->left = temp2;
-	(*root)->right = newtree(NULL);
-	(*root)->right->s = transfer_list_to_2darray(get_cmd(s, &l, v));
 	return (l);
 }
 
-void	tree(char *s, t_vars *v)
+void tree(char *s, t_vars *v)
 {
-	t_tree	*root;
-	t_tree	*temp;
-	char	**str;
-	int		i;
-	int		j;
+	t_tree *root;
+	t_tree *temp;
+	char **str;
+	int i;
+	int j;
 
 	i = 0;
 	j = 0;
@@ -73,8 +75,16 @@ void	tree(char *s, t_vars *v)
 		{
 			j = pipe_parsing(&root, str, &s[i], j, v);
 			if (j == 0)
-				return ;
+				return;
 			i += j;
+			str = transfer_list_to_2darray(get_cmd(s, &i, v));
+			if(str[0])
+				root->right = newtree(str);
+			else
+			{
+				ft_putendl_fd("Syntax Error", 2);
+				return;
+			}
 			temp = root->right;
 			j = 3;
 		}
@@ -82,24 +92,22 @@ void	tree(char *s, t_vars *v)
 		{
 			j = redirection(&temp, &s[i], str, j, v);
 			if (j == 0)
-				return ;
+				return;
 			i += j;
 			j = 2;
 		}
 	}
-	if (j == 1)
-		temp->s = str;
 	if (!root || !root->s)
-		return ;
+		return;
 	//print_tree(root, 0);
 	operator_selection(root, v);
-	//free_tree(root);
+	free_tree(root);
 }
 
-int	redirection(t_tree **temp, char *s, char **str, int j, t_vars *v)
+int redirection(t_tree **temp, char *s, char **str, int j, t_vars *v)
 {
-	t_redirct	*r;
-	int			i;
+	t_redirct *r;
+	int i;
 
 	i = 0;
 	(*temp)->s = malloc(sizeof(char *));
@@ -139,5 +147,6 @@ int	redirection(t_tree **temp, char *s, char **str, int j, t_vars *v)
 		return (0);
 	}
 	(*temp) = (*temp)->right;
+	int l;
 	return (i);
 }
