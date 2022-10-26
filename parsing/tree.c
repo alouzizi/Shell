@@ -29,7 +29,6 @@ int pipe_parsing(t_tree **root, char **str, char *s, int j)
 {
 	t_tree *temp2;
 	int l;
-
 	l = 0;
 	if (j != 1 && j != 2 && j != 3)
 	{
@@ -98,12 +97,14 @@ void tree(char *s, t_vars *v)
 	}
 	if (j == 1)
 		root = newtree(str);
-	if (!root || !root->s)
+	if (!root->s)
+	{
+		free(root);
 		return;
+	}
 	//print_tree(root, 0);
 	operator_selection(root, v);
 	free_tree(root);
-	free(s);
 }
 
 int redirection(t_tree **temp, char *s, char **str, int j, t_vars *v)

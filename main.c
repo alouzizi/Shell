@@ -35,6 +35,7 @@ void	prompt_display(t_vars *v)
 			g_global.status = 1;
 			ft_putendl_fd("Syntax Error : Check Quotes!", 2);
 		}
+		free(s);
 	}
 }
 

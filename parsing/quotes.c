@@ -29,7 +29,7 @@ t_node	*get_cmd(char *s, int *i, t_vars *v)
 				return (cmd);
 		}
 		while (s[*i] && s[*i] == ' ')
-			(*i)++;
+			(*i)++; 
 	}
 	return (cmd);
 }
@@ -78,12 +78,12 @@ t_node	*create_node(char *str, int start, int end)
 	if (!node)
 		return (NULL);
 	node->next = NULL;
-	node->s = (char *)malloc(sizeof(char) * (end - start + 1));
+	node->s = (char *)malloc(sizeof(char) * (end - start + 2));
 	if (!node->s)
 		return (NULL);
 	while (start <= end)
 		node->s[i++] = str[start++];
-	node->s[i] = 0;
+	node->s[i] = '\0';
 	return (node);
 }
 

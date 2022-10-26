@@ -33,7 +33,7 @@ int	normall_collect(t_node **cmd, char *s, int *i, t_vars *v)
 	if (s[*i] == '$' && s[*i])
 	{
 		if (node->s)
-			node->s = ft_strjoin(node->s, expand_dollar(s, star, 0, ' ', v), 1);
+			node->s = ft_strjoin(node->s, expand_dollar(s, star, 0, ' ', v), 3);
 		else
 			node->s = expand_dollar(s, star, 0, ' ', v);
 		while (s[*i] && (s[*i] != ' ' && s[*i] != '|' && s[*i] != '"' && s[*i]
