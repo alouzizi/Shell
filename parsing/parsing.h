@@ -25,7 +25,7 @@ void		handle_quotes(t_node **cmd, char *s, char c, int *i, t_vars *v);
 t_node		*create_node(char *str, int start, int end);
 char		**transfer_list_to_2darray(t_node *node);
 char		*expand_dollar(char *s, int start, int lvl, char c, t_vars *v);
-char		*expand_dollar_2(char *s, int i, t_vars *v);
+char		*expand_dollar_2(char *s, int i, t_vars *v ,char c);
 void		signals_handling(void);
 t_redirct	*redirection_parse(t_tree *root, char *str, int *i, t_vars *v);
 char		**ft_strjoin2d(char **s, char **s0);

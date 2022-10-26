@@ -21,7 +21,7 @@ char *expand_dollar(char *s, int start, int lvl, char c, t_vars *v)
 
 	j = 0;
 	i = start;
-	while ((lvl == 1 || s[start] != '$') && s[start] != c)
+	while ((lvl == 1 || s[start] != '$') && s[start] != c && s[start])
 		start++;
 	expand = malloc(start - i + 1);
 	while (i < start)
@@ -29,14 +29,15 @@ char *expand_dollar(char *s, int start, int lvl, char c, t_vars *v)
 	expand[j] = '\0';
 	if (s[i] == '$')
 	{
-		dollar = expand_dollar_2(s, i, v);
+		dollar = expand_dollar_2(s, i, v, c);
+		
 		if (dollar)
 			expand = ft_strjoin(expand, dollar, 1);
 	}
 	return (expand);
 }
 
-char *expand_dollar_2(char *s, int i, t_vars *v)
+char *expand_dollar_2(char *s, int i, t_vars *v ,char c)
 {
 	char *dollar;
 	int j;
@@ -44,20 +45,20 @@ char *expand_dollar_2(char *s, int i, t_vars *v)
 
 	j = 0;
 	start = 0;
-	if (ft_isdigit(s[i + 1]) || (!ft_isalpha(s[i + 1]) && s[i + 1] != '_'))
+	if (s[ i + 1] && (ft_isdigit(s[i + 1]) || (!ft_isalpha(s[i + 1]) && s[i + 1] != '_')))
 	{
 		if (ft_isdigit(s[i + 1]))
-			return (expand_dollar(s, i + 2, 0, '"', v));
+			return (expand_dollar(s, i + 2, 0, c, v));
 		else if (s[i + 1] == '?')
 			dollar = ft_itoa(g_global.status);
 		else
-			return (expand_dollar(s, i, 1, '"', v));
-		return (ft_strjoin(dollar, expand_dollar(s, i + 2, 0, '"', v), 1));
+			return (expand_dollar(s, i, 1, c, v));
+		return (ft_strjoin(dollar, expand_dollar(s, i + 2, 0, c, v), 1));
 	}
-	else if (ft_isdigit(s[i + 1]) || ft_isalpha(s[i + 1]) || s[i + 1] == '_')
+	else if (s[i + 1] && (ft_isdigit(s[i + 1]) || ft_isalpha(s[i + 1]) || s[i + 1] == '_'))
 	{
 		++i;
-		while (ft_isdigit(s[i]) || ft_isalpha(s[i]) || s[i] == '_')
+		while (s[i] && (ft_isdigit(s[i]) || ft_isalpha(s[i]) || s[i] == '_'))
 		{
 			start++;
 			i++;
@@ -69,12 +70,12 @@ char *expand_dollar_2(char *s, int i, t_vars *v)
 		dollar[j] = '\0';
 		dollar = get_env(dollar, v);
 	}
-	if (s[i] && s[i] != '"')
+	if (s[i] && s[i] != c)
 	{
 		if (!dollar)
-			return (expand_dollar(s, i, 0, '"', v));
+			return (expand_dollar(s, i, 0, c, v));
 		dollar = ft_strdup(dollar);
-		dollar = ft_strjoin(dollar, expand_dollar(s, i, 0, '"', v), 1);
+		dollar = ft_strjoin(dollar, expand_dollar(s, i, 0, c, v), 3);
 	}
 	return (dollar);
 }

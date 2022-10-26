@@ -21,15 +21,21 @@
 char	*get_env(char *str, t_vars *v)
 {
 	int	i;
+	int len;
 
 	i = -1;
 	str = ft_strjoin(str, ft_strdup("="), 2);
+	len = ft_strlen(str);
 	while (v->env[++i])
 	{
 		if (!ft_strncmp(str, v->env[i], ft_strlen(str)))
-			return (free(str), &v->env[i][ft_strlen(str)]);
+		{
+			free(str);
+			return (&v->env[i][len]);
+		}
 	}
-	return (free(str), NULL);
+	free(str);
+	return (NULL);
 }
 
 // cd error printing
