@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 15:04:14 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/22 01:56:03 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/27 02:25:00 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	prompt_display(t_vars *v)
 {
+	t_tree	*root;
 	char	*s;
 
+	root = NULL;
 	while (1)
 	{
 		g_global.signal = 0;
@@ -29,7 +31,7 @@ void	prompt_display(t_vars *v)
 			exit (g_global.status);
 		}
 		if (!check_quotes(s, 0, 0))
-			tree(s, v);
+			tree(&root, s, v);
 		else
 		{
 			g_global.status = 1;
