@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 09:46:28 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/28 02:05:39 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/28 14:04:32 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,21 @@ int	redirecte_output(t_tree *root, int j, t_vars *v)
 	i = 0;
 	while (root->left->s[i + 1])
 	{
-		f = open(root->left->s[i], O_CREAT | O_RDONLY | O_TRUNC, 0777);
+		f = open(root->left->s[i++], O_CREAT | O_RDONLY | O_TRUNC, 0777);
 		if (f < 0)
+		{
+			perror(PRMPT_ERR);
 			return (-1);
-		i++;
+		}
 	}
 	if (j)
-	{
-		if ((f = open(root->left->s[i], O_CREAT | O_WRONLY | O_APPEND, 0777)) < 0)
-			perror(PRMPT_ERR);
-	}
+		f = open(root->left->s[i], O_CREAT | O_WRONLY | O_APPEND, 0777);
 	else
+		f = open(root->left->s[i], O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	if (f < 0)
 	{
-		if ((f = open(root->left->s[i], O_CREAT | O_WRONLY | O_TRUNC, 0777)) < 0)
-			perror(PRMPT_ERR);
+		perror(PRMPT_ERR);
+		return (-1);
 	}
 	pid = fork();
 	if (!pid)
@@ -79,8 +80,7 @@ int	redirect_intput(t_tree *root, t_vars *v)
 		dup2(f, STDIN_FILENO);
 		close(f);
 		operator_selection(root->left->left, v);
-			exit(g_global.status);
+		exit(g_global.status);
 	}
 	return (wait(0), close(f), 0);
 }
-zz

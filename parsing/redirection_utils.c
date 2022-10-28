@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 09:34:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/28 01:59:46 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/28 16:25:54 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_redirct	*redirection(t_tree **temp, char *s, char **str,t_vars *v)
 		//ymkn lik tzide 2la kant hdahom xi redirect 5ra
 		if (s[i] != s[i + 1])
 		{
-			ft_putendl_fd("Syntax Error", 2);
+			ft_putendl_fd("Syntax Error1", 2);
 			return (NULL);
 		}
 		(*temp)->s[0] = data(2, s[i], s[i + 1]);
@@ -40,6 +40,8 @@ t_redirct	*redirection(t_tree **temp, char *s, char **str,t_vars *v)
 	}
 	else
 		(*temp)->s[0] = data(1, s[i], 0);
+	puts((*temp)->s[0]);
+	printf("i = %d\n", i);
 	r = redirection_pars(*temp, s, &i, v);
 	if(!r || r->j == -1)
 		return (NULL);
@@ -52,6 +54,8 @@ t_redirct	*redirection(t_tree **temp, char *s, char **str,t_vars *v)
 		tmp->left = newtree(NULL);
 		tmp = tmp->left;
 		p = redirection(&tmp, &s[i], NULL,v);
+		if (!p)
+			return (NULL);
 		if(r->param[0])
 			r->param = ft_strjoin2d(r->param, p->param);
 		i += p->j;
@@ -92,8 +96,12 @@ t_redirct	*redirection_pars(t_tree *temp, char *s, int *i, t_vars *v)
 	else
 		p->param = NULL;
 	l = ft_strlen(temp->s[0]);
+	if (s[*i + 1] && l == 1 && (s[*i + 1] == '>' || s[*i + 1] == '<' || 
+			s[*i + 1] == '|' || s[*i + 1] == '&'))
+		return (p);
 	if ((s[*i]) && !ft_strncmp(temp->s[0], &s[*i],l))
 	{
+		puts("here");
 		if (l == 2)
 			*i += 1;
 		tmp = redirection_pars(temp, s, &*i, v);

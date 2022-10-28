@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 00:36:46 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/28 02:03:41 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/28 15:52:09 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,61 +30,62 @@ void check_herdocintree(t_tree **root)
 
 void	herdoc(t_tree **root)
 {
-	t_tree *temp;
+	static	int o = 0;
 	char	*s;
 	char	*her;
-	static	int o = 0;
 	int 	i;
+	int		j;
 
-	temp = (*root);
-	s = NULL;
-	int j = 1;
-	if (!ft_strcmp(temp->s[0],"<<"))
+	j = 1;
+	if (!ft_strcmp((*root)->s[0],"<<"))
 	{
 		i  = -1;
-		her = NULL;
-		while(temp->left->s[++i])
+		while((*root)->left->s[++i])
 		{
 			j = 1;
+			her = NULL;
 			s = readline(">");
 			if (!s)
 			{ 
 				o++;
 				s  = ft_strjoin("/tmp/" ,ft_itoa(o),0);
-				int f = open(s, O_CREAT | O_TRUNC | O_RDWR , 0777);
-                if(f < 0)
-                {
-                    perror(PRMPT_ERR);
-                    return ;
-                }
-				temp->left->s[i] = ft_strdup(s);
+				j = open(s, O_CREAT | O_TRUNC | O_RDWR , 0777);
+				if (j < 0)
+				{
+					perror(PRMPT_ERR);
+					return ;
+				}
+				free((*root)->left->s[i]);
+				(*root)->left->s[i] = ft_strdup(s);
 				j = 0;
 				free (s);
 			}
-			while(ft_strcmp(s , temp->left->s[i]) && j != 0)
+			while(ft_strcmp(s , (*root)->left->s[i]) && j != 0)
 			{
-					her = ft_strjoin2(her, s);
-					her = ft_strjoin2(her ,"\n");
-					s =  readline(">");
-					if (!s)
-						break ;
+				her = ft_strjoin2(her, s, 1);
+				her = ft_strjoin2(her ,"\n",0);
+				s =  readline(">");
+				if (!s)
+					break ;
 			}
 			if (j != 0)
 			{
 				o++;
+				free(s);
 				s  = ft_strjoin("/tmp/" ,ft_itoa(o),2);
-				int f = open(s, O_CREAT | O_TRUNC | O_RDWR , 0777);
-				ft_putstr_fd(her ,f);
-				temp->left->s[i] = ft_strdup(s);
+				j = open(s, O_CREAT | O_TRUNC | O_RDWR , 0777);
+				ft_putstr_fd(her ,j);
+				free((*root)->left->s[i]);
+				(*root)->left->s[i] = ft_strdup(s);
+				free(s);
 				free(her);
-				her = NULL;
+				
 			}
 		}
 	}
-	return ;
 }
 
-char	*ft_strjoin2(char *s1, char *s2)
+char	*ft_strjoin2(char *s1, char *s2, int o)
 {
 	char	*s;
 	int		i;
@@ -105,5 +106,8 @@ char	*ft_strjoin2(char *s1, char *s2)
 	while (s2[i])
 		s[j++] = s2[i++];
 	s[j] = '\0';
+	free(s1);
+	if (o)
+		free(s2);
 	return (s);
 }
