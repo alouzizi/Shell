@@ -29,13 +29,14 @@ int pipe_parsing(t_tree **root, char **str, char *s, int j)
 {
 	t_tree *temp2;
 	int l;
+
 	l = 0;
 	if (j != 1 && j != 2 && j != 3)
 	{
 		ft_putendl_fd("Syntax Error", 2);
 		return (0);
 	}
-	if (root)
+	if (root != NULL)
 		temp2 = *root;
 	(*root) = newtree(NULL);
 	(*root)->s = malloc(sizeof(char *) * 2);
@@ -83,6 +84,7 @@ void tree(t_tree **root, char *s, t_vars *v)
 				ft_putendl_fd("Syntax Error", 2);
 				return;
 			}
+			free(temp);
 			temp = (*root)->right;
 			j = 3;
 		}

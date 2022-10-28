@@ -6,11 +6,38 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 09:34:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/28 16:25:54 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/28 21:22:57 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+int token_redirection(t_tree *temp , char *s)
+{
+	int i;
+
+	i = 0;
+	temp->s = malloc(sizeof(char *) * 2);
+	if (!temp->s)
+	{
+		perror(PRMPT_ERR);
+		return (-1);
+	}
+	temp->s[1] = NULL;
+	if ((s[i + 1] == '<' || s[i + 1] == '>') && (s[i] == '<' || s[i] == '>'))
+	{
+		if (s[i] != s[i + 1])
+		{
+			ft_putendl_fd("Syntax Error", 2);
+			return (-1);
+		}
+		temp->s[0] = data(2, s[i], s[i + 1]);
+		i++;
+	}
+	else
+		temp->s[0] = data(1, s[i], 0);
+	return (i);
+}
 
 t_redirct	*redirection(t_tree **temp, char *s, char **str,t_vars *v)
 {
@@ -19,29 +46,9 @@ t_redirct	*redirection(t_tree **temp, char *s, char **str,t_vars *v)
 	t_tree		*tmp;
 	int			i;
 
-	i = 0;
-	(*temp)->s = malloc(sizeof(char *) * 2);
-	if (!(*temp)->s)
-	{
-		perror(PRMPT_ERR);
+	i = token_redirection(*temp, s);
+	if (i == -1)
 		return (NULL);
-	}
-	(*temp)->s[1] = NULL;
-	if ((s[i + 1] == '<' || s[i + 1] == '>') && (s[i] == '<' || s[i] == '>'))
-	{
-		//ymkn lik tzide 2la kant hdahom xi redirect 5ra
-		if (s[i] != s[i + 1])
-		{
-			ft_putendl_fd("Syntax Error1", 2);
-			return (NULL);
-		}
-		(*temp)->s[0] = data(2, s[i], s[i + 1]);
-		i++;
-	}
-	else
-		(*temp)->s[0] = data(1, s[i], 0);
-	puts((*temp)->s[0]);
-	printf("i = %d\n", i);
 	r = redirection_pars(*temp, s, &i, v);
 	if(!r || r->j == -1)
 		return (NULL);
@@ -101,7 +108,6 @@ t_redirct	*redirection_pars(t_tree *temp, char *s, int *i, t_vars *v)
 		return (p);
 	if ((s[*i]) && !ft_strncmp(temp->s[0], &s[*i],l))
 	{
-		puts("here");
 		if (l == 2)
 			*i += 1;
 		tmp = redirection_pars(temp, s, &*i, v);
@@ -144,6 +150,8 @@ char	**ft_strjoin2d(char **s, char **s0)
 	j = 0;
 	if (!s0)
 		return (s);
+	if (!s)
+		return (s0);
 	i = arr_len(s);
 	i += arr_len(s0);
 	s1 = malloc(sizeof(char *) * (i + 1));

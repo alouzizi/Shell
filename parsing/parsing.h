@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:06:36 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/28 15:40:23 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/28 21:20:57 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ int	get_redirect_file(t_redirct *p, char *str, int i);
 void check_herdocintree(t_tree **root);
 void	herdoc(t_tree **root);
 char	*ft_strjoin2(char *s1, char *s2, int i);
+int token_redirection(t_tree *temp , char *s);
 
 #endif
