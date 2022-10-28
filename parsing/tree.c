@@ -102,7 +102,8 @@ void tree(t_tree **root, char *s, t_vars *v)
 		free(*root);
 		return;
 	}
-	// print_tree(*root, 0);
+	//print_tree(*root, 0);
+	check_herdocintree(root);
 	operator_selection(*root, v);
 	free_tree(*root);
 }

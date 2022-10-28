@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 09:46:28 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/27 02:15:42 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/28 02:05:39 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,3 +83,4 @@ int	redirect_intput(t_tree *root, t_vars *v)
 	}
 	return (wait(0), close(f), 0);
 }
+zz

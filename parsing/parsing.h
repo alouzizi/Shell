@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:06:36 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/27 02:24:06 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/28 01:16:56 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ t_redirct	*redirection_pars(t_tree *temp, char *s, int *i, t_vars *v);
 char		**ft_strjoin2d(char **s, char **s0);
 int			pipe_parsing(t_tree **root, char **str, char *s, int j);
 t_redirct   *redirection(t_tree **temp, char *s, char **str,t_vars *v);
-void		open_heredoc(t_tree *root);
-void		check_heredoc(t_tree *root);
 void		free_tree(t_tree *root);
 int	get_redirect_file(t_redirct *p, char *str, int i);
+void check_herdocintree(t_tree **root);
+void	herdoc(t_tree **root);
+char	*ft_strjoin2(char *s1, char *s2);
 
 #endif

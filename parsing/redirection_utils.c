@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 09:34:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/27 03:36:06 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/28 01:59:46 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ t_redirct	*redirection_pars(t_tree *temp, char *s, int *i, t_vars *v)
 	l = ft_strlen(temp->s[0]);
 	if ((s[*i]) && !ft_strncmp(temp->s[0], &s[*i],l))
 	{
+		if (l == 2)
+			*i += 1;
 		tmp = redirection_pars(temp, s, &*i, v);
 		p->param = ft_strjoin2d(p->param, tmp->param);
 		p->file = ft_strjoin2d(p->file, tmp->file);

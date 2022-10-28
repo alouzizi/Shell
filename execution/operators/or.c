@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   or.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 00:14:59 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/21 04:37:25 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/10/28 00:50:21 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	operator_selection(t_tree *root, t_vars *v)
 		return (redirect_intput(root, v));
 	else if (!builtincmp(root->s[0], ">>"))
 		return (redirecte_output(root, 1, v));
+	else if (!builtincmp(root->s[0], "<<"))
+		return (redirect_intput(root, v));
 	else
 		return (simple_cmd(root, v));
 	return (0);
