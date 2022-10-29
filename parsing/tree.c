@@ -37,8 +37,10 @@ int pipe_parsing(t_tree **root, char **str, char *s, int j)
 		return (0);
 	}
 	if (root != NULL)
+	{
 		temp2 = *root;
-	(*root) = newtree(NULL);
+		(*root) = newtree(NULL);
+	}
 	(*root)->s = malloc(sizeof(char *) * 2);
 	(*root)->s[0] = data(1, s[l], 0);
 	(*root)->s[1] = NULL;
@@ -61,7 +63,6 @@ void tree(t_tree **root, char *s, t_vars *v)
 	i = 0;
 	j = 0;
 	*root = newtree(NULL);
-	temp = *root;
 	str = NULL;
 	while (s[i])
 	{
@@ -78,18 +79,20 @@ void tree(t_tree **root, char *s, t_vars *v)
 			i += j;
 			str = transfer_list_to_2darray(get_cmd(s, &i, v));
 			if(str[0])
+			{
 				(*root)->right = newtree(str);
+				temp = (*root)->right;
+			}
 			else
 			{
 				ft_putendl_fd("Syntax Error", 2);
 				return;
 			}
-			free(temp);
-			temp = (*root)->right;
 			j = 3;
 		}
 		if ((s[i] == '<' || s[i] == '>') && s[i])
 		{
+			temp = *root;
 			r = redirection(&temp, &s[i], str, v);
 			if (!r || r->j == -1)
 				return;
@@ -104,7 +107,7 @@ void tree(t_tree **root, char *s, t_vars *v)
 		free(*root);
 		return;
 	}
-	//print_tree(*root, 0);
+	print_tree(*root, 0);
 	check_herdocintree(root);
 	operator_selection(*root, v);
 	free_tree(*root);

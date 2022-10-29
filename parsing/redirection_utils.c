@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 09:34:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/28 21:22:57 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/29 10:01:16 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,37 @@ int token_redirection(t_tree *temp , char *s)
 	return (i);
 }
 
-t_redirct	*redirection(t_tree **temp, char *s, char **str,t_vars *v)
+int token_file_param(t_tree **temp, char *s, t_redirct *r, t_vars *v)
 {
-	t_redirct	*r;
 	t_redirct	*p;
 	t_tree		*tmp;
 	int			i;
+
+	i = 0;
+	if (s[i] && (s[i] == '>' || s[i] == '<'))
+	{
+		tmp = (*temp)->left;
+		tmp->left = newtree(NULL);
+		tmp = tmp->left;
+		p = redirection(&tmp, &s[i], NULL,v);
+		if (!p)
+			return (-1);
+		if(r->param[0])
+			r->param = ft_strjoin2d(r->param, p->param);
+		i += p->j;
+		if(r->param[0])
+			tmp->left->left =  newtree(r->param);
+	}
+	else if(r->param)
+		(*temp)->left->left = newtree(r->param);
+	return (i);
+}
+
+t_redirct	*redirection(t_tree **temp, char *s, char **str,t_vars *v)
+{
+	 t_redirct	*r;
+	int			i;
+	int			j;
 
 	i = token_redirection(*temp, s);
 	if (i == -1)
@@ -55,22 +80,10 @@ t_redirct	*redirection(t_tree **temp, char *s, char **str,t_vars *v)
 	if (str)
 		r->param = ft_strjoin2d(str, r->param);
 	(*temp)->left = newtree(r->file);
-	if (s[i] && (s[i] == '>' || s[i] == '<'))
-	{
-		tmp = (*temp)->left;
-		tmp->left = newtree(NULL);
-		tmp = tmp->left;
-		p = redirection(&tmp, &s[i], NULL,v);
-		if (!p)
-			return (NULL);
-		if(r->param[0])
-			r->param = ft_strjoin2d(r->param, p->param);
-		i += p->j;
-		if(r->param[0])
-			tmp->left->left =  newtree(r->param);
-	}
-	else if(r->param)
-		(*temp)->left->left = newtree(r->param);
+	j = token_file_param(temp, &s[i], r,v);
+	if (j == -1)
+		return (NULL);
+	i += j;
 	r->j = i;
 	return (r);
 }
