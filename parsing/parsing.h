@@ -15,7 +15,7 @@
 # include "../minishell.h"
 
 void		print_tree(t_tree *root, int space);
-char		data(int j, char c, char c2);
+char		*data(int j, char c, char c2);
 t_tree		*newtree(char **content);
 void		tree(t_tree **root, char *s, t_vars *v);
 t_node		*get_cmd(char *s, int *l, t_vars *v);
