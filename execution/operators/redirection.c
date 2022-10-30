@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 09:46:28 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/28 14:04:32 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/30 21:49:14 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	redirecte_output(t_tree *root, int j, t_vars *v)
 		perror(PRMPT_ERR);
 		return (-1);
 	}
+	//check if cmd is cd
 	pid = fork();
 	if (!pid)
 	{
@@ -72,6 +73,7 @@ int	redirect_intput(t_tree *root, t_vars *v)
 		i++;
 	}
 	f = open(root->left->s[i - 1], O_RDONLY, 0777);
+	// protect open
 	pid = fork();
 	if (!pid)
 	{

@@ -92,7 +92,10 @@ void tree(t_tree **root, char *s, t_vars *v)
 		}
 		if ((s[i] == '<' || s[i] == '>') && s[i])
 		{
-			temp = *root;
+			if (root)
+				temp = (*root)->right;
+			else
+				temp = *root;
 			r = redirection(&temp, &s[i], str, v);
 			if (!r || r->j == -1)
 				return;
@@ -107,7 +110,7 @@ void tree(t_tree **root, char *s, t_vars *v)
 		free(*root);
 		return;
 	}
-//	print_tree(*root, 0);
+	//print_tree(*root, 0);
 	check_herdocintree(root);
 	operator_selection(*root, v);
 	free_tree(*root);

@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:06:36 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/29 10:17:28 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/30 21:23:37 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		tree(t_tree **root, char *s, t_vars *v);
 t_node		*get_cmd(char *s, int *l, t_vars *v);
 int			check_quotes(char *s, int i, int j);
 int			normall_collect(t_node **cmd, char *s, int *i, t_vars *v);
-void		handle_quotes(t_node **cmd, char *s, char c, int *i, t_vars *v);
+void        handle_quotes(t_node **cmd, char *s, int *i, t_vars *v);
 t_node		*create_node(char *str, int start, int end);
 char		**transfer_list_to_2darray(t_node *node);
 char		*expand_dollar(char *s, int start, int lvl, char c, t_vars *v);
@@ -38,5 +38,7 @@ void		herdoc(t_tree **root);
 char		*ft_strjoin2(char *s1, char *s2, int i);
 int			token_redirection(t_tree *temp , char *s);
 int			token_file_param(t_tree **temp, char *s, t_redirct *r, t_vars *v);
+int         check_nextredirect(t_tree *temp, char *s, t_redirct *p, t_vars *v);
+void         what_next(t_node *node, char *s, int *i, t_vars *v);
 
 #endif

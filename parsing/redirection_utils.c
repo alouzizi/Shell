@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 09:34:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/29 10:01:16 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/30 20:27:13 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,7 @@ t_redirct	*redirection(t_tree **temp, char *s, char **str,t_vars *v)
 t_redirct	*redirection_pars(t_tree *temp, char *s, int *i, t_vars *v)
 {
 	t_redirct	*p;
-	t_redirct	*tmp;
-	int			l;
+	int			j;
 
 	(*i) += 1;
 	p = malloc(sizeof(t_redirct));
@@ -111,25 +110,40 @@ t_redirct	*redirection_pars(t_tree *temp, char *s, int *i, t_vars *v)
 		return (p);
 	}
 	*i = get_redirect_file(p, s, *i);
-	if ((s[*i]) && (s[*i] != '<' || s[*i] != '>' || s[*i] == '|' || s[*i] =='&'))
-		p->param = transfer_list_to_2darray(get_cmd(s, &*i, v));
+	j = check_nextredirect(temp, &s[*i], p, v);
+	if (j == -1)
+		return (p);
+	*i += j;
+	return (p);
+}
+
+
+int	check_nextredirect(t_tree *temp, char *s, t_redirct *p, t_vars *v)
+{
+	t_redirct	*tmp;
+	int			l;
+	int			i;
+
+	i = 0;
+	if ((s[i]) && (s[i] != '<' || s[i] != '>' || s[i] == '|' || s[i] =='&'))
+		p->param = transfer_list_to_2darray(get_cmd(s, &i, v));
 	else
 		p->param = NULL;
 	l = ft_strlen(temp->s[0]);
-	if (s[*i + 1] && l == 1 && (s[*i + 1] == '>' || s[*i + 1] == '<' || 
-			s[*i + 1] == '|' || s[*i + 1] == '&'))
-		return (p);
-	if ((s[*i]) && !ft_strncmp(temp->s[0], &s[*i],l))
+	if (s[i + 1] && l == 1 && (s[i + 1] == '>' || s[i + 1] == '<' || 
+			s[i + 1] == '|' || s[i + 1] == '&'))
+		return (i);
+	if ((s[i]) && !ft_strncmp(temp->s[0], &s[i],l))
 	{
 		if (l == 2)
-			*i += 1;
-		tmp = redirection_pars(temp, s, &*i, v);
+			i += 1;
+		tmp = redirection_pars(temp, s, &i, v);
 		p->param = ft_strjoin2d(p->param, tmp->param);
 		p->file = ft_strjoin2d(p->file, tmp->file);
 		if (tmp->j == -1)
-			return (p);
+			return (-1);
 	}
-	return(p);
+	return(i);		
 }
 
 int	get_redirect_file(t_redirct *p, char *str, int i)

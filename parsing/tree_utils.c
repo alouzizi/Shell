@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 04:57:35 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/27 01:27:05 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/10/30 20:57:06 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	normall_collect(t_node **cmd, char *s, int *i, t_vars *v)
 	}
 	if ((s[*i] == '\'' || s[*i] == '"') && s[*i])
 	{
-		handle_quotes(&list, s, s[*i], i, v);
+		handle_quotes(&list, s, i, v);
 		node->s = ft_strjoin(node->s, list->s, 3);
 		list = NULL;
 	}
@@ -56,7 +56,7 @@ t_tree	*newtree(char **content)
 
 	tree = malloc(sizeof(t_tree));
 	if (!tree)
-		return (NULL);
+		exit (1);
 	tree->s = content;
 	tree->left = NULL;
 	tree->right = NULL;
