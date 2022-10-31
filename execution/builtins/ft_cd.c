@@ -21,7 +21,7 @@
 char	*get_env(char *str, t_vars *v)
 {
 	int	i;
-	int len;
+	int	len;
 
 	i = -1;
 	str = ft_strjoin(str, ft_strdup("="), 2);
@@ -31,7 +31,7 @@ char	*get_env(char *str, t_vars *v)
 		if (!ft_strncmp(str, v->env[i], ft_strlen(str)))
 		{
 			free(str);
-			return (&v->env[i][len]);
+			return (ft_strdup(&v->env[i][len]));
 		}
 	}
 	free(str);

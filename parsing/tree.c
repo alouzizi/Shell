@@ -12,7 +12,7 @@
 
 #include "parsing.h"
 
-void free_tree(t_tree *root)
+void	free_tree(t_tree *root)
 {
 	if (root == NULL)
 		return ;
@@ -25,10 +25,10 @@ void free_tree(t_tree *root)
 	}
 }
 
-int pipe_parsing(t_tree **root, char **str, char *s, int j)
+int	pipe_parsing(t_tree **root, char **str, char *s, int j)
 {
-	t_tree *temp2;
-	int l;
+	t_tree	*temp2;
+	int		l;
 
 	l = 0;
 	if (j != 1 && j != 2 && j != 3)
@@ -52,7 +52,7 @@ int pipe_parsing(t_tree **root, char **str, char *s, int j)
 	return (l);
 }
 
-void tree(t_tree **root, char *s, t_vars *v)
+void	tree(t_tree **root, char *s, t_vars *v)
 {
 	t_redirct	*r;
 	t_tree		*temp;
@@ -75,10 +75,10 @@ void tree(t_tree **root, char *s, t_vars *v)
 		{
 			j = pipe_parsing(root, str, &s[i], j);
 			if (j == 0)
-				return;
+				return ;
 			i += j;
 			str = transfer_list_to_2darray(get_cmd(s, &i, v));
-			if(str[0])
+			if (str[0])
 			{
 				(*root)->right = newtree(str);
 				temp = (*root)->right;
@@ -86,19 +86,19 @@ void tree(t_tree **root, char *s, t_vars *v)
 			else
 			{
 				ft_putendl_fd("Syntax Error", 2);
-				return;
+				return ;
 			}
 			j = 3;
 		}
 		if ((s[i] == '<' || s[i] == '>') && s[i])
 		{
-			if (root)
+			if ((*root)->s)
 				temp = (*root)->right;
 			else
 				temp = *root;
 			r = redirection(&temp, &s[i], str, v);
 			if (!r || r->j == -1)
-				return;
+				return ;
 			i += r->j;
 			j = 2;
 		}
@@ -108,7 +108,7 @@ void tree(t_tree **root, char *s, t_vars *v)
 	if (!(*root)->s)
 	{
 		free(*root);
-		return;
+		return ;
 	}
 	//print_tree(*root, 0);
 	check_herdocintree(root);

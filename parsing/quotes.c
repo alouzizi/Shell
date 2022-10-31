@@ -29,7 +29,7 @@ t_node	*get_cmd(char *s, int *i, t_vars *v)
 				return (cmd);
 		}
 		while (s[*i] && s[*i] == ' ')
-			(*i)++; 
+			(*i)++;
 	}
 	return (cmd);
 }
@@ -50,7 +50,7 @@ void	handle_quotes(t_node **cmd, char *s, int *i, t_vars *v)
 	if (s[*i] == '"')
 	{
 		node = ft_lstnew(NULL);
-		node->s = expand_dollar(s, start, 0, c, v);
+		node->s = expand_dollar(&s[start], 0, c, v);
 	}
 	else
 		node = create_node(s, start, end);
@@ -140,4 +140,3 @@ int	check_quotes(char *s, int i, int j)
 	}
 	return (j);
 }
-

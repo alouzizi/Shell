@@ -12,15 +12,15 @@
 
 #include "parsing.h"
 
-void check_herdocintree(t_tree **root)
+void	check_herdocintree(t_tree **root)
 {
-	t_tree *temp;
+	t_tree	*temp;
 
 	temp = *root;
 	if (temp)
 	{
 		check_herdocintree(&temp->left);
-		if(!ft_strcmp(temp->s[0],"<<"))
+		if (!ft_strcmp(temp->s[0], "<<"))
 			herdoc(&temp);
 		check_herdocintree(&temp->right);
 	}
@@ -30,26 +30,26 @@ void check_herdocintree(t_tree **root)
 
 void	herdoc(t_tree **root)
 {
-	static	int o = 0;
-	char	*s;
-	char	*her;
-	int 	i;
-	int		j;
+	static int	o = 0;
+	char		*s;
+	char		*her;
+	int			i;
+	int			j;
 
 	j = 1;
-	if (!ft_strcmp((*root)->s[0],"<<"))
+	if (!ft_strcmp((*root)->s[0], "<<"))
 	{
-		i  = -1;
-		while((*root)->left->s[++i])
+		i = -1;
+		while ((*root)->left->s[++i])
 		{
 			j = 1;
 			her = NULL;
 			s = readline(">");
 			if (!s)
-			{ 
+			{
 				o++;
-				s  = ft_strjoin("/tmp/" ,ft_itoa(o),0);
-				j = open(s, O_CREAT | O_TRUNC | O_RDWR , 0777);
+				s = ft_strjoin("/tmp/", ft_itoa(o), 0);
+				j = open(s, O_CREAT | O_TRUNC | O_RDWR, 0777);
 				if (j < 0)
 				{
 					perror(PRMPT_ERR);
@@ -60,11 +60,11 @@ void	herdoc(t_tree **root)
 				j = 0;
 				free (s);
 			}
-			while(ft_strcmp(s , (*root)->left->s[i]) && j != 0)
+			while (ft_strcmp(s, (*root)->left->s[i]) && j != 0)
 			{
 				her = ft_strjoin2(her, s, 1);
-				her = ft_strjoin2(her ,"\n",0);
-				s =  readline(">");
+				her = ft_strjoin2(her, "\n", 0);
+				s = readline(">");
 				if (!s)
 					break ;
 			}
@@ -72,14 +72,13 @@ void	herdoc(t_tree **root)
 			{
 				o++;
 				free(s);
-				s  = ft_strjoin("/tmp/" ,ft_itoa(o),2);
-				j = open(s, O_CREAT | O_TRUNC | O_RDWR , 0777);
-				ft_putstr_fd(her ,j);
+				s = ft_strjoin("/tmp/", ft_itoa(o), 2);
+				j = open(s, O_CREAT | O_TRUNC | O_RDWR, 0777);
+				ft_putstr_fd(her, j);
 				free((*root)->left->s[i]);
 				(*root)->left->s[i] = ft_strdup(s);
 				free(s);
 				free(her);
-				
 			}
 		}
 	}
@@ -91,7 +90,7 @@ char	*ft_strjoin2(char *s1, char *s2, int o)
 	int		i;
 	int		j;
 
-	if(!s1)
+	if (!s1)
 		return (s2);
 	if (!s2)
 		return (NULL);

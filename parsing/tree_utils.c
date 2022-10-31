@@ -15,11 +15,9 @@
 int	normall_collect(t_node **cmd, char *s, int *i, t_vars *v)
 {
 	t_node	*node;
-	t_node	*list;
 	int		star;
 	int		end;
 
-	list = NULL;
 	star = *i;
 	while (s[*i] && s[*i] != '\'' && s[*i] != '"' && s[*i] != ' '
 		&& s[*i] != '$')
@@ -30,24 +28,35 @@ int	normall_collect(t_node **cmd, char *s, int *i, t_vars *v)
 	}
 	end = (*i) - 1;
 	node = create_node(s, star, end);
-	if (s[*i] == '$' && s[*i])
+	(*i) += next(node, &s[*i], star, v);
+	ft_lstadd_back(cmd, node);
+	return (0);
+}
+
+int	next(t_node *node, char *s, int j, t_vars *v)
+{
+	t_node	*list;
+	int		i;
+
+	i = 0;
+	list = NULL;
+	if (s[i] == '$' && s[i])
 	{
 		if (node->s)
-			node->s = ft_strjoin(node->s, expand_dollar(s, star, 0, ' ', v), 3);
+			node->s = ft_strjoin(node->s, expand_dollar(&s[j], 0, ' ', v), 3);
 		else
-			node->s = expand_dollar(s, star, 0, ' ', v);
-		while (s[*i] && (s[*i] != ' ' && s[*i] != '|' && s[*i] != '"' && s[*i]
-				!= '<' && s[*i] != '&' && s[*i] != '|' && s[*i] != '>'))
-			(*i)++;
+			node->s = expand_dollar(&s[j], 0, ' ', v);
+		while (s[i] && (s[i] != ' ' && s[i] != '|' && s[i] != '"' && s[i]
+				!= '<' && s[i] != '&' && s[i] != '|' && s[i] != '>'))
+			i++;
 	}
-	if ((s[*i] == '\'' || s[*i] == '"') && s[*i])
+	if ((s[i] == '\'' || s[i] == '"') && s[i])
 	{
-		handle_quotes(&list, s, i, v);
+		handle_quotes(&list, s, &i, v);
 		node->s = ft_strjoin(node->s, list->s, 3);
 		list = NULL;
 	}
-	ft_lstadd_back(cmd, node);
-	return (0);
+	return (i);
 }
 
 t_tree	*newtree(char **content)
@@ -75,7 +84,7 @@ void	print_tree(t_tree *root, int space)
 	ft_putendl_fd("", 1);
 	while (++i < space)
 		ft_putstr_fd(" ", 1);
-	if(root->s)
+	if (root->s)
 		printf("[%s]\n", root->s[0]);
 	print_tree(root->left, space);
 }

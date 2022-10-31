@@ -12,9 +12,9 @@
 
 #include "parsing.h"
 
-int token_redirection(t_tree *temp , char *s)
+int	token_redirection(t_tree *temp, char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	temp->s = malloc(sizeof(char *) * 2);
@@ -39,7 +39,7 @@ int token_redirection(t_tree *temp , char *s)
 	return (i);
 }
 
-int token_file_param(t_tree **temp, char *s, t_redirct *r, t_vars *v)
+int	token_file_param(t_tree **temp, char *s, t_redirct *r, t_vars *v)
 {
 	t_redirct	*p;
 	t_tree		*tmp;
@@ -51,23 +51,23 @@ int token_file_param(t_tree **temp, char *s, t_redirct *r, t_vars *v)
 		tmp = (*temp)->left;
 		tmp->left = newtree(NULL);
 		tmp = tmp->left;
-		p = redirection(&tmp, &s[i], NULL,v);
+		p = redirection(&tmp, &s[i], NULL, v);
 		if (!p)
 			return (-1);
-		if(r->param[0])
+		if (r->param[0])
 			r->param = ft_strjoin2d(r->param, p->param);
 		i += p->j;
-		if(r->param[0])
-			tmp->left->left =  newtree(r->param);
+		if (r->param[0])
+			tmp->left->left = newtree(r->param);
 	}
-	else if(r->param)
+	else if (r->param)
 		(*temp)->left->left = newtree(r->param);
 	return (i);
 }
 
-t_redirct	*redirection(t_tree **temp, char *s, char **str,t_vars *v)
+t_redirct	*redirection(t_tree **temp, char *s, char **str, t_vars *v)
 {
-	 t_redirct	*r;
+	t_redirct	*r;
 	int			i;
 	int			j;
 
@@ -75,12 +75,12 @@ t_redirct	*redirection(t_tree **temp, char *s, char **str,t_vars *v)
 	if (i == -1)
 		return (NULL);
 	r = redirection_pars(*temp, s, &i, v);
-	if(!r || r->j == -1)
+	if (!r || r->j == -1)
 		return (NULL);
 	if (str)
 		r->param = ft_strjoin2d(str, r->param);
 	(*temp)->left = newtree(r->file);
-	j = token_file_param(temp, &s[i], r,v);
+	j = token_file_param(temp, &s[i], r, v);
 	if (j == -1)
 		return (NULL);
 	i += j;
@@ -103,7 +103,7 @@ t_redirct	*redirection_pars(t_tree *temp, char *s, int *i, t_vars *v)
 	p->j = 1;
 	while (s[*i] == ' ')
 		(*i)++;
-	if (!s[*i] || s[*i] == '>' || s[*i] == '<' || s[*i] == '|' || s[*i] =='&')
+	if (!s[*i] || s[*i] == '>' || s[*i] == '<' || s[*i] == '|' || s[*i] == '&')
 	{
 		ft_putendl_fd("Syntax Error", 2);
 		p->j = -1;
@@ -117,7 +117,6 @@ t_redirct	*redirection_pars(t_tree *temp, char *s, int *i, t_vars *v)
 	return (p);
 }
 
-
 int	check_nextredirect(t_tree *temp, char *s, t_redirct *p, t_vars *v)
 {
 	t_redirct	*tmp;
@@ -125,15 +124,15 @@ int	check_nextredirect(t_tree *temp, char *s, t_redirct *p, t_vars *v)
 	int			i;
 
 	i = 0;
-	if ((s[i]) && (s[i] != '<' || s[i] != '>' || s[i] == '|' || s[i] =='&'))
+	if ((s[i]) && (s[i] != '<' || s[i] != '>' || s[i] == '|' || s[i] == '&'))
 		p->param = transfer_list_to_2darray(get_cmd(s, &i, v));
 	else
 		p->param = NULL;
 	l = ft_strlen(temp->s[0]);
-	if (s[i + 1] && l == 1 && (s[i + 1] == '>' || s[i + 1] == '<' || 
-			s[i + 1] == '|' || s[i + 1] == '&'))
+	if (s[i + 1] && l == 1 && (s[i + 1] == '>' || s[i + 1] == '<'
+			|| s[i + 1] == '|' || s[i + 1] == '&'))
 		return (i);
-	if ((s[i]) && !ft_strncmp(temp->s[0], &s[i],l))
+	if ((s[i]) && !ft_strncmp(temp->s[0], &s[i], l))
 	{
 		if (l == 2)
 			i += 1;
@@ -143,7 +142,7 @@ int	check_nextredirect(t_tree *temp, char *s, t_redirct *p, t_vars *v)
 		if (tmp->j == -1)
 			return (-1);
 	}
-	return(i);		
+	return (i);
 }
 
 int	get_redirect_file(t_redirct *p, char *str, int i)
