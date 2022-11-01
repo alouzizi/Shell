@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 09:46:28 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/30 21:49:14 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/11/01 16:43:56 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 int	redirecte_output(t_tree *root, int j, t_vars *v)
 {
-	int	i;
-	int	f;
+	t_tree	*n;
+	int		i;
+	int		f;
 
 	i = 0;
+	n = root->left->left;
 	while (root->left->s[i + 1])
 	{
 		f = open(root->left->s[i++], O_CREAT | O_RDONLY | O_TRUNC, 0777);
@@ -30,7 +32,8 @@ int	redirecte_output(t_tree *root, int j, t_vars *v)
 		f = open(root->left->s[i], O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (f < 0)
 		return (print_error(root->left->s[i]));
-	//check if cmd is cd and exit
+	if (!builtincmp(n->s[0], "cd") || !builtincmp(n->s[0], "exit"))
+		return (simple_cmd(root->left->left, v));
 	return (redirection_dup(root, 1, f, v));
 }
 
@@ -43,10 +46,12 @@ int	print_error(char *s)
 
 int	redirect_intput(t_tree *root, t_vars *v)
 {
-	int	i;
-	int	f;
+	t_tree	*n;
+	int		i;
+	int		f;
 
 	i = 0;
+	n = root->left->left;
 	while (root->left->s[i])
 	{
 		if (access(root->left->s[i], F_OK))
@@ -58,6 +63,8 @@ int	redirect_intput(t_tree *root, t_vars *v)
 	f = open(root->left->s[i - 1], O_RDONLY, 0777);
 	if (f < 0)
 		return (print_error(root->left->s[i - 1]));
+	if (!builtincmp(n->s[0], "cd") || !builtincmp(n->s[0], "exit"))
+		return (simple_cmd(root->left->left, v));
 	return (redirection_dup(root, 0, f, v));
 }
 

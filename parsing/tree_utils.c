@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 04:57:35 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/30 20:57:06 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/11/01 16:36:50 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,23 +70,6 @@ t_tree	*newtree(char **content)
 	tree->left = NULL;
 	tree->right = NULL;
 	return (tree);
-}
-
-void	print_tree(t_tree *root, int space)
-{
-	int	i;
-
-	i = COUNT - 1;
-	if (root == NULL)
-		return ;
-	space += COUNT;
-	print_tree(root->right, space);
-	ft_putendl_fd("", 1);
-	while (++i < space)
-		ft_putstr_fd(" ", 1);
-	if (root->s)
-		printf("[%s]\n", root->s[0]);
-	print_tree(root->left, space);
 }
 
 char	*data(int j, char c, char c2)

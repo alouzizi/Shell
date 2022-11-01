@@ -25,7 +25,8 @@ SRCS = main.c \
 	execution/exec.c \
 	execution/exec_utils.c \
 	parsing/tree_utils.c \
-	parsing/redirection_utils.c 
+	parsing/redirection_utils.c \
+	parsing/utils.c
 
 OBJS = $(SRCS:.c=.o)
 

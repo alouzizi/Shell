@@ -76,25 +76,6 @@ void	what_next(t_node *node, char *s, int *i, t_vars *v)
 	}
 }
 
-t_node	*create_node(char *str, int start, int end)
-{
-	t_node	*node;
-	int		i;
-
-	i = 0;
-	node = malloc(sizeof(t_node));
-	if (!node)
-		return (NULL);
-	node->next = NULL;
-	node->s = (char *)malloc(sizeof(char) * (end - start + 2));
-	if (!node->s)
-		return (NULL);
-	while (start <= end)
-		node->s[i++] = str[start++];
-	node->s[i] = '\0';
-	return (node);
-}
-
 char	**transfer_list_to_2darray(t_node *node)
 {
 	char	**tab;
