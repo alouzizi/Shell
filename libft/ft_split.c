@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 19:04:00 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/16 11:50:11 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/11/03 00:09:45 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,16 @@ static char	**free_tab(char **ptr)
 	return (NULL);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char *s, char c)
 {
 	int		i;
 	int		strs_len;
 	char	**ptr;
+	char	*tmp;
 
 	if (!s)
 		return (NULL);
+	tmp = s;
 	strs_len = count_words(s, c);
 	ptr = (char **)malloc(sizeof(char *) * (strs_len + 1));
 	if (!ptr)
@@ -80,5 +82,6 @@ char	**ft_split(char const *s, char c)
 		s = s + ft_strlen(ptr[i]);
 	}
 	ptr[i] = 0;
+	free(tmp);
 	return (ptr);
 }

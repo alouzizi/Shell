@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:27:05 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/30 18:50:52 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/11/03 00:20:47 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ int	create_pipe(t_tree *root, t_vars *v)
 	waitpid(id, &status, 0);
 	wait(0);
 	exit_status(status);
+	free(fd);
 	return (0);
 }

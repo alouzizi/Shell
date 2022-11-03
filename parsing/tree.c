@@ -36,11 +36,13 @@ int	pipe_parsing(t_tree **root, char **str, char *s, int j)
 		ft_putendl_fd("Syntax Error", 2);
 		return (0);
 	}
-	if (root != NULL)
+	if (*root)
 	{
 		temp2 = *root;
 		(*root) = newtree(NULL);
 	}
+	else
+		(*root) = newtree(NULL);
 	(*root)->s = malloc(sizeof(char *) * 2);
 	(*root)->s[0] = data(1, s[l], 0);
 	(*root)->s[1] = NULL;
@@ -54,15 +56,13 @@ int	pipe_parsing(t_tree **root, char **str, char *s, int j)
 
 void	tree(t_tree **root, char *s, t_vars *v)
 {
-	t_redirct	*r;
-	t_tree		*temp;
 	char		**str;
 	int			i;
 	int			j;
 
 	i = 0;
 	j = 0;
-	*root = newtree(NULL);
+	*root = NULL;
 	str = NULL;
 	while (s[i])
 	{
@@ -80,8 +80,10 @@ void	tree(t_tree **root, char *s, t_vars *v)
 			str = transfer_list_to_2darray(get_cmd(s, &i, v));
 			if (str[0])
 			{
-				(*root)->right = newtree(str);
-				temp = (*root)->right;
+				if ((s[i] != '<' && s[i] != '>'))
+					(*root)->right = newtree(str);
+				else
+					(*root)->right = newtree(NULL);
 			}
 			else
 			{
@@ -92,26 +94,58 @@ void	tree(t_tree **root, char *s, t_vars *v)
 		}
 		if ((s[i] == '<' || s[i] == '>') && s[i])
 		{
-			if ((*root)->s)
-				temp = (*root)->right;
-			else
-				temp = *root;
-			r = redirection(&temp, &s[i], str, v);
-			if (!r || r->j == -1)
+			j = red(root, &s[i], str, v);
+			if (j == -1)
 				return ;
-			i += r->j;
+			i += j;
 			j = 2;
 		}
 	}
 	if (j == 1)
 		*root = newtree(str);
-	if (!(*root)->s)
-	{
-		free(*root);
+	if (!*root)
 		return ;
-	}
 	//print_tree(*root, 0);
 	check_herdocintree(root);
 	operator_selection(*root, v);
 	free_tree(*root);
+}
+
+int	red(t_tree **root, char *s, char **str, t_vars *v)
+{
+	t_tree		*temp;
+	t_redirct	*r;
+	int			i;
+
+	i = 0;
+	if (*root)
+		temp = (*root)->right;
+	else
+	{
+		(*root) = newtree(NULL);
+		temp = *root;
+	}
+	r = redirection(&temp, &s[i], str, v);
+	if (!r || r->j == -1)
+		return (-1);
+	i += r->j;
+	free(r);
+	return (i);
+}
+
+void	print_tree(t_tree *root, int space)
+{
+	int	i;
+
+	i = COUNT - 1;
+	if (root == NULL)
+		return ;
+	space += COUNT;
+	print_tree(root->right, space);
+	ft_putendl_fd("", 1);
+	while (++i < space)
+		ft_putstr_fd(" ", 1);
+	if (root->s)
+		printf("[%s]\n", root->s[0]);
+	print_tree(root->left, space);
 }

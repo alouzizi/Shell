@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 09:34:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/11/01 16:37:57 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/11/03 01:19:48 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,11 @@ t_redirct	*redirection_pars(t_tree *temp, char *s, int *i, t_vars *v)
 	(*i) += 1;
 	p = malloc(sizeof(t_redirct));
 	if (!p)
-	{
-		perror(PRMPT_ERR);
 		return (NULL);
-	}
+	p->param = NULL;
+	p->file = NULL;
 	p->j = 1;
-	while (s[*i] == ' ')
+	while (s[*i] == ' ' && s[*i])
 		(*i)++;
 	if (!s[*i] || s[*i] == '>' || s[*i] == '<' || s[*i] == '|' || s[*i] == '&')
 	{
@@ -126,10 +125,8 @@ int	check_nextredirect(t_tree *temp, char *s, t_redirct *p, t_vars *v)
 	i = 0;
 	if ((s[i]) && (s[i] != '<' || s[i] != '>' || s[i] == '|' || s[i] == '&'))
 		p->param = transfer_list_to_2darray(get_cmd(s, &i, v));
-	else
-		p->param = NULL;
 	l = ft_strlen(temp->s[0]);
-	if (s[i + 1] && l == 1 && (s[i + 1] == '>' || s[i + 1] == '<'
+	if (s[i] && s[i + 1] && l == 1 && (s[i + 1] == '>' || s[i + 1] == '<'
 			|| s[i + 1] == '|' || s[i + 1] == '&'))
 		return (i);
 	if ((s[i]) && !ft_strncmp(temp->s[0], &s[i], l))
@@ -141,6 +138,7 @@ int	check_nextredirect(t_tree *temp, char *s, t_redirct *p, t_vars *v)
 		p->file = ft_strjoin2d(p->file, tmp->file);
 		if (tmp->j == -1)
 			return (-1);
+		free(tmp);
 	}
 	return (i);
 }

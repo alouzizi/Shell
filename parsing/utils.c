@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:36:15 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/11/01 16:39:02 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/11/03 01:19:11 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,47 @@ char	**ft_strjoin2d(char **s, char **s0)
 
 	j = 0;
 	if (!s0)
-		return (s);
+	{
+		s0 = malloc(sizeof(char *) * 1);
+		s0[0] = NULL;
+	}
 	if (!s)
 		return (s0);
-	i = arr_len(s);
-	i += arr_len(s0);
+	i = (arr_len(s) + arr_len(s0));
 	s1 = malloc(sizeof(char *) * (i + 1));
 	if (!s1)
 		exit(1);
+	i = -1;
+	while (s[++i])
+		s1[i] = ft_strdup(s[i]);
+	while (s0[j])
+		s1[i++] = ft_strdup(s0[j++]);
+	s1[i] = NULL;
+	free_array(s);
+	free_array(s0);
+	return (s1);
+}
+
+char	**tabdup(char **tab)
+{
+	char	**new;
+	int		i;
+
+	if (!tab)
+		return (NULL);
+	i = arr_len(tab);
+	new = malloc(sizeof(char *) * (i + 1));
+	if (!new)
+		exit(1);
 	i = 0;
-	while (s[i])
+	while (tab[i])
 	{
-		s1[i] = s[i];
+		new[i] = ft_strdup(tab[i]);
 		i++;
 	}
-	while (s0[j])
-		s1[i++] = s0[j++];
-	s1[i] = NULL;
-	return (s1);
+	new[i] = NULL;
+	free_array(tab);
+	return (new);
 }
 
 int	get_redirect_file(t_redirct *p, char *str, int i)
@@ -60,6 +83,15 @@ int	get_redirect_file(t_redirct *p, char *str, int i)
 		p->file[0][l++] = str[j++];
 	p->file[0][l] = '\0';
 	return (i);
+}
+
+void	free_redirect(t_redirct *p)
+{
+	if (p->file)
+		free_array(p->file);
+	if (p->param)
+		free_array(p->param);
+	free(p);
 }
 
 t_node	*create_node(char *str, int start, int end)

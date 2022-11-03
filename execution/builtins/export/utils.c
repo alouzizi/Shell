@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 05:20:03 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/20 23:22:39 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/11/02 19:48:34 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	arr_len(char **arr)
 	if (!arr)
 		return (0);
 	i = 0;
-	while (arr[i])
+	while (arr[i] != NULL)
 		i++;
 	return (i);
 }

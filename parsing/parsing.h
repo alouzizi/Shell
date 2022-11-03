@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:06:36 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/30 21:23:37 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/11/03 01:00:43 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ char		*check_expand(char *s, int *i, char *dollar, t_vars *v);
 int			print_error(char *s);
 int			redirection_dup(t_tree *root, int o, int f, t_vars *v);
 int			next(t_node *node, char *s, int star, t_vars *v);
-
+char		**tabdup(char **tab);
+void		free_redirect(t_redirct *p);
+int			red(t_tree **root, char *s, char **str, t_vars *v);
 #endif

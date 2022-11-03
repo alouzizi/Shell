@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 04:57:35 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/11/01 16:36:50 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/11/02 17:24:30 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_tree	*newtree(char **content)
 	tree = malloc(sizeof(t_tree));
 	if (!tree)
 		exit (1);
-	tree->s = content;
+	tree->s = tabdup(content);
 	tree->left = NULL;
 	tree->right = NULL;
 	return (tree);
