@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:06:36 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/11/03 01:00:43 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/11/03 13:08:34 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ int			token_redirection(t_tree *temp, char *s);
 int			token_file_param(t_tree **temp, char *s, t_redirct *r, t_vars *v);
 int			check_nextredirect(t_tree *temp, char *s, t_redirct *p, t_vars *v);
 void		what_next(t_node *node, char *s, int *i, t_vars *v);
-char		*check_expand(char *s, int *i, char *dollar, t_vars *v);
+char		*check_expand(char *s, int *i, t_vars *v);
 int			print_error(char *s);
 int			redirection_dup(t_tree *root, int o, int f, t_vars *v);
-int			next(t_node *node, char *s, int star, t_vars *v);
+int			next(t_node *node, char *s, t_vars *v);
 char		**tabdup(char **tab);
 void		free_redirect(t_redirct *p);
 int			red(t_tree **root, char *s, char **str, t_vars *v);

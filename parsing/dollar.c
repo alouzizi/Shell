@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 23:47:28 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/16 08:14:14 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/11/03 13:28:01 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*expand_dollar_2(char *s, int i, t_vars *v, char c)
 			return (expand_dollar(&s[i], 1, c, v));
 		return (ft_strjoin(dollar, expand_dollar(&s[i + 2], 0, c, v), 1));
 	}
-	dollar = check_expand(s, &i, dollar, v);
+	dollar = check_expand(s, &i, v);
 	if (s[i] && s[i] != c)
 	{
 		if (!dollar)
@@ -64,8 +64,9 @@ char	*expand_dollar_2(char *s, int i, t_vars *v, char c)
 	return (dollar);
 }
 
-char	*check_expand(char *s, int *i, char *dollar, t_vars *v)
+char	*check_expand(char *s, int *i, t_vars *v)
 {
+	char	*dollar;
 	int		start;
 	int		j;
 
