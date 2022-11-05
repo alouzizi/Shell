@@ -45,7 +45,7 @@ RM = rm -f
 all : $(NAME)
 $(NAME) : $(OBJS) $(HEADER) $(LIBFT) 
 		@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) -l readline $(RL_LIB) 
-		clear
+		clear && ./minishell
 
 $(LIBFT) :
 	@make -C./libft

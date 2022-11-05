@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 04:57:35 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/11/03 12:57:31 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/11/05 13:54:58 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	next(t_node *node, char *s, t_vars *v)
 	{
 		handle_quotes(&list, s, &i, v);
 		node->s = ft_strjoin(node->s, list->s, 3);
+		free(list);
 		list = NULL;
 	}
 	return (i);

@@ -68,11 +68,13 @@ void	what_next(t_node *node, char *s, int *i, t_vars *v)
 	{
 		handle_quotes(&list, s, i, v);
 		node->s = ft_strjoin(node->s, list->s, 3);
+		free(list);
 	}
 	if (s[*i] != ' ' && s[*i])
 	{
 		normall_collect(&list, s, i, v);
 		node->s = ft_strjoin(node->s, list->s, 3);
+		free(list);
 	}
 }
 

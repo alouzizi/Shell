@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 23:47:28 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/11/03 13:28:01 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/11/05 14:17:53 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*expand_dollar(char *s, int lvl, char c, t_vars *v)
 	{
 		dollar = expand_dollar_2(s, i, v, c);
 		if (dollar)
-			expand = ft_strjoin(expand, dollar, 1);
+			expand = ft_strjoin(expand, dollar, 3);
 	}
 	return (expand);
 }
@@ -67,6 +67,7 @@ char	*expand_dollar_2(char *s, int i, t_vars *v, char c)
 char	*check_expand(char *s, int *i, t_vars *v)
 {
 	char	*dollar;
+	char	*tmp;
 	int		start;
 	int		j;
 
@@ -89,7 +90,8 @@ char	*check_expand(char *s, int *i, t_vars *v)
 		while (start--)
 			dollar[j++] = s[(*i)++];
 		dollar[j] = '\0';
-		dollar = get_env(dollar, v);
+		tmp = get_env(dollar, v);
+		free(dollar);
 	}
-	return (dollar);
+	return (tmp);
 }
