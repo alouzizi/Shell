@@ -6,13 +6,13 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 09:46:28 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/11/03 01:07:34 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:44:43 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../execution.h"
+#include "../../minishell.h"
 
-int	redirecte_output(t_tree *root, int j, t_vars *v)
+int	redirecte_output(t_tree *root, int j)
 {
 	t_tree	*n;
 	int		i;
@@ -33,8 +33,8 @@ int	redirecte_output(t_tree *root, int j, t_vars *v)
 	if (f < 0)
 		return (print_error(root->left->s[i]));
 	if (n && (!builtincmp(n->s[0], "cd") || !builtincmp(n->s[0], "exit")))
-		return (simple_cmd(root->left->left, v));
-	return (redirection_dup(root, 1, f, v));
+		return (simple_cmd(root->left->left));
+	return (redirection_dup(root, 1, f));
 }
 
 int	print_error(char *s)
@@ -44,7 +44,7 @@ int	print_error(char *s)
 	return (-1);
 }
 
-int	redirect_intput(t_tree *root, t_vars *v)
+int	redirect_intput(t_tree *root)
 {
 	t_tree	*n;
 	int		i;
@@ -64,11 +64,11 @@ int	redirect_intput(t_tree *root, t_vars *v)
 	if (f < 0)
 		return (print_error(root->left->s[i - 1]));
 	if (n && (!builtincmp(n->s[0], "cd") || !builtincmp(n->s[0], "exit")))
-		return (simple_cmd(root->left->left, v));
-	return (redirection_dup(root, 0, f, v));
+		return (simple_cmd(root->left->left));
+	return (redirection_dup(root, 0, f));
 }
 
-int	redirection_dup(t_tree *root, int o, int f, t_vars *v)
+int	redirection_dup(t_tree *root, int o, int f)
 {
 	int	pid;
 
@@ -82,7 +82,7 @@ int	redirection_dup(t_tree *root, int o, int f, t_vars *v)
 	{
 		dup2(f, o);
 		close(f);
-		operator_selection(root->left->left, v);
+		operator_selection(root->left->left);
 		exit(g_global.status);
 	}
 	close(f);

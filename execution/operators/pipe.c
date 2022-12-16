@@ -6,11 +6,11 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:27:05 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/11/03 00:20:47 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:45:18 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../execution.h"
+#include "../../minishell.h"
 
 void	dup_function(int fd1, int fd2, int i)
 {
@@ -19,21 +19,21 @@ void	dup_function(int fd1, int fd2, int i)
 	close(fd2);
 }
 
-void	pipe_right(int *fd, t_tree *root, t_vars *v)
+void	pipe_right(int *fd, t_tree *root)
 {
 	dup_function(fd[0], fd[1], 0);
-	operator_selection(root->right, v);
+	operator_selection(root->right);
 	exit(g_global.status);
 }
 
-void	pipe_left(int *fd, t_tree *root, t_vars *v)
+void	pipe_left(int *fd, t_tree *root)
 {
 	dup_function(fd[1], fd[0], 1);
-	operator_selection(root->left, v);
+	operator_selection(root->left);
 	exit(g_global.status);
 }
 
-int	create_pipe(t_tree *root, t_vars *v)
+int	create_pipe(t_tree *root)
 {
 	int	*fd;
 	int	id;
@@ -46,10 +46,10 @@ int	create_pipe(t_tree *root, t_vars *v)
 		return (1);
 	id = fork();
 	if (!id)
-		pipe_left(fd, root, v);
+		pipe_left(fd, root);
 	id = fork();
 	if (!id)
-		pipe_right(fd, root, v);
+		pipe_right(fd, root);
 	close(fd[1]);
 	close(fd[0]);
 	waitpid(id, &status, 0);

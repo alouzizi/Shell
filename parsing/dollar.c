@@ -6,13 +6,13 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 23:47:28 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/11/05 14:17:53 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:17:55 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
-char	*expand_dollar(char *s, int lvl, char c, t_vars *v)
+char	*expand_dollar(char *s, int lvl, char c)
 {
 	char	*expand;
 	char	*dollar;
@@ -31,14 +31,14 @@ char	*expand_dollar(char *s, int lvl, char c, t_vars *v)
 	expand[j] = '\0';
 	if (s[i] == '$')
 	{
-		dollar = expand_dollar_2(s, i, v, c);
+		dollar = expand_dollar_2(s, i, c);
 		if (dollar)
 			expand = ft_strjoin(expand, dollar, 3);
 	}
 	return (expand);
 }
 
-char	*expand_dollar_2(char *s, int i, t_vars *v, char c)
+char	*expand_dollar_2(char *s, int i, char c)
 {
 	char	*dollar;
 
@@ -47,24 +47,24 @@ char	*expand_dollar_2(char *s, int i, t_vars *v, char c)
 			|| (!ft_isalpha(s[i + 1]) && s[i + 1] != '_')))
 	{
 		if (ft_isdigit(s[i + 1]))
-			return (expand_dollar(&s[i + 2], 0, c, v));
+			return (expand_dollar(&s[i + 2], 0, c));
 		else if (s[i + 1] == '?')
 			dollar = ft_itoa(g_global.status);
 		else
-			return (expand_dollar(&s[i], 1, c, v));
-		return (ft_strjoin(dollar, expand_dollar(&s[i + 2], 0, c, v), 1));
+			return (expand_dollar(&s[i], 1, c));
+		return (ft_strjoin(dollar, expand_dollar(&s[i + 2], 0, c), 1));
 	}
-	dollar = check_expand(s, &i, v);
+	dollar = check_expand(s, &i);
 	if (s[i] && s[i] != c)
 	{
 		if (!dollar)
-			return (expand_dollar(&s[i], 0, c, v));
-		dollar = ft_strjoin(dollar, expand_dollar(&s[i], 0, c, v), 3);
+			return (expand_dollar(&s[i], 0, c));
+		dollar = ft_strjoin(dollar, expand_dollar(&s[i], 0, c), 3);
 	}
 	return (dollar);
 }
 
-char	*check_expand(char *s, int *i, t_vars *v)
+char	*check_expand(char *s, int *i)
 {
 	char	*dollar;
 	char	*tmp;
@@ -90,7 +90,7 @@ char	*check_expand(char *s, int *i, t_vars *v)
 		while (start--)
 			dollar[j++] = s[(*i)++];
 		dollar[j] = '\0';
-		tmp = get_env(dollar, v);
+		tmp = ft_strdup(get_value_from_env(dollar));
 		free(dollar);
 	}
 	return (tmp);

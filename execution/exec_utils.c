@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 22:44:12 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/22 22:39:15 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/12/16 15:00:11 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "../minishell.h"
 
 // get_path join the cmd with the path in PATH in env arr
 // i. e. /bin/ls
 
-char	**get_path(char *s, t_vars *v)
+char	**get_path(char *s)
 {
 	int		i;
 	char	**paths;
 
-	if (!v->env)
+	if (!g_global.g_env)
 		return (NULL);
-	paths = ft_split(get_env("PATH", v), ':');
+	paths = ft_split(get_value_from_env("PATH"), ':');
 	if (!paths)
 		return (NULL);
 	i = -1;
@@ -79,4 +79,18 @@ void	exit_status(int status)
 		g_global.status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		g_global.status = 128 + WTERMSIG(status);
+}
+
+char	*get_var_value_from_env(char *str)
+{
+	t_env	*tmp_env;
+
+	tmp_env = g_global.g_env;
+	while (tmp_env)
+	{
+		if (!ft_strcmp(tmp_env->key, str))
+			return (tmp_env->value);
+		tmp_env = tmp_env->next;
+	}
+	return (NULL);
 }

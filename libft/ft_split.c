@@ -6,12 +6,12 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 19:04:00 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/11/03 00:09:45 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:47:05 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
+#include <stdio.h>
 static int	count_words(char const *s, char c)
 {
 	int		count;
@@ -62,11 +62,11 @@ char	**ft_split(char *s, char c)
 	int		i;
 	int		strs_len;
 	char	**ptr;
-	char	*tmp;
+//	char	*tmp;
 
 	if (!s)
 		return (NULL);
-	tmp = s;
+	// tmp = s;
 	strs_len = count_words(s, c);
 	ptr = (char **)malloc(sizeof(char *) * (strs_len + 1));
 	if (!ptr)
@@ -82,6 +82,6 @@ char	**ft_split(char *s, char c)
 		s = s + ft_strlen(ptr[i]);
 	}
 	ptr[i] = 0;
-	free(tmp);
+	//free(tmp);
 	return (ptr);
 }

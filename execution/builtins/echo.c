@@ -1,18 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   and.c                                              :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 22:35:07 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/12/16 14:46:01 by alouzizi         ###   ########.fr       */
+/*   Created: 2022/08/26 21:07:18 by ywadday           #+#    #+#             */
+/*   Updated: 2022/12/16 14:21:27 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	simple_cmd(t_tree *root)
+void	echo(char **av)
 {
-	return (execute(root->s));
+	int	i;
+	int	n;
+
+	i = 1;
+	n = 1;
+	while (av[i] && !ft_strcmp(av[i], "-n"))
+	{
+		n = 0;
+		i++;
+	}
+	while (av[i])
+	{
+		printf("%s", av[i]);
+		if (av[++i])
+			printf(" ");
+	}
+	if (n == 1)
+		printf("\n");
 }

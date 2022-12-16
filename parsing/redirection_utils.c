@@ -6,11 +6,11 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 09:34:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/11/03 01:19:48 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:33:47 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
 int	token_redirection(t_tree *temp, char *s)
 {
@@ -39,7 +39,7 @@ int	token_redirection(t_tree *temp, char *s)
 	return (i);
 }
 
-int	token_file_param(t_tree **temp, char *s, t_redirct *r, t_vars *v)
+int	token_file_param(t_tree **temp, char *s, t_redirct *r)
 {
 	t_redirct	*p;
 	t_tree		*tmp;
@@ -51,7 +51,7 @@ int	token_file_param(t_tree **temp, char *s, t_redirct *r, t_vars *v)
 		tmp = (*temp)->left;
 		tmp->left = newtree(NULL);
 		tmp = tmp->left;
-		p = redirection(&tmp, &s[i], NULL, v);
+		p = redirection(&tmp, &s[i], NULL);
 		if (!p)
 			return (-1);
 		if (r->param[0])
@@ -65,7 +65,7 @@ int	token_file_param(t_tree **temp, char *s, t_redirct *r, t_vars *v)
 	return (i);
 }
 
-t_redirct	*redirection(t_tree **temp, char *s, char **str, t_vars *v)
+t_redirct	*redirection(t_tree **temp, char *s, char **str)
 {
 	t_redirct	*r;
 	int			i;
@@ -74,13 +74,13 @@ t_redirct	*redirection(t_tree **temp, char *s, char **str, t_vars *v)
 	i = token_redirection(*temp, s);
 	if (i == -1)
 		return (NULL);
-	r = redirection_pars(*temp, s, &i, v);
+	r = redirection_pars(*temp, s, &i);
 	if (!r || r->j == -1)
 		return (NULL);
 	if (str)
 		r->param = ft_strjoin2d(str, r->param);
 	(*temp)->left = newtree(r->file);
-	j = token_file_param(temp, &s[i], r, v);
+	j = token_file_param(temp, &s[i], r);
 	if (j == -1)
 		return (NULL);
 	i += j;
@@ -88,7 +88,7 @@ t_redirct	*redirection(t_tree **temp, char *s, char **str, t_vars *v)
 	return (r);
 }
 
-t_redirct	*redirection_pars(t_tree *temp, char *s, int *i, t_vars *v)
+t_redirct	*redirection_pars(t_tree *temp, char *s, int *i)
 {
 	t_redirct	*p;
 	int			j;
@@ -109,14 +109,14 @@ t_redirct	*redirection_pars(t_tree *temp, char *s, int *i, t_vars *v)
 		return (p);
 	}
 	*i = get_redirect_file(p, s, *i);
-	j = check_nextredirect(temp, &s[*i], p, v);
+	j = check_nextredirect(temp, &s[*i], p);
 	if (j == -1)
 		return (p);
 	*i += j;
 	return (p);
 }
 
-int	check_nextredirect(t_tree *temp, char *s, t_redirct *p, t_vars *v)
+int	check_nextredirect(t_tree *temp, char *s, t_redirct *p)
 {
 	t_redirct	*tmp;
 	int			l;
@@ -124,7 +124,7 @@ int	check_nextredirect(t_tree *temp, char *s, t_redirct *p, t_vars *v)
 
 	i = 0;
 	if ((s[i]) && (s[i] != '<' || s[i] != '>' || s[i] == '|' || s[i] == '&'))
-		p->param = transfer_list_to_2darray(get_cmd(s, &i, v));
+		p->param = transfer_list_to_2darray(get_cmd(s, &i));
 	l = ft_strlen(temp->s[0]);
 	if (s[i] && s[i + 1] && l == 1 && (s[i + 1] == '>' || s[i + 1] == '<'
 			|| s[i + 1] == '|' || s[i + 1] == '&'))
@@ -133,7 +133,7 @@ int	check_nextredirect(t_tree *temp, char *s, t_redirct *p, t_vars *v)
 	{
 		if (l == 2)
 			i += 1;
-		tmp = redirection_pars(temp, s, &i, v);
+		tmp = redirection_pars(temp, s, &i);
 		p->param = ft_strjoin2d(p->param, tmp->param);
 		p->file = ft_strjoin2d(p->file, tmp->file);
 		if (tmp->j == -1)

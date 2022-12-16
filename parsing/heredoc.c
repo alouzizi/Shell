@@ -6,11 +6,11 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 00:36:46 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/10/28 15:52:09 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:16:58 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
 void	check_herdocintree(t_tree **root)
 {
@@ -109,4 +109,14 @@ char	*ft_strjoin2(char *s1, char *s2, int o)
 	if (o)
 		free(s2);
 	return (s);
+}
+
+void	free_array(char **arr)
+{
+	int	i;
+
+	i = -1;
+	while (arr[++i])
+		free(arr[i]);
+	free(arr);
 }

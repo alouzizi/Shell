@@ -6,11 +6,11 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:36:15 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/11/03 01:19:11 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:17:45 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
 char	**ft_strjoin2d(char **s, char **s0)
 {

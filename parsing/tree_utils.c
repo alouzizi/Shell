@@ -6,13 +6,13 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 04:57:35 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/11/05 13:54:58 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:17:33 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
-int	normall_collect(t_node **cmd, char *s, int *i, t_vars *v)
+int	normall_collect(t_node **cmd, char *s, int *i)
 {
 	t_node	*node;
 	int		star;
@@ -28,12 +28,12 @@ int	normall_collect(t_node **cmd, char *s, int *i, t_vars *v)
 	}
 	end = (*i) - 1;
 	node = create_node(s, star, end);
-	(*i) += next(node, &s[*i], v);
+	(*i) += next(node, &s[*i]);
 	ft_lstadd_back(cmd, node);
 	return (0);
 }
 
-int	next(t_node *node, char *s, t_vars *v)
+int	next(t_node *node, char *s)
 {
 	t_node	*list;
 	int		i;
@@ -43,16 +43,16 @@ int	next(t_node *node, char *s, t_vars *v)
 	if (s[i] == '$' && s[i])
 	{
 		if (node->s)
-			node->s = ft_strjoin(node->s, expand_dollar(&s[i], 0, ' ', v), 3);
+			node->s = ft_strjoin(node->s, expand_dollar(&s[i], 0, ' '), 3);
 		else
-			node->s = expand_dollar(&s[i], 0, ' ', v);
+			node->s = expand_dollar(&s[i], 0, ' ');
 		while (s[i] && (s[i] != ' ' && s[i] != '|' && s[i] != '"' && s[i]
 				!= '<' && s[i] != '&' && s[i] != '|' && s[i] != '>'))
 			i++;
 	}
 	if ((s[i] == '\'' || s[i] == '"') && s[i])
 	{
-		handle_quotes(&list, s, &i, v);
+		handle_quotes(&list, s, &i);
 		node->s = ft_strjoin(node->s, list->s, 3);
 		free(list);
 		list = NULL;

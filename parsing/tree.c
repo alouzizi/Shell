@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
 void	free_tree(t_tree *root)
 {
@@ -54,7 +54,7 @@ int	pipe_parsing(t_tree **root, char **str, char *s, int j)
 	return (l);
 }
 
-void	tree(t_tree **root, char *s, t_vars *v)
+void	tree(t_tree **root, char *s)
 {
 	char		**str;
 	int			i;
@@ -68,7 +68,7 @@ void	tree(t_tree **root, char *s, t_vars *v)
 	{
 		if (s[i] != '|' && s[i] != '<' && s[i] != '>' && s[i] != '&')
 		{
-			str = transfer_list_to_2darray(get_cmd(s, &i, v));
+			str = transfer_list_to_2darray(get_cmd(s, &i));
 			j = 1;
 		}
 		if (s[i] == '|' && s[i])
@@ -77,7 +77,7 @@ void	tree(t_tree **root, char *s, t_vars *v)
 			if (j == 0)
 				return ;
 			i += j;
-			str = transfer_list_to_2darray(get_cmd(s, &i, v));
+			str = transfer_list_to_2darray(get_cmd(s, &i));
 			if (str[0])
 			{
 				if ((s[i] != '<' && s[i] != '>'))
@@ -94,7 +94,7 @@ void	tree(t_tree **root, char *s, t_vars *v)
 		}
 		if ((s[i] == '<' || s[i] == '>') && s[i])
 		{
-			j = red(root, &s[i], str, v);
+			j = red(root, &s[i], str);
 			if (j == -1)
 				return ;
 			i += j;
@@ -105,13 +105,13 @@ void	tree(t_tree **root, char *s, t_vars *v)
 		*root = newtree(str);
 	if (!*root)
 		return ;
-	//print_tree(*root, 0);
+	print_tree(*root, 0);
 	check_herdocintree(root);
-	operator_selection(*root, v);
+	operator_selection(*root);
 	free_tree(*root);
 }
 
-int	red(t_tree **root, char *s, char **str, t_vars *v)
+int	red(t_tree **root, char *s, char **str)
 {
 	t_tree		*temp;
 	t_redirct	*r;
@@ -125,7 +125,7 @@ int	red(t_tree **root, char *s, char **str, t_vars *v)
 		(*root) = newtree(NULL);
 		temp = *root;
 	}
-	r = redirection(&temp, &s[i], str, v);
+	r = redirection(&temp, &s[i], str);
 	if (!r || r->j == -1)
 		return (-1);
 	i += r->j;

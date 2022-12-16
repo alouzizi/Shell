@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
-t_node	*get_cmd(char *s, int *i, t_vars *v)
+t_node	*get_cmd(char *s, int *i)
 {
 	t_node	*cmd;
 
@@ -20,12 +20,12 @@ t_node	*get_cmd(char *s, int *i, t_vars *v)
 	while (s[*i])
 	{
 		if (s[*i] == '"' || s[*i] == '\'')
-			handle_quotes(&cmd, s, i, v);
+			handle_quotes(&cmd, s, i);
 		else if (s[*i] != ' ')
 		{
 			if (s[*i] == '|' || s[*i] == '<' || s[*i] == '>' || s[*i] == '&')
 				return (cmd);
-			if (normall_collect(&cmd, s, i, v) == 1)
+			if (normall_collect(&cmd, s, i) == 1)
 				return (cmd);
 		}
 		while (s[*i] && s[*i] == ' ')
@@ -34,7 +34,7 @@ t_node	*get_cmd(char *s, int *i, t_vars *v)
 	return (cmd);
 }
 
-void	handle_quotes(t_node **cmd, char *s, int *i, t_vars *v)
+void	handle_quotes(t_node **cmd, char *s, int *i)
 {
 	t_node	*node;
 	int		start;
@@ -50,29 +50,29 @@ void	handle_quotes(t_node **cmd, char *s, int *i, t_vars *v)
 	if (s[*i] == '"')
 	{
 		node = ft_lstnew(NULL);
-		node->s = expand_dollar(&s[start], 0, c, v);
+		node->s = expand_dollar(&s[start], 0, c);
 	}
 	else
 		node = create_node(s, start, end);
 	(*i) += 1;
-	what_next(node, s, i, v);
+	what_next(node, s, i);
 	ft_lstadd_back(cmd, node);
 }
 
-void	what_next(t_node *node, char *s, int *i, t_vars *v)
+void	what_next(t_node *node, char *s, int *i)
 {
 	t_node	*list;
 
 	list = NULL;
 	if ((s[*i] == '\'' || s[*i] == '"') && s[*i])
 	{
-		handle_quotes(&list, s, i, v);
+		handle_quotes(&list, s, i);
 		node->s = ft_strjoin(node->s, list->s, 3);
 		free(list);
 	}
 	if (s[*i] != ' ' && s[*i])
 	{
-		normall_collect(&list, s, i, v);
+		normall_collect(&list, s, i);
 		node->s = ft_strjoin(node->s, list->s, 3);
 		free(list);
 	}

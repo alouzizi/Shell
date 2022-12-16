@@ -6,36 +6,25 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 00:14:59 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/10/28 00:50:21 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:44:54 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../execution.h"
+#include "../../minishell.h"
 
-int	operator_selection(t_tree *root, t_vars *v)
+int	operator_selection(t_tree *root)
 {
 	if (!builtincmp(root->s[0], "|"))
-		return (create_pipe(root, v));
-	else if (!builtincmp(root->s[0], "||"))
-		return (or_operator(root, v));
-	else if (!builtincmp(root->s[0], "&&"))
-		return (and_operator(root, v));
+		return (create_pipe(root));
 	else if (!builtincmp(root->s[0], ">"))
-		return (redirecte_output(root, 0, v));
+		return (redirecte_output(root, 0));
 	else if (!builtincmp(root->s[0], "<"))
-		return (redirect_intput(root, v));
+		return (redirect_intput(root));
 	else if (!builtincmp(root->s[0], ">>"))
-		return (redirecte_output(root, 1, v));
+		return (redirecte_output(root, 1));
 	else if (!builtincmp(root->s[0], "<<"))
-		return (redirect_intput(root, v));
+		return (redirect_intput(root));
 	else
-		return (simple_cmd(root, v));
-	return (0);
-}
-
-int	or_operator(t_tree *root, t_vars *v)
-{
-	if (simple_cmd(root->left, v))
-		simple_cmd(root->right, v);
+		return (simple_cmd(root));
 	return (0);
 }

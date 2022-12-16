@@ -7,17 +7,12 @@ SRCS = main.c \
 	parsing/dollar.c \
 	parsing/signal.c \
 	parsing/tree.c \
-	execution/builtins/export/ft_export.c \
-	execution/builtins/export/add_var.c \
-	execution/builtins/export/append_value.c \
-	execution/builtins/export/print.c \
-	execution/builtins/export/utils.c \
-	execution/builtins/ft_echo.c \
-	execution/builtins/ft_pwd.c \
-	execution/builtins/ft_env.c \
-	execution/builtins/ft_cd.c \
-	execution/builtins/ft_unset.c \
-	execution/builtins/ft_exit.c \
+	execution/builtins/export.c \
+	execution/builtins/echo.c \
+	execution/builtins/pwd.c \
+	execution/builtins/env.c \
+	execution/builtins/cd.c \
+	execution/builtins/unset.c \
 	execution/operators/pipe.c \
 	execution/operators/or.c \
 	execution/operators/and.c \
@@ -45,7 +40,6 @@ RM = rm -f
 all : $(NAME)
 $(NAME) : $(OBJS) $(HEADER) $(LIBFT) 
 		@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) -l readline $(RL_LIB) 
-		clear && ./minishell
 
 $(LIBFT) :
 	@make -C./libft
