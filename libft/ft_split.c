@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 19:04:00 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/12/16 15:47:05 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/17 02:02:14 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
+
 static int	count_words(char const *s, char c)
 {
 	int		count;
@@ -62,11 +62,9 @@ char	**ft_split(char *s, char c)
 	int		i;
 	int		strs_len;
 	char	**ptr;
-//	char	*tmp;
 
 	if (!s)
 		return (NULL);
-	// tmp = s;
 	strs_len = count_words(s, c);
 	ptr = (char **)malloc(sizeof(char *) * (strs_len + 1));
 	if (!ptr)
@@ -82,6 +80,5 @@ char	**ft_split(char *s, char c)
 		s = s + ft_strlen(ptr[i]);
 	}
 	ptr[i] = 0;
-	//free(tmp);
 	return (ptr);
 }

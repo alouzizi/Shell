@@ -8,17 +8,17 @@ SRCS = main.c \
 	parsing/signal.c \
 	parsing/tree.c \
 	execution/builtins/export.c \
+	execution/builtins/export_utils.c \
 	execution/builtins/echo.c \
 	execution/builtins/pwd.c \
 	execution/builtins/env.c \
 	execution/builtins/cd.c \
 	execution/builtins/unset.c \
 	execution/operators/pipe.c \
-	execution/operators/or.c \
-	execution/operators/and.c \
 	execution/operators/redirection.c \
 	execution/exec.c \
 	execution/exec_utils.c \
+	execution/utils.c  \
 	parsing/tree_utils.c \
 	parsing/redirection_utils.c \
 	parsing/utils.c
@@ -33,8 +33,7 @@ RL_LIB = -L/goinfre/$(USER)/.brew/opt/readline/lib
 
 LIBFT = ./libft/libft.a
 
-CFLAGS = -Wall -Wextra -Werror
-
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 RM = rm -f
 
 all : $(NAME)

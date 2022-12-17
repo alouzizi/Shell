@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 23:47:28 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/12/16 17:17:55 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/17 02:08:31 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*expand_dollar_2(char *s, int i, char c)
 			return (expand_dollar(&s[i], 1, c));
 		return (ft_strjoin(dollar, expand_dollar(&s[i + 2], 0, c), 1));
 	}
-	dollar = check_expand(s, &i);
+	dollar = check_expand(s, &i, 0, 0);
 	if (s[i] && s[i] != c)
 	{
 		if (!dollar)
@@ -64,15 +64,12 @@ char	*expand_dollar_2(char *s, int i, char c)
 	return (dollar);
 }
 
-char	*check_expand(char *s, int *i)
+char	*check_expand(char *s, int *i, int start, int j)
 {
 	char	*dollar;
 	char	*tmp;
-	int		start;
-	int		j;
 
-	j = 0;
-	start = 0;
+	tmp = NULL;
 	if (s[*i + 1] && (ft_isdigit(s[*i + 1])
 			|| ft_isalpha(s[*i + 1]) || s[*i + 1] == '_'))
 	{

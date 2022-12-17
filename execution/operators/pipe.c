@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:27:05 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/12/16 14:45:18 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/17 01:59:16 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,9 @@ int	create_pipe(t_tree *root)
 	exit_status(status);
 	free(fd);
 	return (0);
+}
+
+int	simple_cmd(t_tree *root)
+{
+	return (execute(root->s));
 }

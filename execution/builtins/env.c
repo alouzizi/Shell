@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 14:20:00 by ywadday           #+#    #+#             */
-/*   Updated: 2022/12/16 15:48:08 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/17 01:53:02 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	parse_env(char **env)
 	else
 	{
 		addtolist(env);
-		if (!get_value_from_env("PWD")) 
+		if (!get_value_from_env("PWD"))
 			add_var_to_env("PWD", path);
 		if (!get_value_from_env("PWD"))
 			add_var_to_env("SHLVL", "1");
@@ -75,4 +75,3 @@ void	print_env(void)
 		head = head->next;
 	}
 }
-

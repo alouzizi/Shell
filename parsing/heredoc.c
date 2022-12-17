@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 00:36:46 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/12/16 14:16:58 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/17 02:09:21 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	check_herdocintree(t_tree **root)
 	if (temp)
 	{
 		check_herdocintree(&temp->left);
-		if (!ft_strcmp(temp->s[0], "<<"))
+		if (!ft_strcmp(temp->s[0], "<<") && temp->s[0])
 			herdoc(&temp);
 		check_herdocintree(&temp->right);
 	}

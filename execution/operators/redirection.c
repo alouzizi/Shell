@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 09:46:28 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/12/16 14:44:43 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/17 01:58:43 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,28 @@ int	redirection_dup(t_tree *root, int o, int f)
 	{
 		dup2(f, o);
 		close(f);
-		operator_selection(root->left->left);
+		if (root->left->left)
+			operator_selection(root->left->left);
 		exit(g_global.status);
 	}
 	close(f);
 	wait(0);
+	return (0);
+}
+
+int	operator_selection(t_tree *root)
+{
+	if (!builtincmp(root->s[0], "|"))
+		return (create_pipe(root));
+	else if (!builtincmp(root->s[0], ">"))
+		return (redirecte_output(root, 0));
+	else if (!builtincmp(root->s[0], "<"))
+		return (redirect_intput(root));
+	else if (!builtincmp(root->s[0], ">>"))
+		return (redirecte_output(root, 1));
+	else if (!builtincmp(root->s[0], "<<"))
+		return (redirect_intput(root));
+	else
+		return (simple_cmd(root));
 	return (0);
 }
