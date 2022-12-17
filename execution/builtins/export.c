@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 16:54:48 by ywadday           #+#    #+#             */
-/*   Updated: 2022/12/17 01:55:40 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/12/17 18:48:51 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,6 @@ void	export(char **key_value)
 	while (key_value[++x.i])
 	{
 		x.j = 0;
-		if (!ony_chars(key_value[x.i][0]))
-		{
-			printf("export: `%s': not a valid identifier\n", key_value[x.i]);
-			continue ;
-		}
 		while (key_value[x.i][x.j] && key_value[x.i][x.j] != '=')
 			x.j++;
 		x.key = ft_substr(key_value[x.i], 0, x.j);

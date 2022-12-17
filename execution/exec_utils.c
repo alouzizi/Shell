@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 22:44:12 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/12/17 01:51:51 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/12/17 18:41:20 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,18 +79,4 @@ void	exit_status(int status)
 		g_global.status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		g_global.status = 128 + WTERMSIG(status);
-}
-
-char	*get_var_value_from_env(char *str)
-{
-	t_env	*tmp_env;
-
-	tmp_env = g_global.g_env;
-	while (tmp_env)
-	{
-		if (!ft_strcmp(tmp_env->key, str))
-			return (tmp_env->value);
-		tmp_env = tmp_env->next;
-	}
-	return (NULL);
 }

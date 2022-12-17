@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:14:09 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/12/17 01:50:59 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/12/17 19:21:25 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	builtincmp(char *s1, char *s2)
-{
-	int	i;
-
-	if (!s1 || !s2)
-		return (0);
-	i = 0;
-	while (s1[i] || s2[i])
-	{
-		if (s1[i] != s2[i])
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 void	print_cnf_error(char *cmd)
 {
@@ -49,43 +33,41 @@ static int	lstsize(t_env *lst)
 	return (i);
 }
 
-char	**new_env(void)
+char	**envv(t_env *head, char *shlvl)
 {
+	int		i;
 	int		size;
 	char	**env;
-	t_env	*head;
-	char	*shlvl;
-	int		i;
 
+	i = 0;
 	size = lstsize(g_global.g_env) + 1;
 	env = (char **)malloc(sizeof(g_global.g_env) * size);
 	if (!env)
 		return (NULL);
-	head = g_global.g_env;
-	shlvl = get_value_from_env("SHLVL");
-	if (!shlvl)
-	{
-		add_var_to_env("SHLVL", "1");
-		shlvl = "1";
-	}
-	else
-		shlvl = ft_itoa(ft_atoi(shlvl) + 1);
-	i = 0;
 	while (head)
 	{
 		if (!ft_strcmp(head->key, "SHLVL"))
-			head->value = shlvl;
-		if (head->value)
-		{
-			if (head->value[0] == '=')
-				head->value = "";
-			env[i] = ft_strjoin(ft_strjoin(head->key, "=", 0), head->value, 0);
-			i++;
-		}
+			head->value = ft_itoa(ft_atoi(shlvl) + 1);
+		env[i] = ft_strjoin(ft_strjoin(head->key, "=", 0), head->value, 0);
+		i++;
 		head = head->next;
 	}
 	env[i] = NULL;
 	return (env);
+}
+
+char	**new_env(void)
+{
+	t_env	*head;
+	char	*shlvl;
+
+	head = g_global.g_env;
+	shlvl = "1";
+	if (!get_value_from_env("SHLVL"))
+		add_var_to_env("SHLVL", "shlvl");
+	else
+		shlvl = get_value_from_env("SHLVL");
+	return (envv(head, shlvl));
 }
 
 int	commands_execution(char *path, char **cmd)

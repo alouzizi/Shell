@@ -15,6 +15,7 @@ SRCS = main.c \
 	execution/builtins/env.c \
 	execution/builtins/cd.c \
 	execution/builtins/unset.c \
+	execution/builtins/exit.c \
 	execution/operators/pipe.c \
 	execution/operators/redirection.c \
 	execution/exec.c \
@@ -34,7 +35,7 @@ RL_LIB = -L/goinfre/$(USER)/.brew/opt/readline/lib
 
 LIBFT = ./libft/libft.a
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
 all : $(NAME)

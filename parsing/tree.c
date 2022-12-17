@@ -105,7 +105,6 @@ void	tree(t_tree **root, char *s)
 		*root = newtree(str);
 	if (!*root)
 		return ;
-	//print_tree(*root, 0);
 	check_herdocintree(root);
 	operator_selection(*root);
 	free_tree(*root);

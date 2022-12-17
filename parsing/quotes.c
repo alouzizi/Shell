@@ -101,25 +101,24 @@ char	**transfer_list_to_2darray(t_node *node)
 
 int	check_quotes(char *s, int i, int j)
 {
-	while (s[i])
+	while (s[++i])
 	{
-		if (s[i] == '\'')
+		if (s[i] && s[i] == '\'')
 		{
 			i++;
-			while (s[i] != '\'' && s[i])
+			while (s[i] && s[i] != '\'')
 				i++;
-			if (s[i] != '\'')
-				j = 1;
+			if (!s[i] || s[i] != '\'')
+				return (1);
 		}
-		if (s[i] == '"')
+		if (s[i] && s[i] == '"')
 		{
 			i++;
-			while (s[i] != '"' && s[i])
+			while (s[i] && s[i] != '"')
 				i++;
-			if (s[i] != '"')
-				j = 1;
+			if (!s[i] || s[i] != '"')
+				return (1);
 		}
-		i++;
 	}
 	return (j);
 }

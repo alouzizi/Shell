@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 15:04:14 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/12/17 01:36:49 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/12/17 20:21:50 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	prompt_display(void)
 			ft_putstr_fd(CTL_D, 1);
 			exit (g_global.status);
 		}
-		if (!check_quotes(s, 0, 0))
+		if (!check_quotes(s, -1, 0))
 			tree(&root, s);
 		else
 		{
@@ -40,6 +40,7 @@ void	prompt_display(void)
 		free(s);
 	}
 }
+
 
 int	main(int ac, char **av, char **env)
 {
@@ -51,4 +52,7 @@ int	main(int ac, char **av, char **env)
 	parse_env(env);
 	signals_handling();
 	prompt_display();
-}
+	return (0);
+	}
+
+
