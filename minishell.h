@@ -173,4 +173,8 @@ void			unset(char **var);
 void			echo(char **av);
 void			print_env(void);
 char			**new_env(void);
+
+int				open_herdoc(t_tree **root, char *s, int i, int o);
+int				herdoc_loop(t_tree **root, int o, int i, char *her);
+void			check_open_and_free(t_tree **root, int o, int i, char *her);
 #endif

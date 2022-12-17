@@ -4,6 +4,7 @@ HEADER = minishell.h
 SRCS = main.c \
 	parsing/quotes.c \
 	parsing/heredoc.c \
+	parsing/heredoc_utils.c \
 	parsing/dollar.c \
 	parsing/signal.c \
 	parsing/tree.c \
