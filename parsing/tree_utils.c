@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 04:57:35 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/12/16 14:17:33 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/18 03:18:51 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,26 @@ char	*data(int j, char c, char c2)
 		s[i++] = c2;
 	s[i] = '\0';
 	return (s);
+}
+
+int	red(t_tree **root, char *s, char **str)
+{
+	t_tree		*temp;
+	t_redirct	*r;
+	int			i;
+
+	i = 0;
+	if (*root)
+		temp = (*root)->right;
+	else
+	{
+		(*root) = newtree(NULL);
+		temp = *root;
+	}
+	r = redirection(&temp, &s[i], str);
+	if (!r || r->j == -1)
+		return (-1);
+	i += r->j;
+	free(r);
+	return (i);
 }

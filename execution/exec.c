@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:14:09 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/12/17 19:21:25 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/18 02:42:12 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,14 @@ static int	lstsize(t_env *lst)
 	return (i);
 }
 
-char	**envv(t_env *head, char *shlvl)
+char	**envv(char *shlvl)
 {
 	int		i;
 	int		size;
 	char	**env;
+	t_env	*head;
 
+	head = g_global.g_env;
 	i = 0;
 	size = lstsize(g_global.g_env) + 1;
 	env = (char **)malloc(sizeof(g_global.g_env) * size);
@@ -58,16 +60,14 @@ char	**envv(t_env *head, char *shlvl)
 
 char	**new_env(void)
 {
-	t_env	*head;
 	char	*shlvl;
 
-	head = g_global.g_env;
 	shlvl = "1";
 	if (!get_value_from_env("SHLVL"))
-		add_var_to_env("SHLVL", "shlvl");
+		add_var_to_env("SHLVL", shlvl);
 	else
 		shlvl = get_value_from_env("SHLVL");
-	return (envv(head, shlvl));
+	return (envv(shlvl));
 }
 
 int	commands_execution(char *path, char **cmd)

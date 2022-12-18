@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 15:58:02 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/11/03 00:07:21 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/18 02:39:42 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@ typedef struct list
 	struct list	*next;
 	char		*s;
 }	t_node;
+
+typedef struct split_shit
+{
+	char	**tab;
+	int		i;
+	int		j;
+	int		k;
+}	t_split;
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);

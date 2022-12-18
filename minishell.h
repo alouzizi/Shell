@@ -38,6 +38,12 @@ typedef struct redirct
 	int		j;
 }	t_redirct;
 
+typedef struct v
+{
+	int	i;
+	int	j;
+}	t_v;
+
 typedef struct s_vars
 {
 	int		i;
@@ -91,6 +97,7 @@ typedef struct export_shit
 {
 	int						i;
 	int						j;
+	int						k;
 	char					*key;
 	char					*v;
 }	t_export_shit;
@@ -143,7 +150,7 @@ char			*expand_dollar(char *s, int lvl, char c);
 char			*expand_dollar_2(char *s, int i, char c);
 void			signals_handling(void);
 char			**ft_strjoin2d(char **s, char **s0);
-int				pipe_parsing(t_tree **root, char **str, char *s, int j);
+t_v				pipe_parsing(t_tree **root, char **str, char *s, t_v v);
 void			free_tree(t_tree *root);
 int				get_redirect_file(t_redirct *p, char *str, int i);
 void			check_herdocintree(t_tree **root);
@@ -178,4 +185,5 @@ int				exitt(char **str);
 int				open_herdoc(t_tree **root, char *s, int i, int o);
 int				herdoc_loop(t_tree **root, int o, int i, char *her);
 void			check_open_and_free(t_tree **root, int o, int i, char *her);
+t_v				norm_tree(t_tree **root, char **str, char *s, t_v v);
 #endif

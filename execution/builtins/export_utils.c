@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 01:55:00 by mfagri            #+#    #+#             */
-/*   Updated: 2022/12/17 01:55:44 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/12/18 02:43:32 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,17 @@ t_env	*last_node(t_env *lst)
 		lst = lst->next;
 	}
 	return (NULL);
+}
+
+t_env	*new_node2(char *key, char *value)
+{
+	t_env	*new;
+
+	new = (t_env *)malloc(sizeof(t_env));
+	if (!new)
+		return (NULL);
+	new->value = value;
+	new->key = key;
+	new->next = NULL;
+	return (new);
 }

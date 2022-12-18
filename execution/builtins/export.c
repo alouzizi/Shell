@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 16:54:48 by ywadday           #+#    #+#             */
-/*   Updated: 2022/12/17 18:48:51 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/18 02:43:38 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,31 @@ void	modify_if_exist(char *key, char *value, int *b, int *b2)
 		{
 			if (*b == 1)
 			{
-				head->value = ft_strjoin(head->value, value, 2);
+				head->value = ft_strjoin(head->value, value, 3);
 				*b = 0;
 			}
 			else
-				head->value = ft_strdup(value);
+			{
+				free(head->value);
+				head->value = value;
+			}
+			*b2 = 1;
+			break ;
+		}
+		head = head->next;
+	}
+}
+
+void	reapted_empty_key(char *key, int *b2)
+{
+	t_env	*head;
+
+	head = g_global.g_env;
+	while (head)
+	{
+		if (!ft_strcmp(head->key, key))
+		{
+			head->value = NULL;
 			*b2 = 1;
 			break ;
 		}
@@ -66,6 +86,8 @@ void	add_var_to_env(char *key, char *value)
 	}
 	if (value)
 		modify_if_exist(key, value, &b, &b2);
+	else
+		reapted_empty_key(key, &b2);
 	if (b2 == 0 && b == 0)
 	{
 		tmp = new_node2(key, value);
@@ -97,17 +119,4 @@ void	export(char **key_value)
 			x.v = ft_substr(key_value[x.i], x.j + 1, ft_strlen(key_value[x.i]));
 		add_var_to_env(x.key, x.v);
 	}
-}
-
-t_env	*new_node2(char *key, char *value)
-{
-	t_env	*new;
-
-	new = (t_env *)malloc(sizeof(t_env));
-	if (!new)
-		return (NULL);
-	new->value = value;
-	new->key = key;
-	new->next = NULL;
-	return (new);
 }

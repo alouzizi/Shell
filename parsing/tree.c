@@ -25,16 +25,15 @@ void	free_tree(t_tree *root)
 	}
 }
 
-int	pipe_parsing(t_tree **root, char **str, char *s, int j)
+t_v	pipe_parsing(t_tree **root, char **str, char *s, t_v v)
 {
 	t_tree	*temp2;
-	int		l;
 
-	l = 0;
-	if (j != 1 && j != 2 && j != 3)
+	if (v.j != 1 && v.j != 2 && v.j != 3)
 	{
 		ft_putendl_fd("Syntax Error", 2);
-		return (0);
+		v.j = -1;
+		return (v);
 	}
 	if (*root)
 	{
@@ -44,107 +43,82 @@ int	pipe_parsing(t_tree **root, char **str, char *s, int j)
 	else
 		(*root) = newtree(NULL);
 	(*root)->s = malloc(sizeof(char *) * 2);
-	(*root)->s[0] = data(1, s[l], 0);
+	(*root)->s[0] = data(1, s[v.i], 0);
 	(*root)->s[1] = NULL;
-	l++;
-	if (j == 1)
+	v.i++;
+	if (v.j == 1)
 		(*root)->left = newtree(str);
 	else
 		(*root)->left = temp2;
-	return (l);
+	v.j = 3;
+	return (v);
+}
+
+t_v	norm_rediect(t_tree **root, char **str, char *s, t_v v)
+{
+	if ((s[v.i] == '<' || s[v.i] == '>') && s[v.i])
+	{
+		v.j = red(root, &s[v.i], str);
+		if (v.j == -1)
+			return (v);
+		v.i += v.j;
+		v.j = 2;
+	}
+	return (v);
+}
+
+t_v	norm_tree(t_tree **root, char **str, char *s, t_v v)
+{
+	if (s[v.i] == '|' && s[v.i])
+	{
+		v = pipe_parsing(root, str, s, v);
+		if (v.j == -1)
+			return (v);
+		str = transfer_list_to_2darray(get_cmd(s, &v.i));
+		if (str[0])
+		{
+			if ((s[v.i] != '<' && s[v.i] != '>'))
+				(*root)->right = newtree(str);
+			else
+				(*root)->right = newtree(NULL);
+		}
+		else
+		{
+			ft_putendl_fd("Syntax Erro1r", 2);
+			return (v.j = -1, v);
+		}
+	}
+	v = norm_rediect(root, str, s, v);
+	if (v.j == -1)
+		return (v);
+	return (v);
 }
 
 void	tree(t_tree **root, char *s)
 {
 	char		**str;
-	int			i;
-	int			j;
+	t_v			v;	
 
-	i = 0;
-	j = 0;
+	v.i = 0;
+	v.j = 0;
 	*root = NULL;
 	str = NULL;
-	while (s[i])
+	while (s[v.i])
 	{
-		if (s[i] != '|' && s[i] != '<' && s[i] != '>' && s[i] != '&')
+		if (s[v.i] != '|' && s[v.i] != '<' && s[v.i] != '>' && s[v.i] != '&')
 		{
-			str = transfer_list_to_2darray(get_cmd(s, &i));
-			j = 1;
+			str = transfer_list_to_2darray(get_cmd(s, &v.i));
+			v.j = 1;
 		}
-		if (s[i] == '|' && s[i])
-		{
-			j = pipe_parsing(root, str, &s[i], j);
-			if (j == 0)
-				return ;
-			i += j;
-			str = transfer_list_to_2darray(get_cmd(s, &i));
-			if (str[0])
-			{
-				if ((s[i] != '<' && s[i] != '>'))
-					(*root)->right = newtree(str);
-				else
-					(*root)->right = newtree(NULL);
-			}
-			else
-			{
-				ft_putendl_fd("Syntax Error", 2);
-				return ;
-			}
-			j = 3;
-		}
-		if ((s[i] == '<' || s[i] == '>') && s[i])
-		{
-			j = red(root, &s[i], str);
-			if (j == -1)
-				return ;
-			i += j;
-			j = 2;
-		}
+		v = norm_tree(root, str, s, v);
+		if (v.j == -1)
+			return ;
 	}
-	if (j == 1)
+	if (v.j == 1)
 		*root = newtree(str);
 	if (!*root)
 		return ;
 	check_herdocintree(root);
 	operator_selection(*root);
 	free_tree(*root);
-}
-
-int	red(t_tree **root, char *s, char **str)
-{
-	t_tree		*temp;
-	t_redirct	*r;
-	int			i;
-
-	i = 0;
-	if (*root)
-		temp = (*root)->right;
-	else
-	{
-		(*root) = newtree(NULL);
-		temp = *root;
-	}
-	r = redirection(&temp, &s[i], str);
-	if (!r || r->j == -1)
-		return (-1);
-	i += r->j;
-	free(r);
-	return (i);
-}
-
-void	print_tree(t_tree *root, int space)
-{
-	int	i;
-
-	i = COUNT - 1;
-	if (root == NULL)
-		return ;
-	space += COUNT;
-	print_tree(root->right, space);
-	ft_putendl_fd("", 1);
-	while (++i < space)
-		ft_putstr_fd(" ", 1);
-	if (root->s)
-		printf("[%s]\n", root->s[0]);
-	print_tree(root->left, space);
 }

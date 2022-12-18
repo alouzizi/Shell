@@ -6,7 +6,7 @@
 /*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 15:04:14 by alouzizi          #+#    #+#             */
-/*   Updated: 2022/12/17 20:21:50 by alouzizi         ###   ########.fr       */
+/*   Updated: 2022/12/18 03:06:19 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	prompt_display(void)
 	}
 }
 
-
 int	main(int ac, char **av, char **env)
 {
 	if (ac != 1 || av[1])
@@ -53,6 +52,4 @@ int	main(int ac, char **av, char **env)
 	signals_handling();
 	prompt_display();
 	return (0);
-	}
-
-
+}

@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alouzizi <alouzizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 14:20:00 by ywadday           #+#    #+#             */
-/*   Updated: 2022/12/17 01:53:02 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/12/18 03:20:23 by alouzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void	shlvl_oldpwd(char **str)
+{
+	char	*tmp;
+
+	if (!ft_strcmp(str[0], "SHLVL"))
+	{
+		tmp = ft_itoa(ft_atoi(str[1]));
+		free(str[1]);
+		str[1] = tmp;
+	}
+	if (ft_strcmp(str[0], "OLDPWD"))
+		add_back(&g_global.g_env,
+			new_node2(ft_strdup(str[0]), ft_strdup(str[1])));
+}
 
 void	addtolist(char **env)
 {
@@ -32,10 +47,8 @@ void	addtolist(char **env)
 		}
 		else
 			str = ft_split(env[i], '=');
-		if (!ft_strcmp(str[0], "SHLVL"))
-			str[1] = ft_itoa(ft_atoi(str[1]));
-		if (ft_strcmp(str[0], "OLDPWD"))
-			add_back(&g_global.g_env, new_node2(str[0], str[1]));
+		shlvl_oldpwd(str);
+		free_array(str);
 	}
 }
 
@@ -45,7 +58,7 @@ void	parse_env(char **env)
 	char	*path;
 
 	g_global.g_env = NULL;
-	path = ft_strdup(getcwd(s, 1024));
+	path = getcwd(s, 1024);
 	if (!env || !*env)
 	{
 		add_var_to_env("PWD", path);
